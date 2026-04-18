@@ -1,0 +1,1982 @@
+{
+  "morning_feeling": {
+    "title": "O que está tirando sua paz e precisa ser alinhado agora?",
+    "subtitle_part1": "Vamos montar o seu",
+    "subtitle_highlight": "Plano Vibracional",
+    "subtitle_part2": "com base no seu objetivo:",
+    "options": {
+      "abundance": "Desbloquear minha Riqueza",
+      "attract": "Desbloquear meu Relacionamento",
+      "healing": "Desbloquear minha Saúde",
+      "energy": "Desbloquear minha Paz",
+      "other": "Outro"
+    },
+    "button_continue": "continuar"
+  },
+  "transition_loader": {
+    "title": "Analisando sua resposta",
+    "message": "Estamos personalizando sua jornada com base em sua resposta...",
+    "options": {
+      "manifest": "Manifestar desejos sem esforço",
+      "attract": "Atrair as pessoas e o parceiro que realmente quero",
+      "abundance": "Ativar meu fluxo de abundância",
+      "healing": "Encontrar paz curando minha mente e corpo",
+      "energy": "Sentir-me energizado e confiante todos os dias",
+      "default": "Outro"
+    }
+  },
+  "transition_page": {
+    "video_thumbnail_alt": "Miniatura da apresentação em vídeo",
+    "content": {
+      "manifest": {
+        "title": "Sua energia manifesta realidades",
+        "description": "Existe uma força poderosa dentro de você que pode materializar seus desejos mais profundos. Quando você alinha sua energia com suas intenções, o universo conspira a seu favor. Cada pensamento, cada emoção, cada vibração que você emite é uma semente plantada no campo infinito de possibilidades.",
+        "subDescription": "Vamos despertar o poder de manifestação que está esperando dentro de você. ✨"
+      },
+      "attract": {
+        "title": "Sua energia atrai conexões verdadeiras",
+        "description": "O amor e as conexões que você busca já existem no campo energético ao seu redor. Sua vibração pessoal é como um ímã que atrai pessoas e experiências alinhadas com sua essência. Quando você se torna magnético em sua autenticidade, as relações certas fluem naturalmente para sua vida.",
+        "subDescription": "Vamos ativar sua energia magnética para atrair o amor verdadeiro. 💗"
+      },
+      "abundance": {
+        "title": "Sua energia desbloqueia a abundância",
+        "description": "A prosperidade não é apenas sobre dinheiro - é um estado de ser onde você se sente pleno, próspero e conectado com o fluxo infinito do universo. Sua energia, quando alinhada com a gratidão e a receptividade, se torna um canal para que a abundância se manifeste em todas as áreas da sua vida.",
+        "subDescription": "Vamos abrir os canais da abundância que fluem através de você. 💫"
+      },
+      "healing": {
+        "title": "Sua energia cura e transforma",
+        "description": "Dentro de você existe uma sabedoria ancestral que conhece o caminho de volta ao equilíbrio. Sua energia tem o poder de curar não apenas feridas físicas, mas também padrões emocionais e mentais que limitam sua paz interior. Quando você se conecta com essa força curativa, a transformação acontece naturalmente.",
+        "subDescription": "Vamos despertar o curador que vive dentro de você. 🧘‍♀️"
+      },
+      "energy": {
+        "title": "Sua energia irradia vitalidade",
+        "description": "A confiança e a energia vibrante que você busca não vêm de fontes externas - elas são sua natureza essencial. Quando você se conecta com sua força vital interior, cada célula do seu corpo desperta, cada movimento se torna gracioso, e sua presença ilumina qualquer ambiente.",
+        "subDescription": "Vamos ativar a energia radiante que é sua essência natural. ⚡️"
+      },
+      "other": {
+        "title": "Sua energia é única e poderosa",
+        "description": "Cada pessoa carrega uma assinatura energética única no universo. Sua jornada é especial e os desejos do seu coração são válidos e importantes. Não importa qual seja seu sonho ou aspiração, existe uma energia dentro de você capaz de torná-lo realidade.",
+        "subDescription": "Vamos descobrir e potencializar sua energia única. ❓"
+      },
+      "default": {
+        "title": "Sua energia diz muito",
+        "description": "Existe uma energia poderosa dentro de você — e quando ela estiver você decide como usá-la. Ela pode ser positiva, negativa, agressiva e impaciente, como também pode ser calma, paciente, vivem em estado de consciência, desconectadas do drama — sem apressar ou forçar as coisas, mas apenas sabendo exatamente não somente.",
+        "subDescription": "Vamos construir o futuro que está esperando dentro de você. ✨"
+      }
+    },
+    "headlines": {
+      "only_other_title": "Recupere o controle da sua vida e manifeste seus sonhos em realidade",
+      "only_other_subtitle": "Assista agora e veja como sintonizar suas vibrações em poucos minutos.",
+      "other_combo_abundance": "A chave para colocar sua vida de volta nos trilhos e atrair prosperidade.",
+      "other_combo_attract": "Retome o controle da sua vida e transforme seus relacionamentos.",
+      "other_combo_healing": "A chave para colocar sua vida em ordem e ativar sua cura natural.",
+      "other_combo_energy": "Retome o controle da sua vida e silencie o barulho da mente.",
+      "other_labels": {
+        "abundance": "Riqueza",
+        "attract": "Amor",
+        "healing": "Saúde",
+        "energy": "Paz"
+      },
+      "base_abundance": "Agora você pode <1>DESTRAVAR</1> <3>ABUNDÂNCIA</3> — sem correr atrás",
+      "base_attract": "Atraia <1>VÍNCULOS REAIS</1> hoje — <3>SEM JOGOS</3> emocionais",
+      "base_healing": "Desinflame o corpo e <1>RECUPERE ENERGIA</1> — em <3>2 MIN/DIA</3>",
+      "base_energy": "Silencie a <1>ANSIEDADE</1> agora — com <3>CLAREZA</3> para decidir",
+      "base_other": "Ative seu <1>OBJETIVO ESPECÍFICO</1> — com método validado",
+      "base_default": "Sua energia é <1>ÚNICA</1> e <3>PODEROSA</3>",
+      "benefits_map": {
+        "abundance": "abundância real",
+        "attract": "relacionamentos verdadeiros",
+        "healing": "saúde plena",
+        "energy": "paz interior",
+        "other": "seu objetivo específico"
+      },
+      "suffix_pattern": " — e com <1>{{extras}}</1>",
+      "subtitle_template": "<0>Assista agora</0> e veja como alcançar {{benefit}} em poucos minutos."
+    },
+    "cta": {
+      "button": "Saber mais",
+      "subtext": "Acesso imediato, 100% privado."
+    },
+    "bullets": {
+      "title": "Na apresentação exclusiva, você vai descobrir:",
+      "item1": "A <1>“chave escondida”</1> que <3>reprograma sua mente</3> para vibrar alto — fazendo seus <5>desejos correrem atrás de você</5>.",
+      "item2": "O <1>“Hábito Inocente”</1> que sabota 99% das suas tentativas de visualização e afirmação. ( E porque pessoas ricas NUNCA praticam ele ).",
+      "item3": "Como <1>meditar do jeito errado</1> <3>fortalece bloqueios</3>, drena sua energia e <5>destrói suas chances</5> — e o método certo para <7>limpar sua vibração</7> em minutos."
+    }
+  },
+  "background_border": {
+    "aria_label": "Comparação: Agora vs Seu objetivo",
+    "now": "Agora",
+    "goal": "Seu objetivo",
+    "low_alt": "Baixa vibração",
+    "high_alt": "Alta vibração",
+    "vibration_label": "Vibrações",
+    "low": "Baixa",
+    "high": "Alta",
+    "dream_life": "Vida dos sonhos",
+    "dream_life_far": "Muito distante",
+    "dream_life_meaning": "Vida com propósito",
+    "attraction": "Atração",
+    "attraction_blocked": "Bloqueada",
+    "attraction_flow": "Em fluxo"
+  },
+  "start": {
+    "api_base_label": "API Base:",
+    "headline": "Mapa do Fluxo do Código",
+    "subhead": "Etapas, links e funções principais do funil",
+    "storage_title": "Armazenamento e Integração",
+    "storage_cache": "Cache local: leadCache (personaliza VSL e oferta).",
+    "storage_backend": "Backend: Supabase via endpoints REST.",
+    "cta_button": "Começar pelo /quiz",
+    "steps": {
+      "01": {
+        "title": "ETAPA 01 — Perguntas Iniciais (Filtro Demográfico)",
+        "bullets": [
+          "Captura Gênero e Idade.",
+          "Cria leadId inicial.",
+          "Redireciona para fluxo específico (H/M)."
+        ]
+      },
+      "02": {
+        "title": "ETAPA 02 — Tela de Sucesso e Carregamento",
+        "bullets": [
+          "Validação visual (Checkmarks).",
+          "Conexão emocional ('Analisando seu perfil...').",
+          "Prepara o usuário para o vídeo."
+        ]
+      },
+      "03": {
+        "title": "ETAPA 03 — Sentimento Matinal",
+        "bullets": [
+          "Pergunta de conexão emocional profunda.",
+          "Segmenta o estado atual do lead.",
+          "Reforça a necessidade de mudança."
+        ]
+      },
+      "04": {
+        "title": "ETAPA 04 — Tela de Transição (Problema Único)",
+        "bullets": [
+          "Foca na dor principal.",
+          "Cria suspense e curiosidade.",
+          "Prepara para a revelação na VSL."
+        ]
+      },
+      "05": {
+        "title": "ETAPA 05 — Processamento (Cálculo do Arquétipo)",
+        "bullets": [
+          "Simula análise complexa.",
+          "Gera expectativa para o resultado.",
+          "Define a personalização da VSL."
+        ]
+      },
+      "06": {
+        "title": "ETAPA 06 — Primeira VSL (Introdução)",
+        "bullets": [
+          "Constrói narrativa inicial.",
+          "Cria conexão emocional e apresenta o caminho.",
+          "Inicia microquebras de objeção."
+        ]
+      },
+      "07": {
+        "title": "ETAPA 07 — Teste de Frequência (Quiz Profundo)",
+        "bullets": [
+          "Aprofunda o diagnóstico.",
+          "Aumenta envolvimento.",
+          "Faz o lead sentir que o sistema entende de verdade."
+        ]
+      },
+      "08": {
+        "title": "ETAPA 08 — Segunda VSL + Bloco de Oferta Completo",
+        "bullets": [
+          "VSL profunda com foco na transformação.",
+          "Oferta visual e personalizada: entregáveis, plano, benefícios e FAQs.",
+          "Âncoragem de preço, provas sociais e quebra final de objeções.",
+          "Leva ao call to action final."
+        ]
+      }
+    }
+  },
+  "quiz": {
+    "initial": {
+      "headline_part1": "Eleve sua Vibração",
+      "headline_part2": "& Torne Seus Sonhos Realidade",
+      "subtitle": "Por favor, escolha a opção para começar",
+      "gender_male": "Homem",
+      "gender_female": "Mulher",
+      "test_duration": "EXAME RÁPIDO",
+      "rating_aria": "Avaliação média",
+      "legal_text_part1": "Ao clicar em \"Homem\" ou \"Mulher\", você aceita os ",
+      "terms": "Termos de Uso",
+      "privacy": "Política de Privacidade",
+      "cookies": "Política de Assinatura e Cookies"
+    },
+    "age_selection": {
+      "title": "Qual é a sua idade?",
+      "subtitle": "Usamos apenas para personalização",
+      "alt": {
+        "men_18_34": "Homem 18-34 anos",
+        "men_35_49": "Homem 35-49 anos",
+        "men_50_64": "Homem 50-64 anos",
+        "men_65plus": "Homem 65+ anos",
+        "women_18_34": "Mulher 18-34 anos",
+        "women_35_49": "Mulher 35-49 anos",
+        "women_50_64": "Mulher 50-64 anos",
+        "women_65plus": "Mulher 65+ anos"
+      },
+      "ranges": {
+        "18-34": "18-34",
+        "35-49": "35-49",
+        "50-64": "50-64",
+        "65plus": "65+"
+      }
+    },
+    "success_page": {
+      "women_title_part1": "Quase 10.000 Mulheres",
+      "women_title_part2": "Já Elevaram Suas Vibrações",
+      "men_title_part1": "Quase 10.000 Homens",
+      "men_title_part2": "Já Elevaram Suas Vibrações",
+      "subtitle": "Através da Física Quântica!",
+      "benefits_intro": "Os maiores benefícios relatados são:",
+      "analyzing_profile": "Analisando seu perfil...",
+      "button_continue": "Continuar",
+      "button_sending": "Enviando...",
+      "modal": {
+        "title_lead": "Neurociência Vibracional:",
+        "title_suffix": "vibre em sintonia com seus sonhos",
+        "lead": "Ao vibrar em alta frequência:"
+      },
+      "benefits": {
+        "connection": "Conexões emocionais profundas e estáveis",
+        "manifestation": "Desejos manifestam com rapidez",
+        "magnetism": "Magnetismo pessoal elevado",
+        "finance": "Oportunidades financeiras surgem com naturalidade",
+        "abundance": "Abundância desbloqueada e fluxo real",
+        "calm": "Calma interior inabalável, escolhas óbvias",
+        "cycles": "Fim dos ciclos repetitivos, vida leve",
+        "anxiety": "Ansiedade reduzida, mente clara e focada",
+        "body": "Corpo responde melhor: energia e recuperação aceleradas"
+      }
+    },
+    "step1": {
+      "q1": {
+        "title": "Você já sentiu alguma vez que mesmo correndo atrás de seus sonhos, você parece nunca sair do mesmo lugar?",
+        "options": {
+          "sim_drenado": "Sim... parece que corro em círculos e nada muda",
+          "cabeca_nunca_desliga": "Muitas vezes... minha mente cria bloqueios invisíveis",
+          "ignoro_pausa": "Às vezes... sinto que preciso descansar mas não consigo parar",
+          "pouco_forte": "Raramente... mas quando acontece, fico sem rumo"
+        }
+      }
+    },
+    "step2": {
+      "q2_evitar_conversar": {
+        "title": "Ao longo da sua vida, as pessoas ao seu redor reagiram negativamente aos seus objetivos, como se eles não fossem para você?",
+        "options": {
+          "sim_acontece_muito": "Sim... sinto que ninguém acredita no meu potencial",
+          "algumas_vezes_afastar": "Frequentemente... prefiro me fechar para não me machucar",
+          "as_vezes_sem_energia": "Às vezes... é exaustivo tentar explicar meus sonhos",
+          "pouco_evitei_conflitos": "Pouco... mas aprendi a guardar meus objetivos para mim"
+        }
+      }
+    },
+    "step3": {
+      "q3_evitar_encontros_financas": {
+        "title": "Mesmo dormindo mais de 8 horas, você passa o dia com um cansaço, como se estivesse carregando um peso em suas costas?",
+        "options": {
+          "sim_mexe_demais": "Sim... acordo exausto(a), como se nem tivesse dormido",
+          "as_vezes_fujo": "Muitas vezes... sinto um peso físico real nos ombros",
+          "detesto_quando_acontece": "Às vezes... minha energia cai do nada durante o dia",
+          "nao_costumo": "Raramente... mas sinto que minha vitalidade poderia ser maior"
+        }
+      }
+    },
+    "step4": {
+      "q4_casa_energia_pesada": {
+        "title": "Ao conhecer pessoas novas, parece que existe uma “barreira” que impede você de se aproximar delas?",
+        "options": {
+          "sim_sinto_na_pele": "Sim, e eu sinto isso na pele",
+          "frequentemente_sensivel": "Frequentemente… tudo fica sensível",
+          "as_vezes_tenso": "Às vezes noto esse ambiente tenso",
+          "pouco_incomoda": "Pouco, mas incomoda quando aparece"
+        }
+      }
+    },
+    "step5": {
+      "q5_sozinho_sem_apoio": {
+        "title": "Você sente que existe uma “névoa” que impede sua mente de se concentrar por muito tempo ou aprender algo novo?",
+        "options": {
+          "sim_magoa": "Sim... minha mente parece nublada e isso me frustra",
+          "varias_vezes": "Muitas vezes... começo coisas e não consigo terminar",
+          "as_vezes_distancia": "Às vezes... sinto que meu cérebro está derretendo de cansaço",
+          "pouco_doi": "Raramente... mas sinto que não estou 100% focado"
+        }
+      }
+    },
+    "step6": {
+      "q6_corpo_humor_impede": {
+        "title": "Mesmo se esforçando em seu trabalho, você sente que o dinheiro nunca parece ser o suficiente no final do mês?",
+        "options": {
+          "sim_perdi_ritmo": "Sim... trabalho muito, mas o dinheiro some",
+          "muitas_vezes_limitado": "Frequentemente... o dinheiro voa da minha mão",
+          "as_vezes_desanimo": "Às vezes... tento encaixar as contas e não consigo",
+          "raramente_afeta_muito": "Pouco... mas sinto que meu esforço é invisível"
+        }
+      }
+    },
+    "step10": {
+      "manifest": {
+        "title": "Se você pudesse manifestar perfeitamente, como seria sua vida?",
+        "subtitle": "Visualize seu futuro ideal",
+        "options": {
+          "effortless_flow": "Tudo fluiria sem esforço",
+          "abundant_everything": "Abundância em todas as áreas",
+          "perfect_timing": "Timing perfeito em tudo",
+          "magical_synchronicities": "Sincronicidades mágicas diárias"
+        }
+      },
+      "attract": {
+        "title": "Se você atraísse relacionamentos perfeitos, como seria sua vida?",
+        "subtitle": "Visualize seus relacionamentos ideais",
+        "options": {
+          "deep_connection": "Conexões profundas e verdadeiras",
+          "mutual_respect": "Respeito mútuo em todos os relacionamentos",
+          "authentic_self": "Seria amado(a) sendo autêntico(a)",
+          "supportive_circle": "Círculo de apoio incondicional"
+        }
+      },
+      "abundance": {
+        "title": "Se você tivesse abundância total, como seria sua vida?",
+        "subtitle": "Visualize sua prosperidade ideal",
+        "options": {
+          "financial_freedom": "Liberdade financeira completa",
+          "generous_giving": "Poderia ser generoso(a) sem limites",
+          "dream_lifestyle": "Viveria meu estilo de vida dos sonhos",
+          "impact_others": "Impactaria positivamente muitas vidas"
+        }
+      },
+      "healing": {
+        "title": "Se você estivesse completamente curado(a), como seria sua vida?",
+        "subtitle": "Visualize sua cura completa",
+        "options": {
+          "pain_free": "Livre de toda dor física e emocional",
+          "inner_peace": "Paz interior constante",
+          "vibrant_health": "Saúde vibrante e energia",
+          "helping_others": "Ajudaria outros a se curarem"
+        }
+      },
+      "energy": {
+        "title": "Se você tivesse energia ilimitada, como seria sua vida?",
+        "subtitle": "Visualize sua vitalidade ideal",
+        "options": {
+          "unstoppable_force": "Seria uma força imparável",
+          "inspiring_others": "Inspiraria outros com minha energia",
+          "achieving_dreams": "Realizaria todos os meus sonhos",
+          "radiating_joy": "Irradiaria alegria e positividade"
+        }
+      },
+      "other": {
+        "title": "Se sua vida fosse transformada, como seria?",
+        "subtitle": "Visualize sua transformação ideal",
+        "options": {
+          "purposeful_life": "Viveria com propósito claro",
+          "balanced_harmony": "Harmonia em todas as áreas",
+          "authentic_expression": "Expressaria minha autenticidade",
+          "fulfilled_happy": "Seria genuinamente feliz e realizado(a)"
+        }
+      }
+    },
+    "q9": {
+      "title": "Como você acha que seria sua vida se resolvesse esses bloqueios — prosperidade, saúde, paz e relacionamentos — de uma vez por todas?",
+      "options": {
+        "libertador": "Libertador… como respirar fundo depois de anos",
+        "viver": "Sinto que finalmente voltaria a viver",
+        "energia": "Mudaria completamente minha energia e confiança",
+        "urgente": "Não sei descrever… mas preciso disso urgentemente"
+      }
+    }
+  },
+  "fim": {
+    "page_title": "Fim · Plano Vibracional",
+    "loading_plan": "Gerando seu Plano Vibracional...",
+    "svg": {
+      "title": "Aura/frequência vibracional finalizada",
+      "desc": "Representação de campos vibracionais com núcleo e órbitas energéticas em movimento."
+    },
+    "important_video": "IMPORTANTE: Assista Ao Vídeo!",
+    "status": {
+      "ready": "Plano Vibracional Pronto.",
+      "generating": "GERANDO PLANO VIBRACIONAL"
+    },
+    "headline": {
+      "ready": "Acesse Seu Plano no Botão Abaixo!",
+      "generating_part1": "Descubra Como Acessar Seu Plano e ",
+      "generating_highlight": "Manifestar seus Sonhos"
+    },
+    "receipt": {
+      "summary": "Resumo",
+      "summary_placeholder": "[Resumo... ]",
+      "progressive_anchoring": "Ancoragem progressiva",
+      "total": "Total",
+      "today": "Hoje",
+      "urgency": "Desconto válido apenas até concorrermos ao Prêmio Nobel",
+      "only": "Apenas",
+      "spots_left": "vagas restantes",
+      "done": "Concluído!"
+    },
+    "guarantee": {
+      "title": "Garantia de reembolso de 30 dias",
+      "text": "Acreditamos que nosso plano funcionará para você e você terá resultados notáveis em apenas 4 semanas! Estamos prontos para devolver seu dinheiro se este plano não for para você!"
+    },
+    "custom_headline": "Seu Plano Personalizado Está Pronto!",
+    "testimonials": {
+      "title": "Pessoas transformaram suas vidas",
+      "laura": {
+        "time": "1 dia atrás",
+        "text": "\"Eu não percebia quanto trauma interno estava bloqueando minhas manifestações. Com o plano, finalmente curei a energia que segurava há anos. Assim que soltei, tudo começou a fluir — clareza, confiança e as coisas que eu tentava atrair apareceram sem esforço.\""
+      },
+      "ann": {
+        "time": "1 semana atrás",
+        "text": "\"Desde que comecei a usar, toda a minha energia em relação à abundância mudou. Parei de perseguir e comecei a receber. Oportunidades, dinheiro e apoio começaram a fluir assim que me alinhei com a frequência de ter — não de faltar.\""
+      },
+      "scott": {
+        "time": "2 meses atrás",
+        "text": "\"Eu não acreditava em manifestação até me sentir completamente estagnado. O plano me deu as ferramentas para limpar a energia antiga e reprogramar minha mentalidade. Agora, me sinto alinhado, magnético e finalmente atraindo amor — em todos os sentidos.\""
+      }
+    },
+    "faq": {
+      "title": "F.A.Q",
+      "q1": {
+        "question": "E se eu já tentei outras coisas antes e não funcionaram?",
+        "answer": "Isso é comum. A maioria dos métodos foca apenas no consciente. Nossa abordagem atinge a raiz vibracional e subconsciente, onde as verdadeiras mudanças acontecem. É por isso que oferecemos a garantia de 30 dias: confiamos que essa será a peça que faltava."
+      },
+      "q2": {
+        "question": "Em quanto tempo verei resultados?",
+        "answer": "Muitos alunos relatam mudanças sutis na primeira semana, como maior clareza e paz. Resultados tangíveis na realidade externa costumam aparecer consistentemente ao completar o ciclo de 28 dias de reprogramação sugerido."
+      },
+      "q3": {
+        "question": "Preciso de algum conhecimento prévio?",
+        "answer": "Não. O Plano Vibracional é desenhado para ser acessível a todos, independentemente de experiência anterior com meditação ou leis universais. Nós guiamos você passo a passo."
+      },
+      "q4": {
+        "question": "Serei cobrado de alguma assinatura?",
+        "answer": "Não. Com o pagamento realizado hoje, você receberá o acesso vitalício ao seu Plano Vibracional, sem qualquer tipo de assinatura."
+      }
+    },
+    "offer": {
+      "title": "O que você ganha:",
+      "view_more": "Ver mais",
+      "view_less": "Ver menos",
+      "items": {
+        "geniality": {
+          "title": "Onda da Genialidade Financeira",
+          "teaser": "Enxergue GAPS de OPORTUNIDADE invisíveis e acelere a abundância.",
+          "price": "Avaliado em 97€",
+          "desc": "Os voluntários passaram a enxergar oportunidades invisíveis para 99% das pessoas. Sua mente ganha clareza para atrair o emprego dos sonhos, fechar grandes negócios e transformar dinheiro em um processo lógico — o atalho para a abundância."
+        },
+        "decoder": {
+          "title": "Decodificador Neuro-Afetivo",
+          "teaser": "Diga exatamente o que toca pontos emocionais e reconecte relações.",
+          "price": "Avaliado em 75€",
+          "desc": "A clareza mental para falar o que ressoa com qualquer pessoa. Voluntários sabiam exatamente o que dizer para conquistar ou reconectar com parceiros, atingindo impacto emocional preciso."
+        },
+        "regeneration": {
+          "title": "Frequência de Regeneração Celular (528Hz)",
+          "teaser": "Ative reparo biológico durante o sono e recupere vitalidade.",
+          "price": "Avaliado em 60€",
+          "desc": "Aplicando 528Hz, voluntários ativaram processos de regeneração celular durante o sono. Acelere a reparação a nível biológico e promova um reset completo no corpo."
+        },
+        "shield": {
+          "title": "Escudo de Paz Interior (Ondas Theta)",
+          "teaser": "Desacelere o cérebro, blinde emoções e elimine medo/ansiedade.",
+          "price": "Avaliado em 45€",
+          "desc": "Ondas Theta forçam o cérebro a desacelerar e ativam a blindagem emocional. Medo e ansiedade cedem lugar a um estado de motivação superior, com presença e foco ampliados."
+        },
+        "guide": {
+          "title": "Guia de Uso do Algoritmo",
+          "teaser": "Transforme precisão excelente em PRECISÃO INFALÍVEL 24/7.",
+          "price": "Avaliado em 53€",
+          "desc": "Passo a passo para manter sua vibração alinhada, sem falhas. O guia consolida aplicação contínua do algoritmo, garantindo consistência e controle vibracional ao longo do dia."
+        }
+      }
+    },
+    "cta": {
+      "access_plan": "Acessar Meu Plano"
+    },
+    "engagement": {
+      "expert_message": "Este vídeo revela o método de manifestação mais poderoso que a lei da atração!",
+      "cta_button": "Assistir Agora"
+    }
+  },
+  "vsl": {
+    "headline_map": {
+      "manifest": "O atalho pouco conhecido que desbloqueia a sua capacidade natural de atrair o que quiser",
+      "attract": "Como ajustar a frequência certa pode desbloquear todas as suas conexões amorosas…",
+      "abundance": "Como ajustar a frequência certa pode desbloquear toda a sua prosperidade…",
+      "healing": "Como uma frequência simples pode restaurar a sua harmonia total…",
+      "energy": "O segredo para ter mais energia durante o dia, mesmo dormindo menos horas",
+      "other": "Descubra o Segredo para Transformar Sua Vida",
+      "default": "Descubra o Segredo para Transformar Sua Vida"
+    },
+    "selected_label_map": {
+      "manifest": "MANIFESTAÇÃO",
+      "attract": "CONEXÕES AMOROSAS",
+      "abundance": "PROSPERIDADE",
+      "healing": "SAÚDE",
+      "energy": "PAZ INTERIOR",
+      "other": "OBJETIVO ESPECÍFICO",
+      "default": "FREQUÊNCIA"
+    },
+    "pain_headline_map": {
+      "manifest": "O BLOQUEIO QUE FAZ A LEI DA ATRAÇÃO FALHAR COM VOCÊ",
+      "attract": "O BLOQUEIO INVISÍVEL QUE AFASTA SUAS CONEXÕES AMOROSAS",
+      "abundance": "O BLOQUEIO INVISÍVEL QUE DRENA SUA PROSPERIDADE",
+      "healing": "BLOQUEIO OCULTO QUE DESTRÓI SUA SAÚDE",
+      "energy": "O BLOQUEIO INVISÍVEL QUE CAUSA SEU CANSAÇO MENTAL",
+      "other": "O BLOQUEIO VIBRACIONAL QUE TRAVA SEU OBJETIVO",
+      "default": "O BLOQUEIO VIBRACIONAL QUE TRAVA SUA VIDA"
+    },
+    "pain_headline_prefix": "O BLOQUEIO",
+    "pain_headline_connector": "que",
+    "resolution_step": {
+      "manifest": "Destravar seu Poder de Manifestação",
+      "abundance": "Destravar sua Prosperidade",
+      "attract": "Atrair Conexões Amorosas Reais",
+      "healing": "Reativar sua Saúde Vibracional",
+      "energy": "Eliminar o Cansaço e a Fadiga",
+      "other": "Destravar seu Caminho",
+      "default": "Elevar sua Vibração"
+    },
+    "current_headline": "FÍSICO QUÂNTICO REVELA:",
+    "impact_text": "Assista e veja a <1>CHAVE ESCONDIDA</1> que <3>REPROGRAMA</3> sua mente para <5>vibrar alto</5> em poucos dias.",
+    "button_discover": "Descobrir meus bloqueios!",
+    "steps": {
+      "header": "Próximos Passos",
+      "step1": "Descobrir seus <1>Bloqueios</1>",
+      "step2": "Medir sua <1>Frequência Hz</1>",
+      "step3": "Gerar plano que <1>Elevará sua Vibração</1>"
+    },
+    "progress_text": "VSL"
+  },
+  "vsl2": {
+    "progress": {
+      "ready": "Seu Plano Vibracional está Pronto!",
+      "finalizing": "Finalizando personalização do plano...",
+      "synchronizing": "Sincronizando frequências sonoras...",
+      "identifying": "Identificando bloqueios energéticos...",
+      "analyzing": "Assista enquanto analisamos seu perfil..."
+    },
+    "label_map": {
+      "manifest": "Manifestação",
+      "attract": "Atração",
+      "abundance": "Prosperidade",
+      "healing": "Saúde",
+      "energy": "Paz Interior",
+      "other": "Objetivo Específico",
+      "default": "Frequência"
+    },
+    "headline": {
+      "success": "SUCESSO:",
+      "wait": "AGUARDE:"
+    },
+    "impact": {
+      "ready": "Calibramos todas as ondas sonoras necessárias para o seu sucesso!",
+      "not_ready_base": "Essa é a <1>Amplificação do Poder da Lei da Atração</1> — esta é a forma mais rápida de <3>manifestar Abundância</3>",
+      "not_ready_age_suffix": " — quando se tem {{age}}+"
+    },
+    "receipt": {
+      "title": "Resumo",
+      "subtitle": "Ancoragem progressiva",
+      "today": "Hoje",
+      "total": "Total",
+      "urgency": "Desconto válido apenas até concorrermos ao Prêmio Nobel"
+    },
+    "vacancy": {
+      "text_parts": {
+        "apenas": "Apenas",
+        "vagas_restantes": "vagas restantes"
+      }
+    },
+    "offers": {
+      "valued_at": "Avaliado em",
+      "title": "O que você ganha:",
+      "toggle": {
+        "less": "Ver menos",
+        "more": "Ver mais"
+      },
+      "items": {
+        "financial": {
+          "title": "Onda da Genialidade Financeira",
+          "teaser": "Enxergue GAPS de OPORTUNIDADE invisíveis e acelere a abundância.",
+          "description": "Os voluntários passaram a enxergar oportunidades invisíveis para 99% das pessoas. Sua mente ganha clareza para atrair o emprego dos sonhos, fechar grandes negócios e transformar dinheiro em um processo lógico — o atalho para a abundância."
+        },
+        "neuro": {
+          "title": "Decodificador Neuro-Afetivo",
+          "teaser": "Diga exatamente o que toca pontos emocionais e reconecte relações.",
+          "description": "A clareza mental para falar o que ressoa com qualquer pessoa. Voluntários sabiam exatamente o que dizer para conquistar ou reconectar com parceiros, atingindo impacto emocional preciso."
+        },
+        "cellular": {
+          "title": "Frequência de Regeneração Celular (528Hz)",
+          "teaser": "Ative reparo biológico durante o sono e recupere vitalidade.",
+          "description": "Aplicando 528Hz, voluntários ativaram processos de regeneração celular durante o sono. Acelere a reparação a nível biológico e promova um reset completo no corpo."
+        },
+        "peace": {
+          "title": "Escudo de Paz Interior (Ondas Theta)",
+          "teaser": "Desacelere o cérebro, blinde emoções e elimine medo/ansiedade.",
+          "description": "Ondas Theta forçam o cérebro a desacelerar e ativam a blindagem emocional. Medo e ansiedade cedem lugar a um estado de motivação superior, com presença e foco ampliados."
+        },
+        "guide": {
+          "title": "Guia de Uso do Algoritmo",
+          "teaser": "Transforme precisão excelente em PRECISÃO INFALÍVEL 24/7.",
+          "description": "Passo a passo para manter sua vibração alinhada, sem falhas. O guia consolida aplicação contínua do algoritmo, garantindo consistência e controle vibracional ao longo do dia."
+        }
+      }
+    },
+    "header": {
+      "ready": "Plano Vibracional Pronto",
+      "preparing": "Preparando Plano Vibracional..."
+    }
+  },
+  "processing": {
+    "header": {
+      "quiz_label": "QUIZ"
+    },
+    "contact": {
+      "question": "Como você quer receber seu resultado?",
+      "helper": "*WhatsApp garante um acesso rápido",
+      "option_email": "E-mail",
+      "option_whatsapp": "WhatsApp"
+    },
+    "title": "Essa analise pode demorar ate 20 segundos...",
+    "goals": {
+      "step1": "Analisando padrões vibracionais…",
+      "step2": "Identificando bloqueios energéticos",
+      "step3": "Calculando sua frequência atual",
+      "step4": "Descobrindo seu potencial quântico",
+      "step5": "⚠️ Detectando desalinhamento crítico..."
+    },
+    "testimonials": {
+      "t1": {
+        "title": "Virada de Jogo",
+        "author": "Lukas S.",
+        "text": "Sempre tive dificuldade em entender o que realmente precisava fazer para conseguir atrair meus sonhos. Graças ao time de profissionais do Sr Müller, hoje finalmente entendi porque nada dava certo e comecei ter sucesso em várias coisas!"
+      },
+      "t2": {
+        "title": "Amor da Vida",
+        "author": "Anna K.",
+        "text": "Nunca encontrei pessoas decentes. Quando finalmente entendi que isso acontecia porque eu atraía elas, tudo mudou. Tive uma transformação interna, e estou para me casar com o homem dos meus sonhos."
+      },
+      "t3": {
+        "title": "Saúde Restaurada",
+        "author": "Paul W.",
+        "text": "Minhas dores sumiram, Incrível! Vivia com dores de cabeça e no corpo, depois de seguir o plano personalizado, elas acabaram. Isso realmente é transformador."
+      },
+      "t4": {
+        "title": "Novo emprego",
+        "author": "Emma M.",
+        "text": "Graças ao plano personalizado do Sr Müller, finalmente consegui mudar de emprego! Estou recebendo 3 vezes mais e aqui, realmente sinto que meu trabalho é valorizado, obrigada!"
+      }
+    },
+    "analysis_delay": "Essa análise pode demorar até 20 segundos...",
+    "button_view_result": "ver meu resultado"
+  },
+  "result": {
+    "gender_tone": {
+      "feminine": "feminina",
+      "masculine": "masculina"
+    },
+    "adjectives": {
+      "light": "leves"
+    },
+    "visual_result_alt": "Resultado visual",
+    "vibrations_label": "Vibrações",
+    "normal_hz_label": "Normal - 325Hz",
+    "you_score_label": "Você <1>{{score}}Hz</1>",
+    "levels": {
+      "low": "DENSO",
+      "normal": "NORMAL",
+      "medium": "MÉDIO",
+      "high": "FLUIDO"
+    },
+    "progress_aria": "Progresso do resultado",
+    "segment": {
+      "women": "mulheres",
+      "men": "homens",
+      "between": "entre",
+      "like_you": "como você"
+    },
+    "alert": {
+      "title_blocked": "MANIFESTAÇÃO BLOQUEADA",
+      "subtitle_template": "Sua Vibração {{genderTone}} sofre bloqueios {{adjetivo}} — e leves viram sabotagens invisíveis que te impedem de desbloquear {{desire}}. Sinais: vibração desalinhada.",
+      "benefits_template": "Boa notícia: {{segmentLabel}} respondem rápido aos ajustes de frequência.",
+      "custom_symptoms": "Identificamos que sua baixa vibração se manifesta através de <strong>{{symptoms}}</strong>, o que está travando sua prosperidade."
+    },
+    "cards": {
+      "main_blocker": "Bloqueador principal",
+      "attract": "Atrair",
+      "best_solution": "Melhor solução",
+      "potential": "Potencial"
+    },
+    "cta": {
+      "button": "Desbloquear Minha frequência",
+      "caption": "Vamos Criar Seu <1>Plano Vibracional</1> com base em seus resultados...",
+      "nudge_text": "VEJA NO BOTÃO ABAIXO: Começamos A Preparar Seu Plano Vibracional!"
+    },
+    "desire_meta": {
+      "abundance": {
+        "blocker": "Escassez energética",
+        "attract": "Prosperidade financeira",
+        "solution": "Elevar frequência de abundância",
+        "potential": "Alto"
+      },
+      "attract": {
+        "blocker": "Desalinhamento afetivo",
+        "attract": "Magnetismo amoroso",
+        "solution": "Elevar frequência do amor",
+        "potential": "Alto"
+      },
+      "healing": {
+        "blocker": "Baixa vitalidade",
+        "attract": "Cura vibracional",
+        "solution": "Elevar frequência de cura",
+        "potential": "Alto"
+      },
+      "energy": {
+        "blocker": "Ansiedade e peso mental",
+        "attract": "Paz interior",
+        "solution": "Elevar frequência da paz",
+        "potential": "Alto"
+      },
+      "other": {
+        "blocker": "Bloqueio específico",
+        "attract": "Intenção específica",
+        "solution": "Elevar frequência do propósito",
+        "potential": "Alto"
+      }
+    },
+    "contact_modal": {
+      "aria_label": "Coleta de contato",
+      "title_email": "Digite seu e-mail para receber seu Plano Vibracional.",
+      "title_whatsapp": "Digite seu número para receber seu Plano Vibracional.",
+      "expert_main_email": "Olá! Para te enviar seu resultado completo, me informe seu e-mail.",
+      "expert_main_whatsapp": "Olá! Para te enviar seu resultado completo, me informe seu WhatsApp.",
+      "expert_alt": "Especialista",
+      "label_email": "E-mail",
+      "label_whatsapp": "WhatsApp",
+      "placeholder_email": "e-mail",
+      "placeholder_phone": "número",
+      "aria_country_code": "Código do país",
+      "button_continue": "Continuar",
+      "social_proof": "19.000 pessoas já se juntaram a nós!",
+      "privacy_note": "Respeitamos sua privacidade e estamos comprometidos em proteger seus dados pessoais. Enviaremos uma cópia dos seus resultados para acesso conveniente."
+    },
+    "contact_errors": {
+      "invalid_email": "Informe um e-mail válido.",
+      "invalid_phone": "Informe um número válido.",
+      "save_email_failed": "Não foi possível salvar seu e-mail. Tente novamente.",
+      "save_phone_failed": "Não foi possível salvar seu número. Tente novamente."
+    }
+  },
+  "checkout": {
+    "get_my_plan": "GARANTIR MEU PLANO",
+    "special_discount": "Desconto especial:",
+    "your_personal_plan": "Seu Plano de Alta Vibração pessoal",
+    "to_attract_love": "para atrair amor em sua vida",
+    "become_high_vibration": "Torne-se uma pessoa de alta vibração",
+    "alert_error_init": "Não foi possível iniciar o checkout. Tente novamente.",
+    "alert_error_generic": "Erro ao iniciar checkout. Tente novamente.",
+    "what_you_get": "O que você recebe",
+    "secure_payment": "Pagamento Seguro",
+    "guarantee_title": "Garantia de 30 Dias",
+    "guarantee_text": "Se você não estiver satisfeito, devolveremos seu dinheiro.",
+    "now": "Agora",
+    "vibrations": "Vibrações",
+    "dream_life": "Vida dos sonhos",
+    "attraction": "Atração",
+    "low": "Baixa",
+    "far_from_it": "Longe disso",
+    "blocked": "Bloqueado",
+    "blocked_fem": "Bloqueada",
+    "your_goal": "Seu objetivo",
+    "high": "Alta",
+    "living_with_purpose": "Vivendo com propósito",
+    "flowing": "Fluindo",
+    "personalized_plan_ready": "Seu plano personalizado está pronto!",
+    "main_blocker": "Bloqueio principal",
+    "trigger": "Gatilho",
+    "exhaustion": "Exaustão",
+    "constant_tension": "Tensão constante",
+    "promo_code_applied": "Seu código promocional foi aplicado!",
+    "most_popular": "MAIS POPULAR",
+    "per_day": "por dia",
+    "research_note": "Pessoas usando o plano por 3 meses alcançam o dobro do que aquelas usando por 1 mês.",
+    "research_source": "*De acordo com pesquisa da Equipe Spirio",
+    "pay_safe_secure": "Pagamento 100% Seguro",
+    "terms": "Para evitar interrupções, você concorda que o plano selecionado será renovado automaticamente pelo preço total por períodos sucessivos de renovação e você será cobrado US$ 39,99 a cada mês. Você pode cancelar sua assinatura contatando nosso suporte via email em support@spiriohub.com.",
+    "plans": {
+      "1_month": "PLANO DE 1 MÊS",
+      "3_month": "PLANO DE 3 MESES",
+      "6_month": "PLANO DE 6 MESES"
+    },
+    "benefits_list": [
+      "Você se torna uma pessoa de alta vibração e manifesta seus sonhos instantaneamente",
+      "Chega de fadiga ou sensação de estagnação",
+      "Você atrai abundância sem esforço",
+      "Você se sente forte e cheio de energia",
+      "Você desenvolve uma mentalidade positiva",
+      "Você experimenta profunda paz interior",
+      "Você atrai relacionamentos significativos",
+      "Você vive com propósito e clareza"
+    ]
+  },
+  "comments": {
+    "title": "Comentários",
+    "add_placeholder": "Adicionar comentário…",
+    "publish": "Publicar",
+    "reply_placeholder": "Escreva uma resposta...",
+    "likes": "curtidas",
+    "replies": "respostas",
+    "delete_comment": "Excluir comentário",
+    "delete_reply": "Excluir resposta",
+    "confirm_delete_comment": "Tem certeza que deseja excluir este comentário?",
+    "confirm_delete_reply": "Tem certeza que deseja excluir esta resposta?",
+    "you": "Você",
+    "just_now": "Agora",
+    "ago": "Há",
+    "min": "min",
+    "aria": {
+      "add_new_comment": "Adicionar novo comentário",
+      "new_comment_input": "Novo comentário",
+      "unlike": "Descurtir",
+      "like": "Curtir",
+      "replies_to": "Respostas para {{author}}",
+      "unlike_reply": "Descurtir resposta",
+      "like_reply": "Curtir resposta"
+    },
+    "simulated": {
+      "c1": "Eu quase saí, mas esperei o plano carregar. Combinou perfeitamente com o meu bloqueio financeiro! Já estou vendo resultados!",
+      "c2": "Eu sou engenheiro e sempre fui desacreditado com a \"lei da atração\", mas a explicação dele sobre os Hertz e a ressonância no cérebro faz total sentido físico. O plano personalizado que gerou pra mim bateu exatamente com o que eu precisava, impressionante.",
+      "c2r1": "Carlos Mendes: o MAIS impressionante é como apenas ouvir essas ondas me levaram ao meu objetivo… — obrigado Johan Müller",
+      "c3": "Tenho 27 anos e achei que seria difícil usar, mas o sistema montou tudo pra mim enquanto eu via o vídeo. É só apertar o play. Estou me sentindo muito mais leve."
+    }
+  },
+  "checkout_cancel": {
+    "title": "Pagamento cancelado",
+    "message": "Você pode tentar novamente quando quiser."
+  },
+  "checkout_success": {
+    "title": "Pagamento confirmado",
+    "preparing_vsl": "Preparando conteúdo...",
+    "vsl_label": "VSL"
+  },
+  "pre_teste": {
+    "title_part1": "ANTES DE CONTINUAR, VOCÊ",
+    "title_part2": "PRECISA SABER:",
+    "subtitle_part1": "Nosso teste acessa informações energéticas profundas.",
+    "subtitle_part2": "Vamos identificar bloqueios ocultos e padrões vibracionais",
+    "subtitle_part3": "que você nem sabia que existiam.",
+    "list_title": "O que vamos revelar:",
+    "list_items": {
+      "frequency": "Sua frequência vibracional atual",
+      "blocks": "Bloqueios que afetam todas as áreas da sua vida",
+      "patterns": "Padrões repetitivos em relacionamentos e finanças",
+      "impediment": "Por que você sente que algo te impede de evoluir",
+      "impact": "Como sua energia impacta sua saúde e bem-estar"
+    },
+    "warning_title": "⚠️ Atenção:",
+    "warning_text_part1": "87% das pessoas descobrem um",
+    "warning_text_part2": "bloqueio emocional ou energético que nem",
+    "warning_text_part3": "imaginavam ter.",
+    "emphasis_text_part1": "Só continue se estiver preparada para descobrir a",
+    "emphasis_text_part2": "verdade sobre sua frequência.",
+    "button_continue": "Continuar"
+  },
+  "quiz_landing": {
+    "title": "Qual é o seu gênero?",
+    "subtitle": "Isso nos ajuda a personalizar sua experiência",
+    "male": "Homem",
+    "female": "Mulher"
+  },
+  "pressel": {
+    "title": "ANÁLISE CONCLUÍDA:",
+    "lead_part1": "Há indícios de que",
+    "lead_highlight1": "suas células de gordura",
+    "lead_part2": "podem estar",
+    "lead_highlight2": "inflamadas",
+    "vsl_intro_part1": "Veja como",
+    "vsl_intro_highlight1": "desinflamar",
+    "vsl_intro_part2": "suas células de gordura — sem sair de casa — e",
+    "vsl_intro_highlight2": "eliminar até 20 kg",
+    "vsl_intro_part3": "em",
+    "vsl_intro_highlight3": "poucas semanas",
+    "vsl_alt": "Miniatura da apresentação em vídeo",
+    "cta_button": "SIM, QUERO VER AGORA",
+    "cta_subtext": "Acesso imediato, 100% gratuito e privado.",
+    "bullet_title": "Na apresentação exclusiva, você descobrirá:",
+    "bullet_1_part1": "Como",
+    "bullet_1_part2": "eliminar gordura",
+    "bullet_1_highlight": "sem dietas",
+    "bullet_1_part3": "restritivas, sem academia, sem riscos — apenas",
+    "bullet_1_bold": "desinflamando",
+    "bullet_1_part4": "o corpo.",
+    "bullet_2_part1": "Uma",
+    "bullet_2_highlight": "mistura simples",
+    "bullet_2_part2": "de",
+    "bullet_2_bold": "4 ingredientes",
+    "bullet_2_part3": "naturais — derrete gordura 24h/dia.",
+    "bullet_3_part1": "Por que você tem",
+    "bullet_3_bold": "fome",
+    "bullet_3_part2": "constante — e como pará-la de forma natural.",
+    "bullet_4_highlight": "Truque matinal",
+    "bullet_4_part1": "de",
+    "bullet_4_bold": "2 minutos",
+    "bullet_4_part2": "— ativa a queima de gordura o dia todo.",
+    "urgency_join": "Junte-se à audiência agora",
+    "urgency_warning": "⚠️ Devido à exclusividade, o acesso a esta apresentação pode terminar a qualquer momento."
+  },
+  "authority_header": {
+    "stage_initializing": "Inicializando",
+    "stage_analyzing": "Analisando padrões",
+    "stage_adjusting": "Ajustando frequências",
+    "stage_personalizing": "Personalizando plano",
+    "stage_optimizing": "Otimizando vibração",
+    "stage_almost_ready": "Quase pronto",
+    "stage_ready": "Plano pronto",
+    "back_label": "Voltar",
+    "logo_label": "Logo vibracional",
+    "logo_title": "Logo Vibracional",
+    "progress_label": "Progresso do quiz"
+  },
+  "inner_peace_plan": {
+    "discount_prefix": "🎁 Desconto especial:",
+    "title_part1": "Seu plano pessoal de",
+    "title_part2": "paz interior",
+    "subtitle": "Acalme sua mente e redescubra a alegria",
+    "now": "Agora",
+    "tension_level": "Nível de tensão",
+    "high": "Alto",
+    "overthinking": "Excesso de pensamentos",
+    "energy_level": "Nível de energia",
+    "weak": "Fraco",
+    "your_goal": "Seu objetivo",
+    "low": "Baixo",
+    "alt_arrow_down": "Seta para baixo",
+    "alt_arrow": "Seta",
+    "alt_arrow_up": "Seta para cima",
+    "what_you_get": "O que você recebe",
+    "benefit_1": "Sua mente se sente calma e ancorada",
+    "benefit_2": "Você controla a tensão, sem mais drenagem de energia",
+    "benefit_3": "Você dorme profundamente e acorda renovado",
+    "benefit_4": "Sua energia está em alta histórica",
+    "benefit_5": "Sua mente está clara, sem mais neblina",
+    "benefit_6": "Você age com confiança, sem mais atrasos",
+    "benefit_7": "Sua memória é afiada e confiável",
+    "benefit_8": "Seu corpo se sente equilibrado e relaxado",
+    "benefit_9": "Você gosta de socializar e se sente feliz",
+    "people_love_spirio": "Pessoas amam o Spirio",
+    "get_my_plan": "QUERO MEU PLANO"
+  },
+  "plan_extended": {
+    "what_you_get": "O que você recebe",
+    "plan_ready": "Seu plano personalizado está pronto!",
+    "type": "Tipo",
+    "generalized": "Generalizado",
+    "goal": "Objetivo",
+    "increase_energy": "Aumentar energia",
+    "plan_3_month": "PLANO DE 3 MESES",
+    "per_day": "por dia",
+    "most_popular": "MAIS POPULAR",
+    "plan_1_month": "PLANO DE 1 MÊS",
+    "alt_icon": "Ícone",
+    "alt_price_icon": "Ícone de preço",
+    "people_using_stats_part1": "Pessoas usando o plano por",
+    "people_using_stats_part2": "3 meses",
+    "people_using_stats_part3": "conseguem o dobro de resultados comparado a quem usa por 1 mês.",
+    "research_note": "*De acordo com pesquisa do Time Spirio",
+    "get_my_plan": "QUERO MEU PLANO",
+    "pay_safe": "Pagamento seguro",
+    "legal_text_part1": "Ao clicar em QUERO MEU PLANO, concordo em pagar",
+    "legal_text_part2": "pelo meu plano e que, se eu não cancelar antes do fim do plano introdutório de 1 mês, ele se converterá em uma assinatura de",
+    "legal_text_part3": "e o Spirio cobrará automaticamente meu método de pagamento o preço regular de",
+    "legal_text_part4": "a cada",
+    "legal_text_part5": "daí em diante até que eu cancele. Posso cancelar online contatando a equipe de suporte via email em",
+    "people_like_you_part1": "Pessoas como você alcançaram ótimos resultados com",
+    "people_like_you_part2": "Spirio",
+    "stat_calm_part1": "dos usuários se sentiram",
+    "stat_calm_part2": "calmos e livres de preocupações",
+    "stat_calm_part3": "após apenas 4 semanas",
+    "stat_energy_part1": "dos usuários notaram um aumento significativo em",
+    "stat_energy_part2": "energia e qualidade de vida",
+    "stat_similar_part1": "dos usuários começaram com níveis similares de",
+    "stat_similar_part2": "tensão e excesso de pensamentos",
+    "stat_similar_part3": "que você",
+    "better_version": "Uma versão melhor de você. Todo dia.",
+    "tailored_blueprint": "Seu mapa personalizado de paz interior",
+    "people_love_spirio": "Pessoas amam o Spirio",
+    "testimonial_1_text": "Uso isso diariamente e adoro. O que quer que eu esteja sentindo ou passando, há um ritual que ajuda e me guia para uma compreensão mais profunda de mim mesmo, me ajuda a ficar em paz com onde estou e oferece uma experiência pacífica adorável. Muito grato por isso!",
+    "testimonial_1_name": "Natali S.",
+    "testimonial_1_time": "1 dia atrás",
+    "testimonial_2_name": "Mike H.",
+    "testimonial_2_time": "3 dias atrás",
+    "testimonial_2_text": "3 anos atrás minha namorada terminou comigo: então a perdi e ganhei um presente maldito em troca: ondas de medo em momentos aleatórios. Comecei a usar o SPIRIO recentemente e é impressionante como ajuda! Recomendo definitivamente!",
+    "testimonial_3_name": "Taylor D.",
+    "testimonial_3_time": "1 semana atrás",
+    "testimonial_3_text": "Uau... isso é TÃO o que eu estava esperando. Se você realmente quer mudar as coisas para si mesmo, isso vai conseguir! Sinto-me guiada e apoiada na maioria, se não em todos os meus problemas no meu plano. Estou pronta para a mudança e para quebrar minha concha.",
+    "faq": {
+      "title": "Pessoas costumam perguntar",
+      "q1": "E se eu já usei outras coisas antes e não funcionaram?",
+      "q2": "E se eu não tiver força de vontade suficiente para seguir meu plano?",
+      "q3": "E se eu sentir preocupação em começar este plano?"
+    }
+  },
+  "checkout_prompt": {
+    "modal_label": "Plano Vibracional",
+    "title": "Plano Vibracional",
+    "headline": "<0>Crie sua conta</0> e receba acesso à plataforma + Plano Vibracional por email.",
+    "label_email": "Email",
+    "placeholder_email": "seuemail@exemplo.com",
+    "label_confirm_email": "Confirmar email",
+    "placeholder_confirm_email": "repita seu email",
+    "label_password": "Senha (visível)",
+    "placeholder_password": "defina sua senha",
+    "error_invalid_email": "Informe um email válido",
+    "error_email_mismatch": "Os emails não coincidem",
+    "error_password_length": "Defina uma senha com pelo menos 6 caracteres",
+    "error_url_missing": "Falha ao obter URL de checkout",
+    "error_generic": "Não foi possível iniciar o pagamento. Tente novamente.",
+    "error_payment_init": "Não foi possível iniciar o pagamento. Tente novamente.",
+    "button_processing": "Processando…",
+    "button_advance": "Avançar",
+    "note": "Ao clicar em “Avançar”, você será levado à nossa plataforma segura de pagamento"
+  },
+  "guarantee": {
+    "section_label": "Garantias e segurança",
+    "money_back_title": "Garantia de devolução em 30 dias",
+    "money_back_text": "Acreditamos que nosso plano vai funcionar para você e que você perceberá resultados em apenas 4 semanas! Estamos até prontos para devolver seu dinheiro caso este plano não seja para você.",
+    "policy_prefix": "Veja mais sobre limitações aplicáveis em nossa",
+    "policy_link": "política de reembolso.",
+    "info_safe_title": "Suas informações estão seguras",
+    "info_safe_text": "Nós não venderemos ou alugaremos seus dados de contato para fins de marketing.",
+    "checkout_safe_title": "Checkout seguro",
+    "checkout_safe_text": "Todas as informações são criptografadas e transmitidas com segurança usando protocolo SSL."
+  },
+  "checkout_cancel": {
+    "title": "Pagamento cancelado",
+    "message": "Você pode tentar novamente quando quiser."
+  },
+  "checkout_success": {
+    "title": "Compra Confirmada!",
+    "vsl_label": "Vídeo Exclusivo de Acesso",
+    "preparing_vsl": "Preparando seu vídeo exclusivo..."
+  },
+  "pre_teste": {
+    "title_part1": "ANTES DE CONTINUAR, VOCÊ",
+    "title_part2": "PRECISA SABER:",
+    "subtitle_part1": "Nosso teste acessa informações energéticas profundas.",
+    "subtitle_part2": "Vamos identificar bloqueios ocultos e padrões vibracionais",
+    "subtitle_part3": "que você nem sabia que existiam.",
+    "list_title": "O que vamos analisar:",
+    "list_items": {
+      "frequency": "Sua Frequência Vibracional Atual",
+      "blocks": "Bloqueios Emocionais",
+      "patterns": "Padrões de Pensamento Limitantes",
+      "impediment": "O que impede sua prosperidade",
+      "impact": "Impacto nos Relacionamentos"
+    },
+    "warning_title": "AVISO:",
+    "warning_text_part1": "Este teste é baseado em",
+    "warning_text_part2": "princípios de física quântica e neurociência.",
+    "warning_text_part3": "Esteja preparado para respostas honestas.",
+    "emphasis_text_part1": "Sua jornada para uma nova vibração",
+    "emphasis_text_part2": "começa agora.",
+    "button_continue": "Estou pronto para descobrir"
+  },
+  "success_page_alt": {
+    "men_image": "Grupo de homens reunidos",
+    "women_image": "Grupo de mulheres reunidas"
+  },
+  "checkout_modal": {
+    "stripe_not_loaded": "Stripe não carregado corretamente",
+    "error_confirming": "Erro ao confirmar pagamento",
+    "error_unexpected": "Erro inesperado ao confirmar",
+    "processing": "Processando…",
+    "confirm_payment": "Confirmar pagamento",
+    "secure_payment": "Pagamento seguro via Stripe",
+    "config_required": "Configuração necessária",
+    "define_key": "Defina VITE_STRIPE_PUBLISHABLE_KEY no .env para habilitar o checkout.",
+    "finish_payment": "Finalize o seu pagamento",
+    "vibrational_plan": "Plano Vibracional",
+    "paypal_slogan": "Pagamento 100% seguro. Utilize o seu cartão de crédito ou PayPal com total confiança.",
+    "card_number": "Número do cartão",
+    "expiry_date": "Data de validade",
+    "cvv": "CVC / CVV",
+    "cardholder_name": "Nome no cartão",
+    "email_label": "E-mail*",
+    "phone_label": "Telemóvel*",
+    "apple_pay_slogan": "Pague com Apple Pay num toque",
+    "secure_checkout": "CHECKOUT SEGURO",
+    "join_users": "Junte-se a mais de 19.000 utilizadores que já alcançaram os seus objetivos",
+    "proceed_to_checkout": "CONTINUAR",
+    "safe_secure_payment": "Pagamento seguro e protegido",
+    "total": "Total",
+    "savings": "Economia",
+    "coupon": "Cupão",
+    "slots_left": "Apenas 17 vagas • esgota rápido...",
+    "accelerate_results": "Acelere os seus resultados poupando tempo",
+    "accelerate_desc": "Se deseja acelerar o seu processo de atração, esta é a nossa recomendação.",
+    "accelerator_badge": "Acelerador de Resultados",
+    "paypal_new_slogan": "Não tem Paypal? Aceitamos Cartões Debito/credito❤️",
+    "product_name": "Plano Personalizado",
+    "audio_product": "Plano Personalizado 2.0"
+  },
+  "vsl_comments": {
+    "time_ago": {
+      "days": "{{count}} dias atrás",
+      "day": "{{count}} dia atrás",
+      "hours": "{{count}} horas atrás",
+      "hour": "{{count}} hora atrás",
+      "minutes": "{{count}} min atrás"
+    },
+    "rating_aria": "Avaliação {{rating}}",
+    "replies_count": "{{count}} respostas",
+    "reply_placeholder": "Responder...",
+    "send": "Enviar",
+    "you": "Você",
+    "heading": "Pessoas amam o Spirio",
+    "write_comment": "Escreva um comentário...",
+    "comment_field_aria": "Campo de comentário",
+    "pinned_comment_aria": "Comentário fixado",
+    "like_pinned_aria": "Curtir comentário fixado",
+    "section_aria": "Comentários",
+    "send_comment_aria": "Enviar comentário"
+  },
+  "quiz_progress": {
+    "back_aria": "Voltar"
+  },
+  "home": {
+    "welcome": "Bem-vindo"
+  },
+  "components": {
+    "aura_logo_title": "Logo Aura",
+    "page_indicator_aria": "Página {{current}} de {{total}}",
+    "empty": "Vazio"
+  },
+  "checkout_alerts": {
+    "error_init_checkout": "Não foi possível iniciar o checkout. Tente novamente.",
+    "error_generic_checkout": "Erro ao iniciar checkout. Tente novamente."
+  },
+  "comments_extra": {
+    "aria_profile_label": "Perfil de {{name}}",
+    "aria_replies_for": "Respostas para {{name}}",
+    "aria_delete_reply": "Excluir resposta",
+    "likes_lower": "curtidas"
+  },
+  "checkout_cancel": {
+    "title": "Checkout cancelado",
+    "message": "Seu processo de checkout foi cancelado. Se você tiver dúvidas, entre em contato conosco."
+  },
+  "vsl_comments_data": {
+    "thread_id": "vsl2_main",
+    "pinned_comment": {
+      "id": "cmt_pinned_001",
+      "author": "Equipe de Pesquisa",
+      "role": "moderation",
+      "content": "As vagas de hoje estão quase no limite. Fique até o fim do vídeo para entender os 5 presentes e a Garantia de 30 Dias.",
+      "likes": 312,
+      "reactions": {
+        "insightful": 179,
+        "motivador": 94,
+        "esclarecedor": 39
+      },
+      "created_at": "2025-12-05T10:00:00Z",
+      "pinned": true
+    },
+    "comments": [
+      {
+        "id": "cmt_001",
+        "author_name": "Marina",
+        "age_group": "25-34",
+        "location": "Lisboa",
+        "content": "Depois de anos travando por ansiedade, entendi o que chamam de 'blindagem emocional'. Silencioso, mas eficaz.",
+        "benefits_tags": [
+          "blindagem_emocional",
+          "foco",
+          "algoritmo_24h"
+        ],
+        "objections_addressed": [
+          "ceticismo",
+          "tempo"
+        ],
+        "likes": 184,
+        "reactions": {
+          "insightful": 121,
+          "game_changer": 63
+        },
+        "created_at": "2025-12-05T10:03:00Z",
+        "replies": [
+          {
+            "id": "cmt_001_r1",
+            "author_name": "Leo",
+            "age_group": "18-24",
+            "location": "Porto",
+            "content": "Não é barulhento. Coloquei no estudo e o foco veio em 10 minutos.",
+            "likes": 72,
+            "reactions": {
+              "útil": 51,
+              "realista": 21
+            },
+            "created_at": "2025-12-05T10:07:00Z"
+          },
+          {
+            "id": "cmt_001_r2",
+            "author_name": "Sofia",
+            "age_group": "35-44",
+            "location": "Madrid",
+            "content": "Fiquei por causa da garantia. Entrei sem medo.",
+            "likes": 55,
+            "reactions": {
+              "seguro": 41,
+              "prático": 14
+            },
+            "created_at": "2025-12-05T10:08:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_002",
+        "author_name": "André",
+        "age_group": "45-54",
+        "location": "São Paulo",
+        "content": "Preço parece simbólico perto do que evita: meses de travas e oportunidades perdidas.",
+        "benefits_tags": [
+          "claridade_financeira",
+          "algoritmo_24h"
+        ],
+        "objections_addressed": [
+          "preco"
+        ],
+        "likes": 163,
+        "reactions": {
+          "racional": 108,
+          "decisor": 55
+        },
+        "created_at": "2025-12-05T10:05:00Z",
+        "replies": [
+          {
+            "id": "cmt_002_r1",
+            "author_name": "Helena",
+            "age_group": "55-64",
+            "location": "Curitiba",
+            "content": "Tenho 61. Usei sem complicação. Duas faixas, efeito claro.",
+            "likes": 68,
+            "reactions": {
+              "inclusivo": 42,
+              "claro": 26
+            },
+            "created_at": "2025-12-05T10:09:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_003",
+        "author_name": "Rafael",
+        "age_group": "18-24",
+        "location": "Florianópolis",
+        "content": "Parecia bom demais. Testei 7 dias e entendi por que o pessoal comenta sobre as ondas.",
+        "benefits_tags": [
+          "frequencia_432hz",
+          "foco",
+          "prova_social"
+        ],
+        "objections_addressed": [
+          "ceticismo"
+        ],
+        "likes": 201,
+        "reactions": {
+          "cético_que_virou": 139,
+          "surpreso": 62
+        },
+        "created_at": "2025-12-05T10:06:00Z",
+        "replies": [
+          {
+            "id": "cmt_003_r1",
+            "author_name": "Caio",
+            "age_group": "25-34",
+            "location": "Porto Alegre",
+            "content": "A ordem das frequências faz diferença. Não é aleatório.",
+            "likes": 77,
+            "reactions": {
+              "técnico": 39,
+              "confiável": 38
+            },
+            "created_at": "2025-12-05T10:10:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_004",
+        "author_name": "Luiza",
+        "age_group": "35-44",
+        "location": "Rio de Janeiro",
+        "content": "Quando o botão ficou cinza ontem, entendi a escassez. Hoje garanti minha vaga.",
+        "benefits_tags": [
+          "escassez",
+          "acesso_rapido"
+        ],
+        "objections_addressed": [
+          "urgencia"
+        ],
+        "likes": 142,
+        "reactions": {
+          "timing": 83,
+          "alerta": 59
+        },
+        "created_at": "2025-12-05T10:11:00Z",
+        "replies": [
+          {
+            "id": "cmt_004_r1",
+            "author_name": "Bruno",
+            "age_group": "25-34",
+            "location": "Braga",
+            "content": "O contador desce mesmo. Vi cair de 9 para 3.",
+            "likes": 61,
+            "reactions": {
+              "prova": 44,
+              "urgente": 17
+            },
+            "created_at": "2025-12-05T10:12:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_005",
+        "author_name": "Patrícia",
+        "age_group": "45-54",
+        "location": "Coimbra",
+        "content": "Meu único arrependimento foi não ter conhecido isso antes. Foco sem esforço.",
+        "benefits_tags": [
+          "foco",
+          "blindagem_emocional"
+        ],
+        "objections_addressed": [
+          "tempo"
+        ],
+        "likes": 189,
+        "reactions": {
+          "realista": 119,
+          "motivador": 70
+        },
+        "created_at": "2025-12-05T10:13:00Z",
+        "replies": [
+          {
+            "id": "cmt_005_r1",
+            "author_name": "Tadeu",
+            "age_group": "18-24",
+            "location": "Recife",
+            "content": "Usei antes da prova. Zero ruído mental.",
+            "likes": 73,
+            "reactions": {
+              "estudo": 57,
+              "útil": 16
+            },
+            "created_at": "2025-12-05T10:14:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_006",
+        "author_name": "Marta",
+        "age_group": "55-64",
+        "location": "Curitiba",
+        "content": "Tenho 58. Sem apps complicados. Apertar play e deixar o corpo fazer o resto.",
+        "benefits_tags": [
+          "simplicidade",
+          "regeneracao_528hz"
+        ],
+        "objections_addressed": [
+          "idade",
+          "complexidade"
+        ],
+        "likes": 156,
+        "reactions": {
+          "inclusivo": 98,
+          "confiável": 58
+        },
+        "created_at": "2025-12-05T10:15:00Z",
+        "replies": [
+          {
+            "id": "cmt_006_r1",
+            "author_name": "Daniel",
+            "age_group": "35-44",
+            "location": "São Paulo",
+            "content": "A faixa de 528 ficou perfeita para o sono. Acordei leve.",
+            "likes": 64,
+            "reactions": {
+              "sono": 41,
+              "bem_estar": 23
+            },
+            "created_at": "2025-12-05T10:16:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_007",
+        "author_name": "Nina",
+        "age_group": "18-24",
+        "location": "Porto",
+        "content": "O grupo A me chamou atenção: ver 'gaps' que eu não via antes. Silencioso, porém óbvio.",
+        "benefits_tags": [
+          "claridade_financeira",
+          "genialidade_432hz"
+        ],
+        "objections_addressed": [
+          "ceticismo"
+        ],
+        "likes": 131,
+        "reactions": {
+          "insightful": 79,
+          "surpreso": 52
+        },
+        "created_at": "2025-12-05T10:17:00Z",
+        "replies": [
+          {
+            "id": "cmt_007_r1",
+            "author_name": "Rogério",
+            "age_group": "45-54",
+            "location": "Lisboa",
+            "content": "Negócios ficaram lógicos, não mágicos. Foi isso que me convenceu.",
+            "likes": 59,
+            "reactions": {
+              "racional": 44,
+              "claro": 15
+            },
+            "created_at": "2025-12-05T10:18:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_008",
+        "author_name": "Carla",
+        "age_group": "35-44",
+        "location": "Rio de Janeiro",
+        "content": "Decidi entrar só pela Garantia de Eficácia. Trinta dias é tempo suficiente.",
+        "benefits_tags": [
+          "garantia_30d",
+          "seguranca"
+        ],
+        "objections_addressed": [
+          "risco"
+        ],
+        "likes": 175,
+        "reactions": {
+          "seguro": 126,
+          "decisor": 49
+        },
+        "created_at": "2025-12-05T10:19:00Z",
+        "replies": [
+          {
+            "id": "cmt_008_r1",
+            "author_name": "Victor",
+            "age_group": "25-34",
+            "location": "São Paulo",
+            "content": "O checkout é rápido. Caiu no e-mail em 9 minutos.",
+            "likes": 68,
+            "reactions": {
+              "rápido": 51,
+              "confiável": 17
+            },
+            "created_at": "2025-12-05T10:20:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_009",
+        "author_name": "Joana",
+        "age_group": "45-54",
+        "location": "Porto",
+        "content": "Relatos reais fazem diferença. Os voluntários mostram o que esperar sem exagero.",
+        "benefits_tags": [
+          "prova_social",
+          "transparencia"
+        ],
+        "objections_addressed": [
+          "ceticismo"
+        ],
+        "likes": 122,
+        "reactions": {
+          "honesto": 87,
+          "equilibrado": 35
+        },
+        "created_at": "2025-12-05T10:21:00Z",
+        "replies": [
+          {
+            "id": "cmt_009_r1",
+            "author_name": "Guilherme",
+            "age_group": "18-24",
+            "location": "Florianópolis",
+            "content": "Entrei pelo estudo, fiquei pelos resultados.",
+            "likes": 54,
+            "reactions": {
+              "prático": 33,
+              "motivador": 21
+            },
+            "created_at": "2025-12-05T10:22:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_010",
+        "author_name": "Aline",
+        "age_group": "25-34",
+        "location": "São Paulo",
+        "content": "Vi a parte do Nobel e pensei: quem mira alto costuma ter método.",
+        "benefits_tags": [
+          "autoridade",
+          "metodologia"
+        ],
+        "objections_addressed": [
+          "ceticismo"
+        ],
+        "likes": 138,
+        "reactions": {
+          "autoridade": 95,
+          "confiança": 43
+        },
+        "created_at": "2025-12-05T10:23:00Z",
+        "replies": [
+          {
+            "id": "cmt_010_r1",
+            "author_name": "Pedro",
+            "age_group": "35-44",
+            "location": "Lisboa",
+            "content": "A parte do laboratório esclarece. Não é palpite.",
+            "likes": 62,
+            "reactions": {
+              "técnico": 41,
+              "esclarecedor": 21
+            },
+            "created_at": "2025-12-05T10:24:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_011",
+        "author_name": "Fernanda",
+        "age_group": "35-44",
+        "location": "Rio de Janeiro",
+        "content": "Relatos sobre melhora nos relacionamentos chamaram mais atenção do que o dinheiro.",
+        "benefits_tags": [
+          "relacionamentos",
+          "magnetismo_social"
+        ],
+        "objections_addressed": [
+          "expectativa"
+        ],
+        "likes": 117,
+        "reactions": {
+          "humano": 78,
+          "equilibrado": 39
+        },
+        "created_at": "2025-12-05T10:25:00Z",
+        "replies": [
+          {
+            "id": "cmt_011_r1",
+            "author_name": "Marcelo",
+            "age_group": "25-34",
+            "location": "Salvador",
+            "content": "As palavras certas vieram naturalmente. Zero esforço.",
+            "likes": 51,
+            "reactions": {
+              "natural": 31,
+              "útil": 20
+            },
+            "created_at": "2025-12-05T10:26:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_012",
+        "author_name": "Silvia",
+        "age_group": "55-64",
+        "location": "Braga",
+        "content": "Entrega em minutos e sem explicações complicadas. Quem tem pouco tempo agradece.",
+        "benefits_tags": [
+          "acesso_rapido",
+          "simplicidade"
+        ],
+        "objections_addressed": [
+          "tempo",
+          "complexidade"
+        ],
+        "likes": 144,
+        "reactions": {
+          "prático": 103,
+          "inclusivo": 41
+        },
+        "created_at": "2025-12-05T10:27:00Z",
+        "replies": [
+          {
+            "id": "cmt_012_r1",
+            "author_name": "Júlio",
+            "age_group": "45-54",
+            "location": "Campinas",
+            "content": "O algoritmo ajusta o dia. Essa parte me prendeu no vídeo.",
+            "likes": 58,
+            "reactions": {
+              "dia_a_dia": 38,
+              "útil": 20
+            },
+            "created_at": "2025-12-05T10:28:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_013",
+        "author_name": "Beatriz",
+        "age_group": "18-24",
+        "location": "São Paulo",
+        "content": "Não é milagre, é sequência. A soma das frequências faz sentido.",
+        "benefits_tags": [
+          "plano_vibracional",
+          "sequencia_frequencias"
+        ],
+        "objections_addressed": [
+          "ceticismo"
+        ],
+        "likes": 128,
+        "reactions": {
+          "técnico": 69,
+          "claro": 59
+        },
+        "created_at": "2025-12-05T10:29:00Z",
+        "replies": [
+          {
+            "id": "cmt_013_r1",
+            "author_name": "Ricardo",
+            "age_group": "35-44",
+            "location": "Lisboa",
+            "content": "432 para ver, 8-12 para agir, 528 para sustentar. Didático.",
+            "likes": 66,
+            "reactions": {
+              "didático": 44,
+              "útil": 22
+            },
+            "created_at": "2025-12-05T10:30:00Z"
+          }
+        ]
+      },
+      {
+        "id": "cmt_014",
+        "author_name": "Camila",
+        "age_group": "25-34",
+        "location": "Rio de Janeiro",
+        "content": "Fiquei até o fim pelos bônus. O 'Escudo de Paz' vale por si só.",
+        "benefits_tags": [
+          "bonus",
+          "ondas_theta",
+          "paz_interior"
+        ],
+        "objections_addressed": [
+          "engajamento"
+        ],
+        "likes": 173,
+        "reactions": {
+          "motivador": 121,
+          "útil": 52
+        },
+        "created_at": "2025-12-05T10:31:00Z",
+        "replies": [
+          {
+            "id": "cmt_014_r1",
+            "author_name": "Thiago",
+            "age_group": "18-24",
+            "location": "Fortaleza",
+            "content": "O guia evita erro. Segui à risca.",
+            "likes": 49,
+            "reactions": {
+              "prático": 28,
+              "seguro": 21
+            },
+            "created_at": "2025-12-05T10:32:00Z"
+          }
+        ]
+      }
+    ]
+  },
+  "now": "Agora",
+  "vibrations": "Vibrações",
+  "low": "Baixa",
+  "dream_life": "Vida dos Sonhos",
+  "far_from_it": "Longe disso",
+  "attraction": "Atração",
+  "blocked_fem": "Bloqueada",
+  "your_goal": "Seu objetivo",
+  "high": "Alta",
+  "living_with_purpose": "Vivendo com propósito",
+  "flowing": "Fluindo",
+  "audio_upsell": {
+    "pause_balloon_text": "Por favor, não pause — ouça até ao fim.",
+    "success_title": "Parabéns! O acesso às frequências chegou ao seu e‑mail.",
+    "processing": "Estamos a processar o seu pagamento{{dots}}",
+    "subtitle": "Se quiser acelerar os resultados: ouça com atenção!",
+    "aria_pause": "Pausar áudio",
+    "aria_play": "Reproduzir áudio",
+    "expert_alt": "Especialista",
+    "play_hint": "Clique na imagem ACIMA para ouvir a mensagem mais importante!",
+    "cta_loading": "A processar...",
+    "cta": "Quero aproveitar!",
+    "chip_official": "Comunicado oficial",
+    "chip_recommended": "Muito recomendado",
+    "audio_load_error": "Não foi possível carregar o áudio. Verifique a sua ligação.",
+    "chart": {
+      "balance": "Equilíbrio",
+      "plan_1": "Plano Vibracional 1.0",
+      "plan_2": "Plano Vibracional 2.0",
+      "today": "HOJE",
+      "month_1": "1.º MÊS"
+    }
+  },
+  "fim_funil": {
+    "title": "Parabéns! Ficamos muito felizes em poder ajudar.",
+    "subtitle": "Enviamos o acesso à sua plataforma por e‑mail. Se preferir, você pode acessar diretamente pelo botão abaixo.",
+    "completed_badge": "Trabalho concluído",
+    "access_button": "Acessar Plataforma",
+    "preparing": "Preparando"
+  },
+  "fim_postpaid": {
+    "title": "Vamos enviar o Acesso em seu E‑mail",
+    "description": "Informe o e‑mail que deve receber o acesso.",
+    "input_placeholder": "E‑mail para entrega",
+    "send": "Enviar",
+    "sending": "Enviando…",
+    "invalid_email": "E‑mail inválido",
+    "webhook_fail": "Falha ao enviar ao webhook",
+    "unexpected_error": "Erro inesperado ao enviar",
+    "sent_success": "Enviado com sucesso"
+  },
+  "recupera": {
+    "hero": {
+      "kicker": "Plano #N19894 Pronto!",
+      "timerLabel": "Tempo restante:",
+      "headline": "Limpe Seus Bloqueios em 21 Dias Com Seu Plano Vibracional e Atraia a Vida dos Seus Sonhos!",
+      "subheadline": "Junte-se às mais de 19.000 pessoas que já estão desbloqueando seus desejos em tempo recorde!",
+      "bullets": [
+        "Remova seus bloqueios e liberte suas emoções",
+        "Eleve suas frequências e desbloqueie seu potencial",
+        "Atraia seus desejos e crie a vida dos seus sonhos"
+      ],
+      "cta": "QUERO REMOVER MEUS BLOQUEIOS",
+      "microcopy": "Acesso ao plano N19894"
+    },
+    "alert": {
+      "title": "Porque A Maioria das Pessoas Não Consegue Manifestar?",
+      "paragraphs": [
+        "Não é falta de disciplina ou motivação. Estudos mostram que existem bloqueios energéticos vindos de traumas, crenças limitantes e emoções reprimidas.",
+        "Estes bloqueios apagam sua vibração e programam sua mente para o fracasso. O resultado disso não poderia ser diferente de uma vida de escassez.",
+        "A boa notícia é que limpar os bloqueios fará suas vibrações subirem de nível. E a partir desse momento, você reprograma sua mente para o sucesso.",
+        "O resultado? Você para de correr atrás de seus sonhos e eles correm atrás de você."
+      ],
+      "cardTitle": "⚠️ Seu Diagnóstico:",
+      "cardFrequency": "Frequência atual: BAIXA",
+      "cardFrequencyLabel": "Frequência atual:",
+      "cardFrequencyValue": "BAIXA",
+      "cardConsequenceLabel": "Consequência Principal:",
+      "cardSignsTitle": "Os 3 maiores sinais de alerta:",
+      "cardSigns": [
+        "Sensação de que o universo ignora seus desejos.",
+        "Falta de confiança na hora de tomar decisões.",
+        "Dificuldade em enxergar e aproveitar oportunidades."
+      ],
+      "cardConclusion": "**Não é azar.** É frequência desalinhada.",
+      "cardConclusionStrong": "Não é azar.",
+      "cardConclusionText": "É frequência desalinhada.",
+      "painLabels": {
+        "financeiro": "Escassez Financeira",
+        "amor": "Escassez Amorosa",
+        "relacionamento": "Escassez Amorosa",
+        "saude": "Saúde Danificada",
+        "espiritualidade": "Espírito Danificado",
+        "default": "Escassez Energética"
+      }
+    },
+    "scientist": {
+      "title": "Esse Cientista Japonês Descobriu Como Transformar Sua Mente Para Desbloquear o Portal da Abundância!",
+      "text1": "No século passado, o Cientista Japonês Massaru Emoto fez uma Descoberta Incrível.",
+      "text2": "Ele coletou várias amostras de água, e então expôs uma parte delas a palavras de \"amor e abundância\", enquanto outras recebiam palavras de \"ódio e rancor\".",
+      "text3": "O resultado? Veja por si mesmo.",
+      "moleculeHighlight": "As moléculas de água que receberam palavras com frequência de abundância desenvolveram formas perfeitas. Enquanto as que receberam palavras com frequência de escassez e ódio ficaram deformadas e pretas, como se estivessem morrendo.",
+      "text4": "Agora, seu corpo é 70% água, por isso, imagine a influência que as frequências têm no seu corpo, mente e na sua vida.",
+      "consequenceNeg": "Frequências erradas, liberadas por bloqueios = Escassez, fadiga e problemas.",
+      "consequencePos": "Frequências certas = Saúde, Riqueza, Amor e Abundância!",
+      "labelAbundance": "Água com abundância",
+      "labelScarcity": "Água com escassez"
+    },
+    "frequencies": {
+      "title": "Manifeste Seus Sonhos Com Suas Próprias Frequências!",
+      "paragraphs": [
+        "Com base nessa descoberta revolucionária, nosso time desenvolveu um Teste Personalizado.",
+        "O objetivo é descobrir os seus bloqueios específicos e construir um Plano Vibracional de 21 dias.",
+        "É simples: Nós fazemos uma análise completa de seus dados e mapeamos a sequência exata de frequências que você precisa para liberar seu potencial.",
+        "Assim, ao invés de continuar sofrendo com seus bloqueios você terá o apoio de nosso método, junto do acompanhamento de nosso time para garantir sua transformação."
+      ],
+      "planLabel": "Seu plano: #N19894"
+    },
+    "results": {
+      "title": "O Que Esperar?",
+      "beforeTitle": "Antes dos 21 Dias:",
+      "beforeItems": [
+        "Mente na vibração da escassez.",
+        "Fadiga, dor e ansiedade constante.",
+        "Dificuldade em conhecer pessoas novas e aproveitar oportunidades."
+      ],
+      "afterTitle": "Depois dos 21 dias:",
+      "afterItems": [
+        "Mente na vibração da abundância.",
+        "Sensação de vitalidade, tranquilidade e convicção de suas decisões.",
+        "Oportunidades abundantes e confiança social."
+      ]
+    },
+    "testimonials": {
+      "sectionTitle": "Depoimentos",
+      "list": [
+        {
+          "name": "Lena Müller",
+          "initials": "LM",
+          "text": "Incrível, logo nas primeiras semanas vi minha ansiedade sumindo, não é só em casa, no trabalho me sinto mais confiante e focada e até recebi uns elogios!"
+        },
+        {
+          "name": "Thomas Weber",
+          "initials": "TW",
+          "text": "Bom, sempre tive dificuldade em lidar com dinheiro. Todo final de mês era um aperto no peito. Graças ao plano, agora consegui motivação para organizar minhas finanças e pela primeira vez em tempos estou progredindo na vida."
+        },
+        {
+          "name": "Katrin Schäfer",
+          "initials": "KS",
+          "text": "Tenho que agradecer. Estou conseguindo tomar decisões com mais calma e clareza. Além disso, depois de melhorar minha saúde mental, conheci um cara incrível."
+        }
+      ]
+    },
+    "offer": {
+      "title": "Seu Plano Vibracional",
+      "items": [
+        {
+          "name": "Plano Vibracional de 21 dias para remover seus bloqueios e atrair a vida dos seus sonhos",
+          "price": ""
+        },
+        {
+          "name": "Onda Sonora da Genialidade Financeira (432 Hz)",
+          "price": "€97"
+        },
+        {
+          "name": "Decodificador Neuro-Afetivo",
+          "price": "€75"
+        },
+        {
+          "name": "Frequência de Regeneração Celular (528 Hz)",
+          "price": "€60"
+        },
+        {
+          "name": "Escudo de Paz Interior (Ondas Theta 8–12 Hz)",
+          "price": "€45"
+        },
+        {
+          "name": "Guia de uso do algorítimo",
+          "price": "€53"
+        }
+      ],
+      "totalLabel": "Valor total:",
+      "totalPrice": "330€",
+      "todayLabel": "Preço hoje:",
+      "todayPrice": "37€",
+      "planNumber": "#N19894",
+      "cta": "ACESSAR MEU PLANO",
+      "microcopy": "Pagamento Seguro. Acesso imediato.",
+      "videoHeadline": "Veja o que nossos voluntários relatam do Plano Vibracional",
+      "nextButton": "PRÓXIMO",
+      "videoAria": "Ir para vídeo {{index}}",
+      "videoTitles": [
+        "Depoimento 2",
+        "Depoimento 3",
+        "Depoimento 1"
+      ],
+      "errors": {
+        "paymentUnavailable": "Sistema de pagamento indisponível no momento.",
+        "checkoutUrlMissing": "URL de checkout não retornada",
+        "checkoutFailed": "Erro ao iniciar checkout."
+      }
+    },
+    "guarantee": {
+      "title": "Garantia de 30 dias",
+      "text": "Use por 30 dias. Se não sentir mudança clara na sua vibração e nos seus resultados, devolvemos 100% do investimento.",
+      "steps": [
+        "Faça o Plano de 21 dias.",
+        "Teste por 30 dias.",
+        "Se não sentir que teve resultado, basta solicitar o reembolso com nosso suporte."
+      ]
+    },
+    "application": {
+      "title": "É simples de utilizar!",
+      "steps": [
+        {
+          "label": "Passo 01",
+          "text": "Acesse o seu Plano."
+        },
+        {
+          "label": "Passo 02",
+          "text": "Descubra qual é a frequência vibracional recomendada para você."
+        },
+        {
+          "label": "Passo 03",
+          "text": "Dê \"play\" na frequência e deixe que ela faça o resto para você!"
+        }
+      ]
+    },
+    "finalCta": {
+      "title": "Você já sabe o que precisa. Mas é necessário tomar uma decisão.",
+      "path1Label": "Caminho 01",
+      "path2Label": "Caminho 02",
+      "path1ImageAlt": "Caminho 01",
+      "path2ImageAlt": "Caminho 02",
+      "desireFallback": "Riqueza",
+      "sliders": {
+        "vibration": {
+          "label": "Vibração",
+          "path1": "Baixa",
+          "path2": "Alta"
+        },
+        "success": {
+          "label": "Sucesso",
+          "path1": "Bloqueado",
+          "path2": "Abundante"
+        },
+        "attraction": {
+          "path1": "Baixo",
+          "path2": "Alto"
+        },
+        "potential": {
+          "label": "Potencial",
+          "path1": "Alto",
+          "path2": "Alto"
+        }
+      },
+      "cta": "GARANTIR MEU PLANO",
+      "microcopy": "Pagamento seguro. Acesso imediato."
+    },
+    "fomo": {
+      "title": "Não Ignore O Seu Chamado.",
+      "paragraphs": [
+        "Não existem coincidências. Se você sentiu algo enquanto teve sua jornada conosco, é porque é um sinal de que você deve agir.",
+        "Quantas oportunidades você já deixou passar?",
+        "A maioria das pessoas vivem carregando arrependimentos durante a vida.",
+        "E cabe a você tomar a decisão de não se tornar parte dessa estatística.",
+        "Agora, existem apenas 17 vagas para acessar ao nosso programa hoje. E para dar espaço para outras pessoas, logo seus dados serão excluídos e o seu plano será perdido.",
+        "O timer aponta quanto tempo você tem para acessá-lo.",
+        "Não deixe para depois."
+      ],
+      "cta": "GARANTIR MEU PLANO",
+      "microcopy": "Pagamento seguro. Acesso imediato. 30 Dias de garantia."
+    },
+    "faq": {
+      "title": "Perguntas Frequentes"
+    }
+  }
+}

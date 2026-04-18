@@ -1,0 +1,361 @@
+{
+  "thread_id": "vsl2_main",
+  "pinned_comment": {
+    "id": "cmt_pinned_001",
+    "author": "Equipe de Pesquisa",
+    "role": "moderation",
+    "content": "As vagas de hoje estão quase no limite. Fique até o fim do vídeo para entender os 5 presentes e a Garantia de 30 Dias.",
+    "likes": 312,
+    "reactions": { "insightful": 179, "motivador": 94, "esclarecedor": 39 },
+    "created_at": "2025-12-05T10:00:00Z",
+    "pinned": true
+  },
+  "comments": [
+    {
+      "id": "cmt_001",
+      "author_name": "Marina",
+      "age_group": "25-34",
+      "location": "Lisboa",
+      "content": "Depois de anos travando por ansiedade, entendi o que chamam de 'blindagem emocional'. Silencioso, mas eficaz.",
+      "benefits_tags": ["blindagem_emocional", "foco", "algoritmo_24h"],
+      "objections_addressed": ["ceticismo", "tempo"],
+      "likes": 184,
+      "reactions": { "insightful": 121, "game_changer": 63 },
+      "created_at": "2025-12-05T10:03:00Z",
+      "replies": [
+        {
+          "id": "cmt_001_r1",
+          "author_name": "Leo",
+          "age_group": "18-24",
+          "location": "Porto",
+          "content": "Não é barulhento. Coloquei no estudo e o foco veio em 10 minutos.",
+          "likes": 72,
+          "reactions": { "útil": 51, "realista": 21 },
+          "created_at": "2025-12-05T10:07:00Z"
+        },
+        {
+          "id": "cmt_001_r2",
+          "author_name": "Sofia",
+          "age_group": "35-44",
+          "location": "Madrid",
+          "content": "Fiquei por causa da garantia. Entrei sem medo.",
+          "likes": 55,
+          "reactions": { "seguro": 41, "prático": 14 },
+          "created_at": "2025-12-05T10:08:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_002",
+      "author_name": "André",
+      "age_group": "45-54",
+      "location": "São Paulo",
+      "content": "Preço parece simbólico perto do que evita: meses de travas e oportunidades perdidas.",
+      "benefits_tags": ["claridade_financeira", "algoritmo_24h"],
+      "objections_addressed": ["preco"],
+      "likes": 163,
+      "reactions": { "racional": 108, "decisor": 55 },
+      "created_at": "2025-12-05T10:05:00Z",
+      "replies": [
+        {
+          "id": "cmt_002_r1",
+          "author_name": "Helena",
+          "age_group": "55-64",
+          "location": "Curitiba",
+          "content": "Tenho 61. Usei sem complicação. Duas faixas, efeito claro.",
+          "likes": 68,
+          "reactions": { "inclusivo": 42, "claro": 26 },
+          "created_at": "2025-12-05T10:09:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_003",
+      "author_name": "Rafael",
+      "age_group": "18-24",
+      "location": "Florianópolis",
+      "content": "Parecia bom demais. Testei 7 dias e entendi por que o pessoal comenta sobre as ondas.",
+      "benefits_tags": ["frequencia_432hz", "foco", "prova_social"],
+      "objections_addressed": ["ceticismo"],
+      "likes": 201,
+      "reactions": { "cético_que_virou": 139, "surpreso": 62 },
+      "created_at": "2025-12-05T10:06:00Z",
+      "replies": [
+        {
+          "id": "cmt_003_r1",
+          "author_name": "Caio",
+          "age_group": "25-34",
+          "location": "Porto Alegre",
+          "content": "A ordem das frequências faz diferença. Não é aleatório.",
+          "likes": 77,
+          "reactions": { "técnico": 39, "confiável": 38 },
+          "created_at": "2025-12-05T10:10:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_004",
+      "author_name": "Luiza",
+      "age_group": "35-44",
+      "location": "Rio de Janeiro",
+      "content": "Quando o botão ficou cinza ontem, entendi a escassez. Hoje garanti minha vaga.",
+      "benefits_tags": ["escassez", "acesso_rapido"],
+      "objections_addressed": ["urgencia"],
+      "likes": 142,
+      "reactions": { "timing": 83, "alerta": 59 },
+      "created_at": "2025-12-05T10:11:00Z",
+      "replies": [
+        {
+          "id": "cmt_004_r1",
+          "author_name": "Bruno",
+          "age_group": "25-34",
+          "location": "Braga",
+          "content": "O contador desce mesmo. Vi cair de 9 para 3.",
+          "likes": 61,
+          "reactions": { "prova": 44, "urgente": 17 },
+          "created_at": "2025-12-05T10:12:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_005",
+      "author_name": "Patrícia",
+      "age_group": "45-54",
+      "location": "Coimbra",
+      "content": "Meu único arrependimento foi não ter conhecido isso antes. Foco sem esforço.",
+      "benefits_tags": ["foco", "blindagem_emocional"],
+      "objections_addressed": ["tempo"],
+      "likes": 189,
+      "reactions": { "realista": 119, "motivador": 70 },
+      "created_at": "2025-12-05T10:13:00Z",
+      "replies": [
+        {
+          "id": "cmt_005_r1",
+          "author_name": "Tadeu",
+          "age_group": "18-24",
+          "location": "Recife",
+          "content": "Usei antes da prova. Zero ruído mental.",
+          "likes": 73,
+          "reactions": { "estudo": 57, "útil": 16 },
+          "created_at": "2025-12-05T10:14:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_006",
+      "author_name": "Marta",
+      "age_group": "55-64",
+      "location": "Curitiba",
+      "content": "Tenho 58. Sem apps complicados. Apertar play e deixar o corpo fazer o resto.",
+      "benefits_tags": ["simplicidade", "regeneracao_528hz"],
+      "objections_addressed": ["idade", "complexidade"],
+      "likes": 156,
+      "reactions": { "inclusivo": 98, "confiável": 58 },
+      "created_at": "2025-12-05T10:15:00Z",
+      "replies": [
+        {
+          "id": "cmt_006_r1",
+          "author_name": "Daniel",
+          "age_group": "35-44",
+          "location": "São Paulo",
+          "content": "A faixa de 528 ficou perfeita para o sono. Acordei leve.",
+          "likes": 64,
+          "reactions": { "sono": 41, "bem_estar": 23 },
+          "created_at": "2025-12-05T10:16:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_007",
+      "author_name": "Nina",
+      "age_group": "18-24",
+      "location": "Porto",
+      "content": "O grupo A me chamou atenção: ver 'gaps' que eu não via antes. Silencioso, porém óbvio.",
+      "benefits_tags": ["claridade_financeira", "genialidade_432hz"],
+      "objections_addressed": ["ceticismo"],
+      "likes": 131,
+      "reactions": { "insightful": 79, "surpreso": 52 },
+      "created_at": "2025-12-05T10:17:00Z",
+      "replies": [
+        {
+          "id": "cmt_007_r1",
+          "author_name": "Rogério",
+          "age_group": "45-54",
+          "location": "Lisboa",
+          "content": "Negócios ficaram lógicos, não mágicos. Foi isso que me convenceu.",
+          "likes": 59,
+          "reactions": { "racional": 44, "claro": 15 },
+          "created_at": "2025-12-05T10:18:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_008",
+      "author_name": "Carla",
+      "age_group": "35-44",
+      "location": "Rio de Janeiro",
+      "content": "Decidi entrar só pela Garantia de Eficácia. Trinta dias é tempo suficiente.",
+      "benefits_tags": ["garantia_30d", "seguranca"],
+      "objections_addressed": ["risco"],
+      "likes": 175,
+      "reactions": { "seguro": 126, "decisor": 49 },
+      "created_at": "2025-12-05T10:19:00Z",
+      "replies": [
+        {
+          "id": "cmt_008_r1",
+          "author_name": "Victor",
+          "age_group": "25-34",
+          "location": "São Paulo",
+          "content": "O checkout é rápido. Caiu no e-mail em 9 minutos.",
+          "likes": 68,
+          "reactions": { "rápido": 51, "confiável": 17 },
+          "created_at": "2025-12-05T10:20:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_009",
+      "author_name": "Joana",
+      "age_group": "45-54",
+      "location": "Porto",
+      "content": "Relatos reais fazem diferença. Os voluntários mostram o que esperar sem exagero.",
+      "benefits_tags": ["prova_social", "transparencia"],
+      "objections_addressed": ["ceticismo"],
+      "likes": 122,
+      "reactions": { "honesto": 87, "equilibrado": 35 },
+      "created_at": "2025-12-05T10:21:00Z",
+      "replies": [
+        {
+          "id": "cmt_009_r1",
+          "author_name": "Guilherme",
+          "age_group": "18-24",
+          "location": "Florianópolis",
+          "content": "Entrei pelo estudo, fiquei pelos resultados.",
+          "likes": 54,
+          "reactions": { "prático": 33, "motivador": 21 },
+          "created_at": "2025-12-05T10:22:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_010",
+      "author_name": "Aline",
+      "age_group": "25-34",
+      "location": "São Paulo",
+      "content": "Vi a parte do Nobel e pensei: quem mira alto costuma ter método.",
+      "benefits_tags": ["autoridade", "metodologia"],
+      "objections_addressed": ["ceticismo"],
+      "likes": 138,
+      "reactions": { "autoridade": 95, "confiança": 43 },
+      "created_at": "2025-12-05T10:23:00Z",
+      "replies": [
+        {
+          "id": "cmt_010_r1",
+          "author_name": "Pedro",
+          "age_group": "35-44",
+          "location": "Lisboa",
+          "content": "A parte do laboratório esclarece. Não é palpite.",
+          "likes": 62,
+          "reactions": { "técnico": 41, "esclarecedor": 21 },
+          "created_at": "2025-12-05T10:24:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_011",
+      "author_name": "Fernanda",
+      "age_group": "35-44",
+      "location": "Rio de Janeiro",
+      "content": "Relatos sobre melhora nos relacionamentos chamaram mais atenção do que o dinheiro.",
+      "benefits_tags": ["relacionamentos", "magnetismo_social"],
+      "objections_addressed": ["expectativa"],
+      "likes": 117,
+      "reactions": { "humano": 78, "equilibrado": 39 },
+      "created_at": "2025-12-05T10:25:00Z",
+      "replies": [
+        {
+          "id": "cmt_011_r1",
+          "author_name": "Marcelo",
+          "age_group": "25-34",
+          "location": "Salvador",
+          "content": "As palavras certas vieram naturalmente. Zero esforço.",
+          "likes": 51,
+          "reactions": { "natural": 31, "útil": 20 },
+          "created_at": "2025-12-05T10:26:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_012",
+      "author_name": "Silvia",
+      "age_group": "55-64",
+      "location": "Braga",
+      "content": "Entrega em minutos e sem explicações complicadas. Quem tem pouco tempo agradece.",
+      "benefits_tags": ["acesso_rapido", "simplicidade"],
+      "objections_addressed": ["tempo", "complexidade"],
+      "likes": 144,
+      "reactions": { "prático": 103, "inclusivo": 41 },
+      "created_at": "2025-12-05T10:27:00Z",
+      "replies": [
+        {
+          "id": "cmt_012_r1",
+          "author_name": "Júlio",
+          "age_group": "45-54",
+          "location": "Campinas",
+          "content": "O algoritmo ajusta o dia. Essa parte me prendeu no vídeo.",
+          "likes": 58,
+          "reactions": { "dia_a_dia": 38, "útil": 20 },
+          "created_at": "2025-12-05T10:28:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_013",
+      "author_name": "Beatriz",
+      "age_group": "18-24",
+      "location": "São Paulo",
+      "content": "Não é milagre, é sequência. A soma das frequências faz sentido.",
+      "benefits_tags": ["plano_vibracional", "sequencia_frequencias"],
+      "objections_addressed": ["ceticismo"],
+      "likes": 128,
+      "reactions": { "técnico": 69, "claro": 59 },
+      "created_at": "2025-12-05T10:29:00Z",
+      "replies": [
+        {
+          "id": "cmt_013_r1",
+          "author_name": "Ricardo",
+          "age_group": "35-44",
+          "location": "Lisboa",
+          "content": "432 para ver, 8-12 para agir, 528 para sustentar. Didático.",
+          "likes": 66,
+          "reactions": { "didático": 44, "útil": 22 },
+          "created_at": "2025-12-05T10:30:00Z"
+        }
+      ]
+    },
+    {
+      "id": "cmt_014",
+      "author_name": "Camila",
+      "age_group": "25-34",
+      "location": "Rio de Janeiro",
+      "content": "Fiquei até o fim pelos bônus. O 'Escudo de Paz' vale por si só.",
+      "benefits_tags": ["bonus", "ondas_theta", "paz_interior"],
+      "objections_addressed": ["engajamento"],
+      "likes": 173,
+      "reactions": { "motivador": 121, "útil": 52 },
+      "created_at": "2025-12-05T10:31:00Z",
+      "replies": [
+        {
+          "id": "cmt_014_r1",
+          "author_name": "Thiago",
+          "age_group": "18-24",
+          "location": "Fortaleza",
+          "content": "O guia evita erro. Segui à risca.",
+          "likes": 49,
+          "reactions": { "prático": 28, "seguro": 21 },
+          "created_at": "2025-12-05T10:32:00Z"
+        }
+      ]
+    }
+  ]
+}

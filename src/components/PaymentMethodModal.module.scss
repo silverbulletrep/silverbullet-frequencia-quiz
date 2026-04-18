@@ -1,0 +1,174 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    z-index: 10000;
+    backdrop-filter: blur(8px);
+    padding: 0;
+}
+
+.modal {
+    background: #ffffff;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 32px 32px 0 0;
+    padding: 40px 24px;
+    position: relative;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.4);
+    animation: modalEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalEnter {
+    from {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.closeBtn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #f0f2f5;
+    border: none;
+    font-size: 32px;
+    color: #4a5568;
+    cursor: pointer;
+    line-height: 1;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+
+    &:hover {
+        background: #e2e8f0;
+        color: #1a202c;
+    }
+}
+
+.title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a1a1a;
+    text-align: center;
+    margin-bottom: 32px;
+    line-height: 1.2;
+}
+
+.methodsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.methodCard {
+    background: #ffffff;
+    border: 2px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    width: 100%;
+    text-align: left;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+
+    &:hover, &.methodCardSelected {
+        border-color: #3182ce;
+        background: #ebf8ff;
+        box-shadow: 0 8px 20px rgba(49, 130, 206, 0.15);
+        transform: scale(1.02);
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}
+
+.methodImgWrap {
+    width: 120px; // Larger container
+    height: 80px; // Larger container
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 12px;
+    padding: 2px; // Minimal padding to allow images to be larger
+    border: 1px solid #edf2f7;
+    overflow: hidden;
+}
+
+.methodImg {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    transform: scale(1.15); // "Micro zoom" to fill the box better
+}
+
+.methodLabel {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1a202c;
+    flex: 1;
+}
+
+@media (min-width: 640px) {
+    .overlay {
+        align-items: center;
+        padding: 20px;
+    }
+
+    .modal {
+        border-radius: 40px;
+    }
+
+    @keyframes modalEnter {
+        from {
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        to {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+}
+
+@media (max-width: 400px) {
+    .title {
+        font-size: 22px;
+    }
+
+    .methodCard {
+        padding: 16px;
+        gap: 16px;
+    }
+
+    .methodImgWrap {
+        width: 80px;
+        height: 50px;
+    }
+
+    .methodLabel {
+        font-size: 18px;
+    }
+}

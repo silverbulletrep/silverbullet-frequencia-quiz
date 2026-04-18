@@ -1,0 +1,33 @@
+* {
+  box-sizing: border-box;
+}
+
+.httpsSignupSpiriohub {
+  width: 468px;
+  height: 221px;
+
+  .frame {
+    display: inline-flex;
+    align-items: center;
+    column-gap: 8px;
+    opacity: 0.5;
+
+    .component1 {
+      flex-shrink: 0;
+      width: 32px;
+      height: 20px;
+    }
+
+    .component12 {
+      flex-shrink: 0;
+      width: 30px;
+      height: 21px;
+    }
+
+    .component13 {
+      flex-shrink: 0;
+      width: 30px;
+      height: 20px;
+    }
+  }
+}

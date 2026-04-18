@@ -1,0 +1,217 @@
+* {
+  box-sizing: border-box;
+}
+
+.background2 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: var(--color-blue-9, #141319);
+  width: 1920px;
+  height: 1200px;
+
+  .container5 {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-items: flex-start;
+    align-self: stretch;
+    padding-right: 24px;
+    padding-left: 24px;
+    height: 64px;
+
+    .container4 {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      align-self: stretch;
+      justify-content: space-between;
+
+      .container3 {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        column-gap: 16px;
+
+        .container {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+
+          .component1 {
+            flex-shrink: 0;
+            width: 19px;
+            height: 16px;
+          }
+        }
+
+        .container2 {
+          display: inline-flex;
+          flex-shrink: 0;
+          align-items: center;
+          column-gap: 7px;
+
+          .component12 {
+            flex-shrink: 0;
+            width: 57px;
+            height: 20px;
+          }
+
+          .verticalDivider {
+            flex-shrink: 0;
+            background: var(--color-white-20, #ffffff33);
+            width: 1px;
+            height: 11px;
+          }
+
+          .component13 {
+            flex-shrink: 0;
+            width: 41px;
+            height: 11px;
+          }
+        }
+      }
+
+      .a124 {
+        flex-shrink: 0;
+        line-height: 18px;
+        letter-spacing: 0;
+        color: var(--signup-spiriohub-com-White, #ffffff);
+        font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 500;
+      }
+    }
+
+    .horizontalDivider2 {
+      display: flex;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      background: var(--color-white-10, #ffffff1a);
+      padding-right: 1794px;
+
+      .horizontalDivider {
+        border-radius: 8px;
+        background: var(--color-white-solid, #ffffff);
+        width: 78px;
+        height: 2px;
+      }
+    }
+  }
+
+  .container9 {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-items: flex-start;
+    align-self: stretch;
+    padding: 24px 16px 16px;
+    height: 1136px;
+    row-gap: 8px;
+
+    .qualASuaIdade {
+      flex-shrink: 0;
+      align-self: stretch;
+      text-align: center;
+      line-height: 36px;
+      letter-spacing: -0.72px;
+      color: var(--signup-spiriohub-com-White, #ffffff);
+      font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    .usamosApenasParaPers {
+      flex-shrink: 0;
+      align-self: stretch;
+      text-align: center;
+      line-height: 24px;
+      letter-spacing: -0.42px;
+      color: var(--signup-spiriohub-com-Chatelle, #c3b1c8);
+      font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+      font-size: 14px;
+    }
+
+    .container8 {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      padding-top: 8px;
+      padding-bottom: 8px;
+      row-gap: 8px;
+
+      .container7 {
+        display: flex;
+        flex-shrink: 0;
+        align-items: flex-start;
+        align-self: stretch;
+        justify-content: center;
+        column-gap: 8px;
+
+        .component2 {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          align-items: flex-start;
+          align-self: stretch;
+          border: 1px solid #227e64;
+          border-radius: 16px;
+          background: #227e64;
+
+          .background {
+            display: flex;
+            flex-shrink: 0;
+            align-items: flex-end;
+            align-self: stretch;
+            justify-content: center;
+            z-index: 2;
+            border-radius: 15px 15px 0px 0px;
+            background: var(--color-violet-15, #271f2f);
+            min-height: 128px;
+            max-height: 186px;
+
+            .man1834YearsOld {
+              flex-shrink: 0;
+              width: 140px;
+              height: 128px;
+              overflow: hidden;
+            }
+          }
+
+          .container6 {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            align-self: stretch;
+            justify-content: space-between;
+            z-index: 1;
+            border-radius: 0px 0px 16px 16px;
+            padding: 16px;
+
+            .text {
+              flex-shrink: 0;
+              line-height: 24px;
+              letter-spacing: 0;
+              color: var(--signup-spiriohub-com-White, #ffffff);
+              font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+              font-size: 16px;
+              font-weight: 500;
+            }
+
+            .component14 {
+              flex-shrink: 0;
+              width: 9px;
+              height: 16px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

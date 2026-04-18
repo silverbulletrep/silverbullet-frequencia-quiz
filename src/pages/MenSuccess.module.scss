@@ -1,0 +1,269 @@
+* {
+  box-sizing: border-box;
+}
+
+.httpsSignupSpiriohub {
+  width: 100%;
+  min-height: 100dvh;
+  background: #FFFFFF;
+  overflow: hidden;
+
+  .background {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #FFFFFF;
+    width: 100%;
+    min-height: 100dvh;
+
+    .container3 {
+      display: inline-flex;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      column-gap: 16px;
+      padding-right: 24px;
+      padding-left: 24px;
+      height: 64px;
+
+      .container {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+
+        .component1 {
+          flex-shrink: 0;
+          width: 19px;
+          height: 16px;
+          color: #0A1A4F;
+        }
+      }
+
+      .container2 {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        column-gap: 7px;
+
+        .component12 {
+          flex-shrink: 0;
+          width: 57px;
+          height: 20px;
+        }
+
+        .verticalDivider {
+          flex-shrink: 0;
+          background: #F6F7FA;
+          width: 1px;
+          height: 11px;
+        }
+
+        .component13 {
+          flex-shrink: 0;
+          width: 41px;
+          height: 11px;
+        }
+      }
+    }
+
+    .container5 {
+      display: flex;
+      position: relative;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      padding: 24px 16px 16px;
+      flex: 1;
+      row-gap: 16px;
+      background-image: linear-gradient(
+          209deg,
+          var(--color-white-0, #ffffff00) 60.47%,
+          var(--color-white-50, #ffffff80) 77.08%,
+          var(--color-yellow-77, #ffee89) 89.45%
+        ),
+        linear-gradient(
+          191deg,
+          var(--color-magenta-59-0, #ac7dae00) 25.24%,
+          var(--color-magenta-59-50, #ac7dae80) 60.28%,
+          var(--color-yellow-77, #ffee89) 86.39%
+        ),
+        linear-gradient(
+          169deg,
+          var(--color-magenta-59-0, #ac7dae00) 30.84%,
+          var(--color-magenta-59, #ac7dae) 87.69%
+        ),
+        linear-gradient(
+          180deg,
+          var(--color-magenta-57-0, #a872b200) 22.62%,
+          var(--color-magenta-57, #a872b2) 84.6%
+        );
+
+      .container4 {
+        display: inline-flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        align-self: stretch;
+        max-width: 600px;
+        margin: 0 auto;
+        row-gap: 8px;
+        text-align: center;
+
+        .a12MilhEsDeMulheres3 {
+          flex-shrink: 0;
+          align-self: stretch;
+          line-height: 36px;
+          letter-spacing: -0.72px;
+          color: #000000;
+          font-size: 24px;
+          text-align: center;
+
+        .a12MilhEsDeMulheres {
+          line-height: 36px;
+          letter-spacing: -0.72px;
+          color: #A678FF;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        .a12MilhEsDeMulheres2 {
+          line-height: 36px;
+          letter-spacing: -0.72px;
+          color: #6E4DE0;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 24px;
+          font-weight: 500;
+        }
+        }
+
+        .kundaliniDespertadaC {
+          flex-shrink: 0;
+          align-self: stretch;
+          text-align: center;
+          line-height: 24px;
+          letter-spacing: -0.42px;
+          color: #6E4DE0;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 14px;
+        }
+      }
+
+      .gradient {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        flex-shrink: 0;
+        width: 100%;
+        height: 50%;
+      }
+
+      .menImage {
+        flex-shrink: 0;
+        z-index: 1;
+        width: 280px;
+        height: 360px;
+        overflow: hidden;
+        object-fit: contain;
+        object-position: center bottom;
+      }
+    }
+
+    .container7 {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: flex-start;
+      align-self: stretch;
+
+      .horizontalDivider {
+        flex-shrink: 0;
+        align-self: stretch;
+        background: var(--color-white-10, #ffffff1a);
+        height: 1px;
+      }
+
+      .container6 {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        align-self: stretch;
+        justify-content: center;
+        padding: 16px;
+
+        .component2 {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: center;
+          border-radius: 16px;
+          background: #F2C94C;
+          padding: 16px 6px 17px;
+          width: 360px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+
+          &:hover {
+            background: #DFB43B;
+          }
+
+          .text {
+            flex-shrink: 0;
+            line-height: 24px;
+            letter-spacing: 0;
+            color: #0A1A4F;
+            font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsividade
+@media (max-width: 768px) {
+  .httpsSignupSpiriohub {
+    .background {
+      .container5 {
+        padding: 12px 8px;
+        
+        .container4 {
+          margin: 0 16px;
+          
+          .a12MilhEsDeMulheres3 {
+            font-size: 20px;
+            line-height: 28px;
+            
+            .a12MilhEsDeMulheres,
+            .a12MilhEsDeMulheres2 {
+              font-size: 20px;
+              line-height: 28px;
+            }
+          }
+        }
+        
+        .menImage {
+          width: 240px;
+          height: 280px;
+        }
+      }
+      
+      .container7 {
+        .container6 {
+          .component2 {
+            width: 90%;
+            max-width: 360px;
+          }
+        }
+      }
+    }
+  }
+}

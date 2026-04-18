@@ -1,0 +1,90 @@
+.card {
+    background: rgba(180, 30, 30, 0.15);
+    border: 1px solid rgba(255, 80, 60, 0.4);
+    border-radius: 18px;
+    padding: 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 16px;
+    box-shadow: 0 12px 30px rgba(180, 30, 30, 0.12);
+}
+
+.cardItem {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.cardItem.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.frequencyLabel {
+    font-size: 14px;
+    color: #e7dfd0;
+    margin-right: 8px;
+}
+
+.frequencyValue {
+    font-weight: 700;
+    color: #ff7b6b;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.consequenceLabel {
+    font-size: 14px;
+    color: #e7dfd0;
+    margin-right: 8px;
+}
+
+.consequenceValue {
+    font-weight: 700;
+    color: #ff7b6b;
+    font-size: 15px;
+}
+
+.signsTitle {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #f8f3e6;
+}
+
+.signsList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.signItem {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: #e7dfd0;
+}
+
+.signIcon {
+    flex-shrink: 0;
+    font-size: 14px;
+    margin-top: 2px;
+}
+
+.conclusion {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: #ff7b6b;
+}
+
+.conclusion strong {
+    color: #ff6b5b;
+}

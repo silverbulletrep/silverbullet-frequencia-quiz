@@ -1,0 +1,80 @@
+Options -MultiViews
+DirectoryIndex index.html
+RewriteEngine On
+RewriteBase /main/
+
+# Permite acesso direto a arquivos estáticos
+RewriteRule ^(assets|static|img|Audio|videos|Audio - Upsell|\\.figma)/ - [L]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# SPA fallback para rotas profundas (back-redirects e deep links)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 12 months"
+  ExpiresByType image/png  "access plus 12 months"
+  ExpiresByType image/svg+xml "access plus 12 months"
+  ExpiresByType font/woff2 "access plus 12 months"
+  ExpiresByType font/woff "access plus 12 months"
+  ExpiresByType font/ttf "access plus 12 months"
+  ExpiresByType font/otf "access plus 12 months"
+  ExpiresByType text/css "access plus 3 months"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType audio/mpeg "access plus 12 months"
+  ExpiresByType video/mp4 "access plus 12 months"
+  ExpiresByType video/webm "access plus 12 months"
+</IfModule>
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # 1. Tentar servir Brotli (.br) se o navegador aceitar
+  RewriteCond %{HTTP:Accept-Encoding} br
+  RewriteCond %{REQUEST_FILENAME}.br -f
+  RewriteRule ^(.*)$ $1.br [L]
+  AddType "application/javascript" .js.br
+  AddType "text/css" .css.br
+  AddType "text/html" .html.br
+  AddEncoding br .br
+
+  # 2. Tentar servir Gzip (.gz) se o navegador aceitar e não houver Brotli
+  RewriteCond %{HTTP:Accept-Encoding} gzip
+  RewriteCond %{REQUEST_FILENAME}.gz -f
+  RewriteRule ^(.*)$ $1.gz [L]
+  AddType "application/javascript" .js.gz
+  AddType "text/css" .css.gz
+  AddType "text/html" .html.gz
+  AddEncoding gzip .gz
+
+  # Impedir que o Apache tente comprimir novamente o que já está comprimido
+  <FilesMatch "\.(js|css|html)\.(gz|br)$">
+    Header set Content-Encoding %{REQUEST_FILENAME}e
+    Header append Vary Accept-Encoding
+  </FilesMatch>
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css application/javascript application/json
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "^assets/.*\.(css|js|mjs|woff2|woff|ttf|otf|svg|png|webp)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <Files "index.html">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
+
+  <FilesMatch "\.(svg|png|webp|css|js|mjs|woff2|woff|ttf|otf|mp3|mp4|webm)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>

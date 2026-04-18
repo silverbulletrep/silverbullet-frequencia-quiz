@@ -1,0 +1,208 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #141319;
+}
+
+.topBar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(20, 19, 25, 0.9);
+  backdrop-filter: saturate(1.2) blur(6px);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 16px 24px;
+  align-self: center;
+  width: 100%;
+}
+
+.contentTop {
+  margin-top: 12px;
+}
+
+.question {
+  font-size: clamp(20px, 3.2vw, 26px);
+  line-height: 1.5;
+  font-weight: 800;
+  letter-spacing: 0;
+  color: #000000;
+  text-wrap: balance;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.subtitle {
+  font-size: clamp(15px, 2.2vw, 18px);
+  line-height: 1.5;
+  color: #444444;
+  text-wrap: balance;
+  margin-bottom: 14px;
+  text-align: center;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 6px;
+}
+
+.optionButton {
+  display: grid;
+  grid-template-columns: 32px 1fr;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid #2a2935;
+  background: linear-gradient(180deg, #1f1d28 0%, #1a1922 100%);
+  color: #eaeaf2;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+  transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.optionButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, #252334 0%, #1d1c26 100%);
+}
+
+.optionButton:active {
+  transform: translateY(0);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.optionButton:focus {
+  outline: 0;
+  box-shadow: 0 0 0 2px #141319, 0 0 0 4px #f2c94c;
+}
+
+.optionEmoji {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.optionText {
+  font-size: clamp(15px, 2.4vw, 18px);
+  line-height: 1.5;
+}
+
+@media (min-width: 768px) {
+  .content {
+    padding: 16px 24px 32px;
+  }
+  .optionButton {
+    padding: 14px 18px;
+    border-radius: 16px;
+  }
+}
+
+.progressContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 4px 2px 10px;
+}
+
+.progressHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.progressLabel {
+  font-size: 14px;
+  font-weight: 700;
+  color: #eaeaf2;
+}
+
+.progressPercent {
+  font-size: 13px;
+  color: #c8c8d8;
+}
+
+.progressTrack {
+  position: relative;
+  width: 100%;
+  height: 8px;
+  border-radius: 9999px;
+  background: #2a2935;
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #f2c94c 0%, #e5b945 100%);
+  transition: width 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.progressFill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: sheenMove 1800ms linear infinite;
+  pointer-events: none;
+}
+
+
+.progressBackBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  border: 1px solid #2a2935;
+  background: #1f1d28;
+  color: #eaeaf2;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.progressBackBtn:hover {
+  transform: translateY(-1px);
+  background: #252334;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+
+.progressBackBtn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+@keyframes sheenMove {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressFill {
+    transition: none;
+  }
+  .progressFill::after { animation: none; }
+}

@@ -1,0 +1,126 @@
+/* SkeletonFallback — shimmer loading for Suspense boundaries */
+
+$bg: #001736;
+$shimmer-base: rgba(255, 255, 255, 0.04);
+$shimmer-highlight: rgba(255, 255, 255, 0.08);
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .bone {
+        animation: none !important;
+    }
+}
+
+/* shared */
+.wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: $bg;
+    color: #fff;
+    font-family: Poppins, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+}
+
+.bone {
+    border-radius: 6px;
+    background: linear-gradient(90deg, $shimmer-base 25%, $shimmer-highlight 50%, $shimmer-base 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.6s ease-in-out infinite;
+}
+
+/* ─── Quiz Skeleton ─── */
+.quizHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 20px 12px;
+}
+
+.logoBlock {
+    width: 72px;
+    height: 22px;
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.quizLabel {
+    width: 38px;
+    height: 18px;
+}
+
+.progressArea {
+    padding: 0 20px 10px;
+}
+
+.progressTrack {
+    height: 8px;
+    border-radius: 9999px;
+}
+
+.questionArea {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 20px 16px;
+}
+
+.headingBone {
+    width: 80%;
+    max-width: 420px;
+    height: 28px;
+    border-radius: 8px;
+}
+
+.optionsList {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 8px;
+}
+
+.optionBone {
+    height: 56px;
+    border-radius: 14px;
+}
+
+/* ─── Page (generic) Skeleton ─── */
+.pageCenter {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    padding: 40px 24px;
+}
+
+.pageBlock {
+    width: 60%;
+    max-width: 340px;
+    height: 24px;
+    border-radius: 8px;
+}
+
+.pageBlockSmall {
+    width: 40%;
+    max-width: 200px;
+    height: 18px;
+    border-radius: 6px;
+}

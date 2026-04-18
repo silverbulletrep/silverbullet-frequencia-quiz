@@ -1,0 +1,92 @@
+Este artigo fornece instruções que devem ser usadas no Novo VTurb Player. Se você estiver usando o Antigo Player clique aqui.
+
+Atenção: Com a nova versão do Botão de Ação, você pode configurar o delay do botão de forma muito mais simples no painel, sem necessidade de usar o script descrito abaixo. Clique aqui e confira!
+
+Código de delay para sincronizar elementos da página com o vídeo!
+
+Esse artigo vai ensinar pra você como sincronizar os elementos da página com o seu vídeo!
+
+Se preferir, você pode seguir esse tutorial em VÍDEO: Clique aqui para assistir.
+
+Criamos um script sincronizado com o vídeo, onde mesmo se o usuário pausar o vídeo irá ficar tudo sincronizado melhorando sua retenção e suas conversões.
+
+Além disso, também criamos um cache para que, quando o usuário que já chegou no pitch retornar para a página, ele já ter acesso às seções e não precisar esperar todo o vídeo novamente!
+
+📢 Sempre utilize em uma página de teste antes, garantindo total funcionalidade!
+
+Defina o tempo (em segundos) do vídeo em que os elementos devem aparecer.
+Adicione a classe “esconder” nos elementos em que você deseja adicionar essa funcionalidade.
+Copie o código de delay e cole ele abaixo do script do seu player.
+
+
+Passo a Passo:
+Defina o tempo do vídeo em que os elementos devem aparecer.
+
+Abaixo mostramos onde você deve alterar o tempo - em segundos - para as seções e elementos aparecerem em sua página.
+Para descobrir qual o tempo em segundos, multiplique o total de minutos por 60 e adicione os segundos restantes.
+
+Exemplo:
+Se você quer que os elementos apareçam no minuto 22:47 do seu vídeo, você deve calcular o seguinte:
+
+22 (minutos) x 60 = 1320.
+
+Some os segundos restantes: 47.
+
+Total: 1367. Esse é o número que deve constar no seu código.
+Troque o número 10 pelos segundos que você deseja:
+Adicione a classe “esconder” nos elementos em que você deseja adicionar essa funcionalidade.
+
+
+Caso sua página seja em HTML PURO, você deverá criar uma div ao redor dos elementos que você quer que sejam influenciados pelo script de delay e nomear a div com a classe esconder , como na forma abaixo:
+
+
+
+<div class="esconder">
+_SEÇÃO A SER ESCONDIDA
+</div>
+
+
+Por último é só incluir o script de delay abaixo do embed js do seu vídeo ( não em mesma div, depois da div do seu vídeo)
+
+
+Caso você esteja no Elementor, só precisará colar o script de delay na mesma CAIXA HTML do seu vídeo, deixando um espaço entre o embed js e script de delay Seguindo os passos a seguir:
+
+
+
+a) Deixando o script dentro da caixa html no Elementor:
+
+b. Acrescentando a classe esconder nos elementos/seções:
+
+Quando você clica com botão direito sobre o elemento que receberá o delay dentro da sua página e vai em "editar elemento", podendo também ser uma seção completa, abrirá uma seção de edição na lateral. Você deverá clicar em "avançado":
+Agora você deve ir na seção Classe css e colocar a classe: esconder:
+Pronto, seu código script já estará funcionando normalmente em seu site!
+Importante: Sempre teste a funcionalidade do script em seu site em guia anônima!
+E mais: Caso você tenha mais de 1 vídeo na sua página, é necessário deixar apenas o principal em código JS e o restante em iFrame, para evitar conflito entre eles e o seu código de delay funcionar perfeitamente.
+
+
+
+Aqui está o Código Script de Delay:
+
+
+
+<style>
+  .esconder {
+    display: none;
+  }
+</style>
+
+<script>
+  var delaySeconds = 10;
+  var player = document.querySelector("vturb-smartplayer");
+  player.addEventListener("player:ready", function() {
+    player.displayHiddenElements(delaySeconds, [".esconder"], {
+      persist: true
+    });
+  });
+</script>
+
+
+IMPORTANTE: Após inserir o código, verifique seu site em uma janela anônima do navegador (no Chrome, use Ctrl + Shift + N). O cache pode dar a impressão de que a mudança não foi feita na guia normal, mas na guia anônima geralmente mostra corretamente (e é assim que aparecerá para o seu lead).
+
+
+Se você usa usa ClickMax, Systeme, ClickFunnels ou GreatPages, temos um vídeo específico ensinando como integrar o código de delay nesses construtores. Basta clicar no nome do Construtor para direcionar ao artigo correspondente:

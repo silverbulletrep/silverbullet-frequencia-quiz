@@ -1,0 +1,35 @@
+* {
+  box-sizing: border-box;
+}
+
+.httpsSignupSpiriohub {
+  width: 465px;
+  height: 230px;
+
+  .frame {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 4px;
+    border: 1px solid var(--signup-spiriohub-com-Jade, #03bf5a);
+    border-radius: 8px;
+    background: var(--color-spring-green-38-10, #03bf5a1a);
+    padding: 4px 16px;
+
+    .component1 {
+      flex-shrink: 0;
+      width: 16px;
+      height: 17px;
+    }
+
+    .pagamentoSeguroEProt {
+      flex-shrink: 0;
+      line-height: 20px;
+      letter-spacing: -0.42px;
+      color: var(--signup-spiriohub-com-Jade, #03bf5a);
+      font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+    }
+  }
+}

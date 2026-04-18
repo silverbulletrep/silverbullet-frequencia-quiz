@@ -1,0 +1,43 @@
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.numberCurrent {
+  color: #F7C828;
+}
+
+.numberTotal {
+  color: #FFFFFF;
+}
+
+.numberTotalBlack {
+  color: #000000;
+}
+
+.numberTotalBlack {
+  color: #000000;
+}
+
+.separator {
+  color: #FFFFFF;
+  opacity: 1;
+}
+
+.separatorBlack {
+  color: #000000;
+  opacity: 1;
+}
+
+.separatorBlack {
+  color: #000000;
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .indicator { font-size: 12px; }
+}

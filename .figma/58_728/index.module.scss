@@ -1,0 +1,91 @@
+* {
+  box-sizing: border-box;
+}
+
+.httpsF339Escoladefre {
+  width: 1114px;
+  height: 274px;
+
+  .component12 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 986px;
+
+    .xAxisLegend {
+      display: flex;
+      align-items: flex-start;
+      align-self: stretch;
+      justify-content: space-between;
+      padding: 0px 268px 15px 204px;
+      min-width: 986px;
+      overflow: hidden;
+
+      .default {
+        line-height: 15px;
+        letter-spacing: 0;
+        color: #ffffff;
+        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+
+    .component1 {
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+      justify-content: space-between;
+      border: 1px dashed #ffffff;
+      background: #1e1e1eb2;
+      padding: 30px;
+      min-width: 986px;
+      height: 116px;
+
+      .variant1HoverFalse {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: var(--color-orange-50, #f59e0b);
+        padding: 16px 16px 17px;
+        min-height: 56px;
+
+        .text {
+          flex-shrink: 0;
+          align-self: stretch;
+          text-align: center;
+          line-height: 24px;
+          letter-spacing: 0;
+          color: var(--f3-39-escoladefrequencia-com-br-Buttery-White, #fffbeb);
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+
+      .variant1HoverTrue {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: var(--color-orange-52, #ffa60c);
+        padding: 16px 16px 17px;
+        width: 448px;
+        min-height: 56px;
+
+        .text2 {
+          flex-shrink: 0;
+          line-height: 24px;
+          letter-spacing: 0;
+          color: var(--f3-39-escoladefrequencia-com-br-Buttery-White, #fffbeb);
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 16px;
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}

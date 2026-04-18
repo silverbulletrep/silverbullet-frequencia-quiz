@@ -1,0 +1,50 @@
+Options -MultiViews
+DirectoryIndex index.html
+RewriteEngine On
+RewriteBase /main/
+
+# Permite acesso direto a arquivos estáticos
+RewriteRule ^(assets|static|img|Audio|\.figma)/ - [L]
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# SPA fallback para rotas profundas
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]
+
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType image/webp "access plus 12 months"
+  ExpiresByType image/png  "access plus 12 months"
+  ExpiresByType image/svg+xml "access plus 12 months"
+  ExpiresByType font/woff2 "access plus 12 months"
+  ExpiresByType font/woff "access plus 12 months"
+  ExpiresByType font/ttf "access plus 12 months"
+  ExpiresByType font/otf "access plus 12 months"
+  ExpiresByType text/css "access plus 3 months"
+  ExpiresByType application/javascript "access plus 1 month"
+  ExpiresByType audio/mpeg "access plus 12 months"
+</IfModule>
+
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css application/javascript application/json
+</IfModule>
+
+<IfModule mod_headers.c>
+  <FilesMatch "^assets/.*\.(css|js|mjs|woff2|woff|ttf|otf|svg|png|webp)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+
+  <Files "index.html">
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+  </Files>
+
+  <FilesMatch "\.(svg|png|webp|css|js|mjs|woff2|woff|ttf|otf|mp3)$">
+    Header set Access-Control-Allow-Origin "*"
+  </FilesMatch>
+</IfModule>

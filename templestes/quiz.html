@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./quiz.css">
+  <title>Template Quiz</title>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logoWrap"><div class="logoDot"></div></div>
+      <div class="indicator" aria-label="Indicador de páginas"><span class="numberCurrent">1</span><span class="separator">/</span><span class="numberTotal">15</span></div>
+    </div>
+    <div class="progress" aria-label="Progresso do quiz">
+      <div class="progressHalo"></div>
+      <div class="progressFill"></div>
+      <div class="progressBeacon"></div>
+      <div class="progressSpark"></div>
+    </div>
+  </header>
+
+  <main class="content">
+    <h1 class="title">O que você quer atrair?</h1>
+    <p class="subtitle">Escolha uma opção para continuar</p>
+    <div class="options">
+      <button class="optionButton" data-key="abundance"><span class="emoji">💰</span><span class="text">Abundância financeira</span><span class="chevron">›</span></button>
+      <button class="optionButton" data-key="attract"><span class="emoji">❤️</span><span class="text">Relacionamento</span><span class="chevron">›</span></button>
+      <button class="optionButton" data-key="healing"><span class="emoji">🤕</span><span class="text">Saúde</span><span class="chevron">›</span></button>
+      <button class="optionButton" data-key="energy"><span class="emoji">🕊️</span><span class="text">Paz</span><span class="chevron">›</span></button>
+    </div>
+    <div class="ctaBar">
+      <button class="ctaAction" id="continueBtn" disabled>continuar</button>
+    </div>
+  </main>
+
+  <script src="./quiz.js"></script>
+</body>
+</html>

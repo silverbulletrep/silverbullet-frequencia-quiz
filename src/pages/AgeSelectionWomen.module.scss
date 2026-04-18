@@ -1,0 +1,372 @@
+* {
+  box-sizing: border-box;
+}
+
+.signupSpiriohubComEn {
+  width: 100%;
+  min-height: 100dvh;
+  background: #FFFFFF;
+  overflow: hidden;
+  overflow-x: hidden;
+
+  .background2 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: #FFFFFF;
+    width: 100%;
+    min-height: 100dvh;
+    padding-top: 72px;
+
+    .container5 {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: flex-start;
+      align-self: stretch;
+      padding-right: 24px;
+      padding-left: 24px;
+      height: 64px;
+
+      .container4 {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        align-self: stretch;
+        justify-content: space-between;
+
+        .container3 {
+          display: inline-flex;
+          flex-shrink: 0;
+          align-items: center;
+          column-gap: 16px;
+
+          .container {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
+
+            &:hover {
+              opacity: 0.8;
+            }
+
+            .component1 {
+              flex-shrink: 0;
+              width: 19px;
+              height: 16px;
+              color: #0A1A4F;
+            }
+          }
+
+          .container2 {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            column-gap: 7px;
+
+            .component12 {
+              flex-shrink: 0;
+              width: 57px;
+              height: 20px;
+            }
+
+            .verticalDivider {
+              flex-shrink: 0;
+              background: #F6F7FA;
+              width: 1px;
+              height: 11px;
+            }
+
+            .component13 {
+              flex-shrink: 0;
+              width: 41px;
+              height: 11px;
+            }
+          }
+        }
+
+        .a132 {
+          flex-shrink: 0;
+          line-height: 18px;
+          letter-spacing: 0;
+          color: #0A1A4F;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 12px;
+          font-weight: 500;
+        }
+      }
+
+      .horizontalDivider2 {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        align-self: stretch;
+        background: #F6F7FA;
+        padding-right: calc(100% - 83px);
+
+        .horizontalDivider {
+          border-radius: 8px;
+          background: #3CC7C2;
+          width: 59px;
+          height: 2px;
+        }
+      }
+    }
+
+    .container9 {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: flex-start;
+      align-self: stretch;
+      padding: 20px 14px 12px;
+      flex-grow: 1;
+      height: 100%;
+      row-gap: 6px;
+
+      .qualASuaIdade {
+        flex-shrink: 0;
+        align-self: stretch;
+        text-align: center;
+        line-height: 36px;
+        letter-spacing: -0.72px;
+        color: #0A1A4F;
+        font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      .usamosApenasParaPers {
+        flex-shrink: 0;
+        align-self: stretch;
+        text-align: center;
+        line-height: 24px;
+        letter-spacing: -0.42px;
+        color: #6E4DE0;
+        font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        margin: 0;
+      }
+
+      .container8 {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        align-self: stretch;
+        padding-top: 8px;
+        padding-bottom: 8px;
+        row-gap: 8px;
+
+
+        .container7 {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(160px, 1fr));
+          gap: 12px;
+          justify-content: center;
+          align-items: start;
+          align-self: stretch;
+
+          .component2 {
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+            align-items: flex-start;
+            align-self: stretch;
+            border: 1px solid var(--color-cta-primary);
+            border-radius: 16px;
+            background: #FFFFFF;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+
+            &:hover {
+              border-color: #000000;
+              background: #F6F7FA;
+              transform: translateY(-2px);
+              box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+            }
+
+            &.selected {
+              border-color: #000000;
+              box-shadow: 0 0 0 2px #000000;
+            }
+
+            .background {
+              display: flex;
+              flex-shrink: 0;
+              align-items: flex-end;
+              align-self: stretch;
+              justify-content: center;
+              z-index: 2;
+              border-radius: 15px 15px 0px 0px;
+              background: rgba(247, 200, 0, 0.12);
+              box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.12);
+              aspect-ratio: 198 / 181;
+              min-height: 110px;
+              max-height: 180px;
+              overflow: hidden;
+
+              .man1834YearsOld {
+                flex-shrink: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: center;
+              }
+            }
+
+            .container6 {
+              display: flex;
+              flex-shrink: 0;
+              align-items: center;
+              align-self: stretch;
+              justify-content: space-between;
+              z-index: 1;
+              border-radius: 0px 0px 16px 16px;
+              padding: 12px;
+              background: rgba(247, 200, 0, 0.12);
+              border-top: 1px solid rgba(0, 0, 0, 0.08);
+
+              .text {
+                flex-shrink: 0;
+                line-height: 24px;
+                letter-spacing: 0;
+                color: #0A1A4F;
+                font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+                font-size: 16px;
+                font-weight: 700;
+                margin: 0;
+              }
+
+              .component14 {
+                flex-shrink: 0;
+                width: 12px;
+                height: 20px;
+                color: #6E4DE0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .signupSpiriohubComEn {
+    .background2 {
+      padding-top: 64px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .signupSpiriohubComEn {
+    .background2 {
+      padding-top: 56px;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .signupSpiriohubComEn {
+    .background2 {
+      .container9 {
+        padding: 24px 16px 16px;
+
+        .container8 {
+          .container7 {
+            max-width: 680px;
+            margin: 0 auto;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .signupSpiriohubComEn {
+    .background2 {
+      .container5 {
+        padding-right: 16px;
+        padding-left: 16px;
+      }
+
+      .container9 {
+        padding: 24px 12px 12px;
+
+        .qualASuaIdade {
+          font-size: 20px;
+          line-height: 28px;
+        }
+
+        .usamosApenasParaPers {
+          font-size: 12px;
+          line-height: 18px;
+        }
+
+        .container8 {
+          .container7 {
+            grid-template-columns: repeat(2, minmax(130px, 1fr));
+            gap: 10px;
+            justify-content: center;
+
+            .component2 {
+              width: 100%;
+
+              .background {
+                aspect-ratio: 198 / 181;
+                min-height: 88px;
+                max-height: 120px;
+
+                .man1834YearsOld {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                }
+              }
+
+              .container6 {
+                padding: 8px 10px;
+
+                .text {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .signupSpiriohubComEn {
+    .background2 {
+      .container9 {
+        .container8 {
+          .container7 {
+            max-width: 680px;
+            margin: 0 auto;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            justify-content: center;
+          }
+        }
+      }
+    }
+  }
+}

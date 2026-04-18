@@ -1,0 +1,93 @@
+.stickyHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    opacity: 0;
+    transform: translateY(-100%);
+    pointer-events: none;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    will-change: opacity, transform;
+}
+
+.stickyHeader.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+.inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    background: rgba(11, 15, 30, 0.92);
+    border-bottom: 1px solid rgba(242, 201, 76, 0.25);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(14px) saturate(120%);
+}
+
+.timer {
+    /* Override timer component sizing for sticky context */
+    font-size: 15px;
+    padding: 6px 12px;
+}
+
+.cta {
+    background: linear-gradient(180deg, #FFE07A 0%, #F7C800 48%, #D9A700 100%);
+    color: #000000;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 14px;
+    padding: 10px 20px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(247, 200, 0, 0.22);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    white-space: nowrap;
+    min-height: 44px;
+    font-family: inherit;
+}
+
+.cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 24px rgba(247, 200, 0, 0.28);
+    filter: brightness(1.03);
+}
+
+.cta:active {
+    transform: translateY(0);
+    filter: brightness(0.98);
+}
+
+.cta:focus-visible {
+    outline: 3px solid rgba(247, 200, 0, 0.35);
+    outline-offset: 2px;
+}
+
+/* ── Mobile ≤640px ─────────────────────────────── */
+@media (max-width: 640px) {
+    .inner {
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px 14px;
+    }
+
+    .timer {
+        font-size: 14px;
+        padding: 4px 10px;
+    }
+
+    .cta {
+        width: 100%;
+        text-align: center;
+        font-size: 13px;
+        padding: 10px 16px;
+        min-height: 44px;
+    }
+}

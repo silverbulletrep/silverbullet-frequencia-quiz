@@ -1,0 +1,54 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "storyId": "TRAE-001",
+    "capturedAt": "2026-02-12T17:50:00Z",
+    "sessionDuration": "30m",
+    "complexity": "STANDARD",
+    "discoveries": [
+        {
+            "category": "tooling",
+            "description": "TRAE IDE supports CLAUDE.md and AGENTS.md natively, allowing seamless rule integration.",
+            "relevance": "high",
+            "relatedFiles": [
+                "AGENTS.md",
+                ".claude/CLAUDE.md"
+            ]
+        },
+        {
+            "category": "tooling",
+            "description": "TRAE uses .trae/rules/ directory with YAML frontmatter (alwaysApply, description) for granular rule control.",
+            "relevance": "high",
+            "relatedFiles": [
+                ".trae/rules/aios-core.md"
+            ]
+        }
+    ],
+    "patternsLearned": [
+        {
+            "name": "Hybrid Rule Management",
+            "description": "Maintain both .claude/ and .trae/ rules to support multiple IDEs simultaneously without conflict.",
+            "example": ".trae/rules/aios-core.md vs .claude/CLAUDE.md",
+            "applicability": "Projects used in both TRAE and Claude Code environments."
+        }
+    ],
+    "gotchasFound": [],
+    "decisionsMade": [
+        {
+            "decision": "Adopt Hybrid Approach for AIOS Rules",
+            "rationale": "Ensured compatibility with both legacy (Claude Code) and new (TRAE) environments without data loss.",
+            "alternatives": [
+                "Full Migration to TRAE",
+                "Minimal CLAUDE.md Import"
+            ],
+            "reversible": true
+        },
+        {
+            "decision": "Split Rules by Application Mode",
+            "rationale": "Separated core rules (always apply) from specialized rules like MCP (apply intelligently) to reduce context window usage.",
+            "alternatives": [
+                "Single Monolithic Rule File"
+            ],
+            "reversible": true
+        }
+    ]
+}

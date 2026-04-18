@@ -1,0 +1,167 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 16px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 24px;
+  text-align: center;
+  position: relative;
+  
+  &::before {
+    content: '';
+    display: block;
+    width: 24px;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin: 0 auto 16px auto;
+  }
+}
+
+.graphContainer {
+  position: relative;
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 329/180;
+  margin-bottom: 32px;
+}
+
+.graphSvg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Labels positioned absolutely over the graph */
+.label {
+  position: absolute;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transform: translate(-50%, -100%);
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: inherit; /* Takes color from background */
+  }
+}
+
+.labelSpirio {
+  background-color: #227E64; /* Green from screenshot */
+  color: #ffffff;
+  top: 15%; /* Adjusted based on graph */
+  left: 75%;
+  border-color: #227E64 transparent transparent transparent;
+  
+  &::after { border-color: #227E64 transparent transparent transparent; }
+}
+
+.labelNoPlan {
+  background-color: #FF6B6B; /* Reddish from screenshot */
+  color: #ffffff;
+  top: 55%;
+  left: 75%;
+  
+  &::after { border-color: #FF6B6B transparent transparent transparent; }
+}
+
+.xAxis {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: -10px; /* Pull up closer to graph bottom */
+  padding: 0 10px;
+}
+
+.xAxisLabel {
+  font-size: 11px;
+  font-weight: 600;
+  color: #a7b3d1;
+  text-transform: uppercase;
+}
+
+.disclaimer {
+  font-size: 10px;
+  color: #655868;
+  text-align: center;
+  margin: 16px 0 24px;
+}
+
+.offerBox {
+  background-color: rgba(39, 31, 47, 0.5);
+  border: 1px solid rgba(166, 120, 255, 0.2);
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.offerText {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #dcdcf0;
+  margin: 0;
+  
+  strong {
+    color: #FF6B6B; /* Additional Discount color */
+  }
+  
+  .highlight {
+    color: #F2C94C; /* Gold for plan name */
+    font-weight: 700;
+  }
+}
+
+.ctaButton {
+  width: 100%;
+  padding: 16px;
+  background-color: #227E64; /* Green button */
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #1a634e;
+  }
+}
+
+/* Animations from Docs.md */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes appear {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.animDraw {
+  animation: draw 3s ease-in-out forwards;
+}
+
+.animAppear {
+  animation: appear 0.5s linear forwards;
+  opacity: 0;
+}

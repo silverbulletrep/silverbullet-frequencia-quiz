@@ -1,0 +1,297 @@
+/* ── VibrationalExam Luxury Clinical v2 ── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@400;600;700&display=swap');
+
+:root {
+    --ve-bg: #0A0F1D;
+    --ve-surface: rgba(17, 25, 45, 0.6);
+    --ve-border: rgba(242, 201, 76, 0.1);
+    --ve-text: #FFFFFF;
+    --ve-text-muted: #8E9AAF;
+    --ve-accent: #F2C94C;
+    --ve-accent-dim: rgba(242, 201, 76, 0.1);
+    --ve-danger: #FF4D4D;
+    --ve-gold: #D4AF37;
+    --ve-luxury-glass: rgba(10, 15, 29, 0.7);
+}
+
+.examPage {
+    display: flex;
+    flex-direction: column;
+    height: 100dvh;
+    background: transparent;
+    font-family: 'Outfit', sans-serif;
+    color: var(--ve-text);
+    overflow: hidden;
+    padding-top: 84px;
+    position: relative;
+}
+
+.examSubHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: var(--ve-luxury-glass);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ve-border);
+    position: fixed;
+    top: 84px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+}
+
+.examBadge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 6px;
+    background: var(--ve-accent-dim);
+    border: 1px solid rgba(242, 201, 76, 0.2);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ve-accent);
+}
+
+.examContent {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 60px 24px 80px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    z-index: 1;
+    overflow-y: auto;
+    flex: 1;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: 1.2fr 0.8fr;
+        align-items: center;
+        padding-top: 40px;
+    }
+}
+
+.questionPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.questionTitle {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(20px, 4.5vw, 28px);
+    font-weight: 600;
+    line-height: 1.25;
+    color: #fff;
+    text-wrap: balance;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+
+    &::first-letter {
+        color: var(--ve-accent);
+        font-weight: 800;
+    }
+}
+
+.optionsGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* ── VIBRATIONAL BODY - ASIMETRIA ── */
+.bodyContainerDesktop {
+    display: none;
+
+    @media (min-width: 1024px) {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: sticky;
+        top: 200px;
+        background: linear-gradient(180deg, rgba(242, 201, 76, 0.05) 0%, transparent 100%);
+        border-radius: 40px;
+        padding: 40px;
+        border: 1px solid rgba(242, 201, 76, 0.05);
+        box-shadow: 0 0 100px rgba(0,0,0,0.5);
+        margin-top: 0;
+
+        & > div {
+            transform: none;
+            height: 500px !important;
+        }
+    }
+}
+
+.bodyScanLabel {
+    margin-top: 20px;
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: var(--ve-accent);
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+/* ── FEEDBACK BUFFER (DIAGNOSTIC BADGE) ── */
+.feedbackBuffer {
+    position: fixed;
+    bottom: 100px;
+    left: 16px;
+    right: 16px;
+    z-index: 9999;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    
+    @media (min-width: 1024px) {
+        bottom: 40px;
+        left: 20px;
+        right: 20px;
+    }
+}
+
+.feedbackBufferInner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    background: rgba(10, 15, 29, 0.95);
+    backdrop-filter: blur(16px);
+    border-radius: 18px; /* Reduzindo de 100px para economizar espaço lateral no mobile */
+    border: 1px solid rgba(242, 201, 76, 0.3);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), 
+                0 0 0 1px rgba(242, 201, 76, 0.1);
+    max-width: 100%;
+    pointer-events: auto;
+    animation: diagnosticEntry 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+
+    @media (min-width: 480px) {
+        border-radius: 100px;
+        padding: 12px 20px;
+        gap: 16px;
+    }
+}
+
+@keyframes diagnosticEntry {
+    from { opacity: 0; transform: translateY(20px) scale(0.95); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.bufferCritical { border-color: rgba(255, 77, 77, 0.4); box-shadow: 0 0 20px rgba(255, 77, 77, 0.1), 0 12px 32px rgba(0, 0, 0, 0.6); }
+.bufferHigh { border-color: rgba(242, 201, 76, 0.4); }
+
+.feedbackBodyMini {
+    width: 32px;
+    height: 32px;
+    opacity: 0.9;
+}
+
+.feedbackTexts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.feedbackZone {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ve-accent);
+}
+
+.feedbackZoneDot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--ve-accent);
+    box-shadow: 0 0 8px var(--ve-accent);
+}
+
+.feedbackMessage {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    opacity: 0.95;
+    line-height: 1.25;
+
+    @media (min-width: 480px) {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+}
+
+.feedbackCount {
+    display: none; /* Removido por poluicão cognitiva */
+}
+
+.zCritical { color: var(--ve-danger); }
+.dCritical { background: var(--ve-danger); box-shadow: 0 0 8px var(--ve-danger); }
+
+/* ── LASER SCAN EFFECT ── */
+.laserLine {
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--ve-accent), transparent);
+    box-shadow: 0 0 15px var(--ve-accent);
+    top: 0;
+    animation: laserScan 3s infinite ease-in-out;
+}
+
+@keyframes laserScan {
+    0%, 100% { top: 0%; opacity: 0; }
+    50% { top: 100%; opacity: 1; }
+}
+
+/* ── ANIMAÇÃO CASCATA ── */
+.optionsGridCascata .optionCard {
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fadeLeftCascata 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeLeftCascata {
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.optionsGridCascata .optionCard:nth-child(1) { animation-delay: 0.1s; }
+.optionsGridCascata .optionCard:nth-child(2) { animation-delay: 0.2s; }
+.optionsGridCascata .optionCard:nth-child(3) { animation-delay: 0.3s; }
+.optionsGridCascata .optionCard:nth-child(4) { animation-delay: 0.4s; }
+
+/* ── RE-ESTILIZAÇÃO PREMIUM OPTION CARD (OVERRIDE) ── */
+.premiumCardFix {
+    background: var(--ve-surface) !important;
+    border: 1px solid var(--ve-border) !important;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 24px !important;
+}
+
+.optionEmoji {
+    font-size: 28px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    background: rgba(242, 201, 76, 0.08);
+    border-radius: 12px;
+    border: 1px solid rgba(242, 201, 76, 0.15);
+    color: var(--ve-accent);
+    box-shadow: 0 0 15px rgba(242, 201, 76, 0.1);
+}

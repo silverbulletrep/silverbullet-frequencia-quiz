@@ -1,0 +1,81 @@
+.transitionWrapper {
+    animation-duration: 200ms;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+    /* Removido will-change: transform para não criar permanentemente um bloco de contenção e quebrar position: fixed nos filhos */
+
+    @media (prefers-reduced-motion: reduce) {
+        animation-duration: 0ms !important;
+        animation-name: none !important;
+    }
+}
+
+.fadeIn {
+    animation-name: fadeIn;
+}
+
+.slideUpEnter {
+    animation-name: slideUpEnter;
+}
+
+.slideDownEnter {
+    animation-name: slideDownEnter;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUpEnter {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+        /* Crucial para liberar position: fixed nas páginas */
+    }
+}
+
+@keyframes slideDownEnter {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+        /* Crucial para liberar position: fixed nas páginas */
+    }
+}
+
+/* 
+  Global pseudo-elements for View Transitions API.
+  These will run natively in browsers that support View Transitions.
+*/
+:global(::view-transition-old(page-content)) {
+    animation: 200ms ease-out both fadeOut;
+}
+
+:global(::view-transition-new(page-content)) {
+    animation: 200ms ease-out both fadeIn;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

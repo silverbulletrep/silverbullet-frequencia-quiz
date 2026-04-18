@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+}
+
+.homeBackground {
+  width: 100%;
+  min-height: 100vh;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.content {
+  width: 100%;
+  max-width: 640px;
+  padding: 24px;
+}
+
+.title {
+  color: #ffffff;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+}

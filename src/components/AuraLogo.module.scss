@@ -1,0 +1,13 @@
+.aura { display: block; }
+
+@keyframes orbitRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes glowPulse { 0% { opacity: 0.45; } 50% { opacity: 0.75; } 100% { opacity: 0.45; } }
+@keyframes nucleusBeat { 0% { transform: scale(1); } 50% { transform: scale(1.06); } 100% { transform: scale(1); } }
+
+.orbit { transform-origin: 50% 50%; animation: orbitRotate 10s linear infinite; }
+.orbitFast { animation-duration: 7s; }
+.orbitSlow { animation-duration: 14s; }
+.glowLayer { animation: glowPulse 3s ease-in-out infinite; }
+.nucleus { transform-origin: 50% 50%; animation: nucleusBeat 2.6s ease-in-out infinite; }
+
+@supports not (filter: blur(4px)) { .glowFilter { display: none; } }

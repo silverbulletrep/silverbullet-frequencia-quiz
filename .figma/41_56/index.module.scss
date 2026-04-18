@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+}
+
+.signupSpiriohubComEn {
+  width: 938px;
+  height: 518px;
+
+  .component12 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 300px;
+    height: 180px;
+
+    .yAxisLegend {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 25px 81px 25px 0px;
+      overflow: hidden;
+
+      .variant12 {
+        letter-spacing: 0;
+        color: #ffffff;
+        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+      }
+
+      .variant1 {
+        letter-spacing: 0;
+        color: #ffffff80;
+        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+      }
+
+      .variant13 {
+        line-height: 15px;
+        letter-spacing: 0;
+        color: #000000;
+        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+      }
+
+      .variant2 {
+        margin: 20px 0px 0px;
+        line-height: 15px;
+        letter-spacing: 0;
+        color: #000000;
+        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+
+    .component1 {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      border: 1px dashed #ffffff;
+      background: #1e1e1eb2;
+      padding: 30px 93px 39px 30px;
+
+      .variant14 {
+        width: 19px;
+        height: 16px;
+      }
+
+      .variant22 {
+        margin-top: 34px;
+        width: 57px;
+        height: 20px;
+      }
+
+      .variant3 {
+        margin-top: 30px;
+        width: 41px;
+        height: 11px;
+      }
+    }
+  }
+
+  .component22 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 810px;
+
+    .xAxisLegend {
+      display: flex;
+      align-items: flex-start;
+      align-self: stretch;
+      justify-content: space-between;
+      padding: 0px 224px 15px 160px;
+      min-width: 810px;
+      overflow: hidden;
+
+      .default {
+        line-height: 15px;
+        letter-spacing: 0;
+        color: #ffffff;
+        font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 12px;
+        font-weight: 300;
+      }
+    }
+
+    .component2 {
+      display: flex;
+      align-items: center;
+      align-self: stretch;
+      justify-content: space-between;
+      border: 1px dashed #ffffff;
+      background: #1e1e1eb2;
+      padding: 30px;
+      min-width: 810px;
+      height: 116px;
+
+      .text {
+        flex-shrink: 0;
+        line-height: 24px;
+        letter-spacing: 0;
+        color: var(--signup-spiriohub-com-White, #ffffff);
+        font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .variant1HoverFalse {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: var(--color-spring-green-31, #227e64);
+        padding: 16px 6px 17px;
+        width: 360px;
+      }
+
+      .variant1HoverTrue {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 16px;
+        background: var(--color-spring-green-45, #4e9883);
+        padding: 16px 6px 17px;
+        width: 360px;
+      }
+    }
+  }
+}

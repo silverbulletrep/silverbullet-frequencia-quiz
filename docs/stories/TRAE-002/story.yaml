@@ -1,0 +1,36 @@
+id: TRAE-002
+title: Ajustes de produção no resultado e recuperação
+status: Done
+story: Corrigir problemas visuais e de carregamento em /resultado e /recupera para consistência entre ambientes e dispositivos.
+acceptance_criteria:
+  - A imagem do especialista em /resultado carrega em produção
+  - O card de resultado em /resultado fica centralizado no desktop
+  - A tipografia de Recupera.jsx fica consistente com o restante do funil
+  - O modal de coleta de contato não é sobreposto pela barra do navegador no iPhone
+tasks:
+  - id: T1
+    title: Corrigir imagem e centralização no resultado
+    status: completed
+  - id: T2
+    title: Ajustar tipografia em Recupera
+    status: completed
+  - id: T3
+    title: Planejar e aplicar ajuste do modal no iPhone
+    status: completed
+dev_agent_record:
+  agent: dev
+  model: gpt-5.2-codex
+  debug_log: []
+  completion_notes:
+    - Imagem do especialista passa a ser importada pelo bundler em Resultado.
+    - Modal do Resultado ajustado para viewport dinâmica e safe-area.
+    - Tipografia do Recupera alinhada com Poppins.
+  file_list:
+    - src/pages/Resultado.jsx
+    - src/pages/Resultado.module.scss
+    - src/pages/Recupera.module.scss
+  change_log:
+    - Resultado: expert.webp importado via bundler para produção.
+    - Resultado: overlay do modal usa 100dvh e safe-area.
+    - Recupera: headlines com Poppins para consistência.
+    - Resultado: card branco centralizado em viewports médias.

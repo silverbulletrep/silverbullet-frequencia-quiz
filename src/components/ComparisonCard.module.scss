@@ -1,0 +1,360 @@
+.container {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 8px; /* Reduzido de 16px para 8px conforme original */
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto 0 auto;
+  padding: 0;
+  position: relative;
+  font-family: inherit;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 0; /* Gap zero no mobile para o separador ficar no meio */
+  }
+}
+
+.cardLeft, .cardRight {
+  flex: 1;
+  border-radius: 20px; /* Aumentado para 20px */
+  padding: 12px; /* Reduzido de 16px para 12px */
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  max-width: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden; /* Para garantir border-radius */
+}
+
+.cardLeft {
+  background-color: #271f2f; /* Cor base das seções do projeto (Roxo escuro) */
+  color: #dcdcf0; /* Cor de texto padrão do projeto */
+  border: 1px solid rgba(255, 255, 255, 0.12); /* Borda padrão do projeto */
+}
+
+.cardRight {
+  background-color: #ffffff; /* Branco conforme solicitado para positivo */
+  color: #271f2f; /* Texto na cor do tema escuro para contraste e harmonia */
+  border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px; /* Aumentado espaçamento */
+  position: relative;
+  z-index: 2;
+}
+
+.labelContainerLeft, .labelContainerRight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.labelBadgeLeft {
+  background-color: rgba(20, 19, 25, 0.80);
+  padding: 0.5rem 1rem; /* Ajustado padding */
+  border-radius: 8px; /* Ajustado radius */
+  width: 100%;
+  text-align: center;
+  margin-bottom: -1px; /* Colar na seta */
+}
+
+.labelBadgeRight {
+  background-color: #227E64;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  margin-bottom: -1px;
+}
+
+.labelText {
+  color: #fff;
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.labelArrowLeft {
+  display: block;
+  color: rgba(20, 19, 25, 0.80); /* Cor do preenchimento SVG */
+}
+.labelArrowRight {
+  display: block;
+  color: #227E64;
+}
+
+.imageContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  height: auto; /* Ajuste automático para remover espaço extra */
+  align-items: flex-end; /* Alinhar imagem na base */
+  position: relative;
+  padding-bottom: 10px; /* Espaço para o traço não ficar colado na borda inferior absoluta se necessário */
+}
+
+.imageContainer::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%; /* Largura do traço base */
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+  z-index: 1;
+}
+
+/* Ajuste específico para o traço no card claro (direito) para ter contraste */
+.cardRight .imageContainer::after {
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 0, 0, 0.2) 50%, transparent 100%);
+}
+
+.mainImage {
+  height: 100%; /* Altura fixa definida para garantir uniformidade e tamanho adequado */
+  width: auto;
+  object-fit: contain;
+  z-index: 2;
+  margin-bottom: -1px; /* Ajuste fino para tocar o traço */
+  mask-image: linear-gradient(to top, transparent 0%, black 15%); /* Fade suave na base da imagem para integrar com o traço */
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 15%);
+}
+
+/* Filtros de Sombra Específicos */
+.cardLeft .mainImage {
+  filter: drop-shadow(rgba(155, 59, 59, 0.6) 0px 1px 40px);
+}
+
+.cardRight .mainImage {
+  filter: drop-shadow(rgba(3, 191, 160, 0.4) 0px 1px 40px);
+}
+
+.metricsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Aumentado gap entre métricas */
+}
+
+.metricRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metricHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.metricTitle {
+  font-size: 13px; /* Levemente maior */
+  font-weight: 500;
+  margin: 0;
+  opacity: 0.7;
+}
+
+.cardRight .metricTitle {
+  opacity: 0.8;
+  color: #1F2937;
+}
+
+.metricValueContainer {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.metricStatusLow {
+  color: #EF4444; /* Vermelho mais vibrante */
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.metricStatusHigh {
+  color: #22C55E;
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.metricStatusText {
+  font-size: 13px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cardLeft .metricStatusText {
+  color: #EF4444;
+}
+
+.cardRight .metricStatusText {
+  color: #22C55E;
+}
+
+/* Baterias */
+.batteryContainer {
+  display: flex;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.batteryLevel {
+  height: 6px; /* Mais fino */
+  flex: 1;
+  border-radius: 4px; /* Mais arredondado */
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.cardRight .batteryLevel {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.batteryLevel.levelLow {
+  background-color: #EF4444;
+}
+
+.batteryLevel.levelHigh {
+  background-color: #22C55E;
+}
+
+/* Barra de Progresso */
+.progressContainer {
+  height: 6px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 99px;
+  position: relative;
+  margin-top: 4px;
+}
+
+.cardRight .progressContainer {
+  background-color: rgba(0, 0, 0, 0.06);
+}
+
+.progressBarFill {
+  height: 100%;
+  border-radius: 99px;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.fillLow {
+  background-color: #EF4444;
+}
+
+.fillHigh {
+  background-color: #22C55E;
+}
+
+.progressKnob {
+  width: 16px; /* Maior */
+  height: 16px;
+  background-color: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.knobInner {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.knobLow .knobInner {
+  background-color: #EF4444;
+}
+
+.knobHigh .knobInner {
+  background-color: #22C55E;
+}
+
+/* Separador */
+.separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  
+  @media (max-width: 768px) {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: -16px 0; /* Sobrepor bordas */
+    transform: rotate(90deg);
+  }
+}
+
+.separatorIcon {
+  width: 36px; /* Maior */
+  height: 36px;
+  background-color: #F2C94C; /* Dourado do tema (Garantia/Estrelas) */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  border: 3px solid #fff; /* Borda branca mais grossa */
+}
+
+/* Wrapper para Headline + Cards */
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+}
+
+.discountHeadline {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 24px;
+  line-height: 1.4;
+  
+  @media (max-width: 768px) {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding: 0 16px;
+  }
+}
+
+.subHeadline {
+  font-size: 16px;
+  font-weight: 500;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 32px;
+  margin-top: -16px;
+  opacity: 0.8;
+}
+
+.highlightText {
+  color: #ffe8b0;
+  font-weight: 700;
+}

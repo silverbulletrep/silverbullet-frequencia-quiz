@@ -1,0 +1,1021 @@
+* {
+  box-sizing: border-box;
+}
+
+.vslContainer {
+  width: 100%;
+  min-height: 100vh;
+  height: auto;
+  /* Página contínua: scroll único do documento */
+  overflow: visible;
+  /* Unificar toda a página com um único fundo (Global Body) */
+  background: transparent;
+  /* Largura máxima de referência (card) para toda a página */
+  --content-max-width: 528px;
+
+    .background {
+      display: flex;
+      flex-direction: column;
+      /* Centralizar todos os elementos no eixo horizontal */
+      align-items: center;
+      /* Remover fundo escuro para evitar divisão visual */
+      background: transparent;
+      width: 100%;
+      height: 100%;
+      position: relative;
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      /* Centralizar conteúdo do header */
+      align-items: center;
+      align-self: stretch;
+      padding-right: 24px;
+      padding-left: 24px;
+      height: 64px;
+
+      .headerContent {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        align-self: stretch;
+        /* Centralizar itens em vez de espaçar */
+        justify-content: center;
+        column-gap: 16px;
+        max-width: var(--content-max-width);
+        width: 100%;
+
+        .headerLeft {
+          display: inline-flex;
+          flex-shrink: 0;
+          align-items: center;
+          column-gap: 16px;
+
+          .backButton {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+
+            .backIcon {
+              flex-shrink: 0;
+              width: 19px;
+              height: 16px;
+              color: #0A1A4F;
+            }
+          }
+
+          .logoContainer {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            column-gap: 7px;
+
+            .spirioLogo {
+              flex-shrink: 0;
+              width: 57px;
+              height: 20px;
+            }
+
+            .verticalDivider {
+              flex-shrink: 0;
+              background: #F6F7FA;
+              width: 1px;
+              height: 11px;
+            }
+
+            .quizLogo {
+              flex-shrink: 0;
+              width: 41px;
+              height: 11px;
+            }
+          }
+        }
+
+        .progressText {
+          flex-shrink: 0;
+          line-height: 18px;
+          letter-spacing: 0;
+          color: #0A1A4F;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 12px;
+          font-weight: 500;
+          margin: 0;
+        }
+        .progressSub {
+          display: inline-block;
+          margin-left: 8px;
+          color: #51608f;
+          font-size: 11px;
+          font-weight: 600;
+        }
+
+        .headerProgress {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+          padding: 8px 12px;
+          border-radius: 999px;
+          background: rgba(246, 247, 250, 0.9);
+          box-shadow: 0 4px 12px rgba(10, 26, 79, 0.08);
+          overflow: hidden;
+        }
+
+        .progressContent {
+          position: relative;
+          display: inline-flex;
+          align-items: baseline;
+        }
+
+        .headerProgressFill {
+          position: absolute;
+          left: 0;
+          top: 0;
+          bottom: 0;
+          width: 0%;
+          background: linear-gradient(90deg, #E7FBFA 0%, #D5F6F3 100%);
+          opacity: 0.6;
+          transition: width 200ms linear;
+        }
+
+        .spinner {
+          width: 14px;
+          height: 14px;
+          border: 2px solid #3CC7C2;
+          border-top-color: transparent;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+        }
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    }
+
+      .content {
+        display: flex;
+        flex-direction: column;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      padding: 96px 16px 16px;
+      flex-grow: 1;
+      row-gap: 24px;
+      justify-content: flex-start;
+      position: relative; /* cria contexto de empilhamento para z-index */
+      /* Todos os filhos respeitam a largura máxima do card */
+        > * {
+          width: 100%;
+          max-width: var(--content-max-width);
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .promoSpacer {
+          width: 100%;
+          max-width: var(--content-max-width);
+        }
+
+      /* Wrapper para centralizar o bloco extraído do Figma e habilitar scroll horizontal */
+      .innerPlanWrapper {
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        max-width: var(--content-max-width);
+        /* Fluxo contínuo, sem scroll horizontal local */
+        overflow: visible;
+        /* leve espaçamento do vídeo */
+        margin-top: 8px;
+      }
+
+      /* Wrapper para o bloco estendido abaixo de "People love Spirio" */
+      .extendedPlanWrapper {
+        /* Oculto conforme solicitação para remover cards de preço do /vsl2 */
+        display: none;
+      }
+
+      .headlineContainer {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        align-self: stretch;
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        position: relative;
+        z-index: 10; /* garantir que fique acima de qualquer overlay/blur */
+
+        .headline {
+          flex-shrink: 0;
+          align-self: stretch;
+          text-align: center;
+          line-height: 36px;
+          letter-spacing: -0.72px;
+          color: var(--color-cta-primary);
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 24px;
+          font-weight: 500;
+          margin: 0;
+          text-shadow: none;
+          position: relative;
+          z-index: 10;
+        }
+
+        .headlineAccent {
+          color: #000000;
+          font-weight: 700;
+          text-transform: uppercase;
+          margin-left: 6px;
+        }
+
+        .impactText {
+          margin: 10px 0 0;
+          text-align: center;
+          font-size: 14px;
+          line-height: 20px;
+          max-width: var(--content-max-width);
+          display: flex;
+          justify-content: center;
+        }
+
+        .impactBox {
+          background: #F2C94C;
+          color: #000000;
+          padding: 8px 12px;
+          border-radius: 6px;
+          font-weight: 500;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .upper {
+          text-transform: uppercase;
+        }
+
+        .upperBoldBlack {
+          text-transform: uppercase;
+          font-weight: 800;
+          color: var(--color-cta-primary);
+        }
+      }
+
+      /* Seção: O que você ganha */
+      .offerSection {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        border: 1px solid rgba(255,255,255,0.20);
+        border-radius: 16px;
+        background: #201c27;
+        padding: 16px;
+        color: #ffffff;
+      }
+
+      .offerTitle {
+        font-size: 20px;
+        font-weight: 700;
+        color: #ffffff;
+        margin: 0 0 4px 0;
+        text-align: center;
+      }
+
+      .offerGrid {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .anchorReceipt {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        border: 1px solid rgba(255,255,255,0.18);
+        border-radius: 12px;
+        background: #251d2d;
+        padding: 12px;
+      }
+
+      .receiptHeader {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+      }
+
+      .receiptTitle {
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 14px;
+      }
+
+      .receiptSub {
+        color: #cbd5e1;
+        font-weight: 600;
+        font-size: 12px;
+      }
+
+      .receiptBody {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .receiptRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #e9e9f0;
+        font-size: 13px;
+      }
+
+      .receiptTotalRow {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px dashed rgba(255,255,255,0.16);
+        padding-top: 8px;
+        color: #ffe8b0;
+        font-weight: 800;
+      }
+
+      .strikeValue {
+        color: #E53935;
+        text-decoration: line-through;
+        position: relative;
+        display: inline-block;
+        text-shadow: 0 0 8px rgba(229, 57, 53, 0.25);
+      }
+      .strikeValue::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, #E53935 0%, #FF6B6B 100%);
+      }
+
+      .strikeValue {
+        color: #E53935;
+        text-decoration: line-through;
+        position: relative;
+        text-shadow: 0 0 8px rgba(229, 57, 53, 0.25);
+      }
+
+      .finalAnchor {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        background: linear-gradient(90deg, #3CC7C2 0%, #0AA88F 100%);
+        border: 1px solid rgba(60,199,194,0.4);
+        border-radius: 10px;
+        padding: 10px 12px;
+        box-shadow: 0 8px 24px rgba(10,168,143,0.25);
+        animation: gentleGlow 2.4s ease-in-out infinite alternate;
+      }
+
+      .finalLabel {
+        color: #cbd5e1;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .finalPrice {
+        color: #FFFFFF;
+        font-weight: 900;
+        font-size: 20px;
+        letter-spacing: 0.5px;
+        animation: textGlow 2.2s ease-in-out infinite alternate;
+      }
+
+      .urgencyNotice {
+        text-align: center;
+        color: #A678FF;
+        font-weight: 700;
+        font-size: 12px;
+      }
+
+      .vacancyBox {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .vacancyHeader {
+        display: inline-flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 6px;
+      }
+
+      .vacancyText {
+        color: #e9e9f0;
+        font-weight: 600;
+        font-size: 12px;
+      }
+
+      .vacancyCount {
+        color: #F2C94C;
+        font-weight: 900;
+        font-size: 16px;
+        animation: pulseCount 1.6s ease-in-out infinite;
+      }
+
+      .vacancyProgress {
+        width: 100%;
+        height: 8px;
+        background: rgba(255,255,255,0.12);
+        border-radius: 999px;
+        overflow: hidden;
+      }
+
+      .vacancyFill {
+        height: 100%;
+        background: linear-gradient(90deg, #3CC7C2 0%, #0AA88F 100%);
+        border-radius: 999px;
+        transition: width 600ms ease;
+        box-shadow: 0 2px 8px rgba(10,168,143,0.35);
+      }
+
+      @keyframes pulseCount {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.06); }
+        100% { transform: scale(1); }
+      }
+
+      .offerItem {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        border: 1px solid rgba(255,255,255,0.12);
+        border-radius: 12px;
+        background: #271f2f;
+        padding: 12px;
+      }
+
+      .offerHeader {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+      }
+
+      .offerTitleRow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .offerIndex {
+        color: #F2C94C;
+        font-weight: 800;
+      }
+
+      .offerName {
+        font-weight: 700;
+        color: #ffffff;
+      }
+
+      .offerPrice {
+        color: #ffe8b0;
+        font-weight: 700;
+        font-size: 13px;
+      }
+
+      .offerTeaser {
+        margin: 0;
+        color: #e9e9f0;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+
+      .offerMore {
+        align-self: flex-start;
+        border: 1px solid rgba(166, 120, 255, 0.4);
+        background: rgba(166, 120, 255, 0.1);
+        color: #A678FF;
+        font-weight: 600;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        padding: 6px 16px;
+        border-radius: 20px;
+        transition: all 0.2s ease;
+      }
+
+      .offerMore:hover {
+        background: rgba(166, 120, 255, 0.2);
+        border-color: rgba(166, 120, 255, 0.6);
+        color: #C9B6FF;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(166, 120, 255, 0.15);
+      }
+
+      .offerDescription {
+        margin: 4px 0 0 0;
+        color: #dcdcf0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+
+      .videoContainer {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        /* evitar que o vídeo force altura do container */
+        flex-grow: 0;
+        width: 100%;
+        max-width: var(--content-max-width);
+        margin: 0 auto;
+        position: relative;
+        z-index: 1; /* garantir que o headline fique acima */
+
+        .video {
+          width: 100%;
+          max-width: 300px;
+          height: auto;
+          aspect-ratio: 9/16;
+          border-radius: 16px;
+          /* evita barras pretas visíveis, mantendo a proporção */
+          background: transparent;
+          object-fit: contain;
+          /* Moldura brilhante suave */
+          box-shadow: 0 0 20px rgba(198, 182, 255, 0.25);
+          border: 2px solid rgba(201, 182, 255, 0.6);
+          animation: none;
+        }
+      }
+
+      .promoBanner {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 12px;
+        width: calc(100% - 32px);
+        max-width: var(--content-max-width);
+        display: block;
+        padding: 12px 16px;
+        border-radius: 12px;
+        background: linear-gradient(90deg, #141319 0%, #202734 100%);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+        color: #FFFFFF;
+        z-index: 1000;
+      }
+
+      .promoContent {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        column-gap: 16px;
+        width: 100%;
+      }
+
+      .bannerLeft {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 4px 8px;
+        border-radius: 999px;
+        background: #0AA88F;
+        color: #ffffff;
+        font-weight: 800;
+        font-size: 12px;
+      }
+
+      .discountText {
+        font-weight: 700;
+        color: #3CC7C2;
+      }
+
+      .savingsText {
+        font-weight: 600;
+        color: #cbd5e1;
+      }
+
+      .bannerCenter {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .centerLabel {
+        color: #cbd5e1;
+        font-size: 12px;
+      }
+
+      .timerLabel {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 22px;
+        font-weight: 700;
+        color: #3CC7C2;
+        letter-spacing: 1px;
+      }
+
+      .bannerRight {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .priceGroup {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        line-height: 1.1;
+      }
+
+      .priceOriginal {
+        color: #E53935;
+        text-decoration: line-through;
+        font-weight: 700;
+        font-size: 12px;
+        position: relative;
+        display: inline-block;
+        text-shadow: 0 0 8px rgba(229, 57, 53, 0.25);
+      }
+      .priceOriginal::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 2px;
+        transform: translateY(-50%);
+        background: linear-gradient(90deg, #E53935 0%, #FF6B6B 100%);
+      }
+
+      .priceNew {
+        font-weight: 800;
+        color: #F2C94C;
+        font-size: 16px;
+      }
+
+      .bannerCTA {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 999px;
+        padding: 8px 12px;
+        background: #4E9883;
+        color: #FFFFFF;
+        font-weight: 700;
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(78, 152, 131, 0.30);
+        transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+      }
+      .bannerCTA:active { transform: scale(0.98); }
+      .bannerCTA:hover { background: #5FB19B; box-shadow: 0 10px 30px rgba(78, 152, 131, 0.35); }
+
+      @media (max-width: 480px) {
+        .promoBanner {
+          padding: 10px 12px;
+          column-gap: 12px;
+          row-gap: 10px;
+          flex-direction: column;
+          align-items: stretch;
+        }
+        .promoContent {
+          display: grid;
+          grid-template-columns: 1fr;
+          row-gap: 10px;
+          width: 100%;
+        }
+        .badge { font-size: 11px; }
+        .discountText { font-size: 12px; }
+        .savingsText { font-size: 11px; }
+        .centerLabel { display: none; }
+        .timerLabel { font-size: 18px; }
+        .bannerLeft { justify-content: center; }
+        .bannerCenter { justify-content: center; }
+        .bannerRight { flex-direction: column; justify-content: center; }
+        .priceGroup { align-items: center; }
+        .priceOriginal { font-size: 11px; }
+        .priceNew { font-size: 16px; }
+        .bannerCTA { width: 100%; padding: 8px 12px; font-size: 13px; }
+      }
+
+      /* Seletor de preço abaixo do vídeo */
+      .priceSelector {
+        margin-top: 16px;
+        padding: 12px;
+        border: 1px solid #F6F7FA;
+        border-radius: 12px;
+        background: #FFFFFF;
+        backdrop-filter: none;
+      }
+
+      .priceTitle {
+        margin: 0 0 8px;
+        font-size: 16px;
+        color: #0A1A4F;
+        text-align: center;
+      }
+
+      .radioGroup {
+        display: grid;
+        gap: 8px;
+      }
+
+      .radioOption {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px;
+        border: 1px solid #F6F7FA;
+        border-radius: 8px;
+        background: #FFFFFF;
+      }
+
+      .optionLabel {
+        color: #e5e7eb;
+        font-size: 14px;
+        color: #0A1A4F;
+      }
+
+      .checkoutButton {
+        margin-top: 12px;
+        width: 100%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        border: none;
+        font-weight: 600;
+        background: #4E9883;
+        color: #FFFFFF;
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(78, 152, 131, 0.30);
+        transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .checkoutButton:hover {
+        background: #5FB19B;
+        box-shadow: 0 10px 30px rgba(78, 152, 131, 0.35);
+      }
+
+      .checkoutButton:active {
+        transform: scale(0.98);
+      }
+
+      .securityNote {
+        margin-top: 6px;
+        text-align: center;
+        color: #cbd5e1;
+        font-size: 12px;
+      }
+    }
+
+    .buttonContainer {
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      /* Centralizar o botão na largura toda */
+      align-items: center;
+      align-self: stretch;
+      animation: fadeIn 0.5s ease-in-out;
+
+      .divider {
+        flex-shrink: 0;
+        align-self: stretch;
+        background: var(--color-white-10, #ffffff1a);
+        height: 1px;
+      }
+
+      .buttonWrapper {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        align-self: stretch;
+        justify-content: center;
+        padding: 16px;
+        max-width: var(--content-max-width);
+        width: 100%;
+
+        .continueButton {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          justify-content: center;
+          border: none;
+          border-radius: 16px;
+          background: #4E9883;
+          padding: 16px 6px 17px;
+          width: 360px;
+          cursor: pointer;
+          box-shadow: 0 8px 24px rgba(78, 152, 131, 0.30);
+          transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+
+          &:hover {
+            background: #5FB19B;
+            box-shadow: 0 10px 30px rgba(78, 152, 131, 0.35);
+          }
+
+          &:active {
+            transform: scale(0.98);
+          }
+
+          .buttonText {
+            flex-shrink: 0;
+            line-height: 24px;
+            letter-spacing: 0;
+            color: #FFFFFF;
+            font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modal overlay e conteúdo */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modalContent {
+  background: #ffffff;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #141319;
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #444;
+  cursor: pointer;
+}
+
+.modalBody {
+  padding: 16px;
+  color: #333;
+  font-size: 14px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 12px 16px 16px;
+}
+
+.primaryAction {
+  border: none;
+  border-radius: 8px;
+  background: #4E9883;
+  color: #FFFFFF;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.primaryAction:hover {
+  background: #5FB19B;
+}
+
+@keyframes gentleGlow {
+  from {
+    box-shadow: 
+      0 0 20px rgba(78, 152, 131, 0.3),
+      0 0 40px rgba(60, 199, 194, 0.2),
+      0 0 60px rgba(10, 168, 143, 0.1);
+    border-color: rgba(78, 152, 131, 0.4);
+  }
+  to {
+    box-shadow: 
+      0 0 30px rgba(78, 152, 131, 0.4),
+      0 0 50px rgba(60, 199, 194, 0.3),
+      0 0 70px rgba(10, 168, 143, 0.15);
+    border-color: rgba(78, 152, 131, 0.5);
+  }
+}
+
+@keyframes textGlow {
+  from {
+    text-shadow: 
+      0 0 10px rgba(78, 152, 131, 0.3),
+      0 0 20px rgba(60, 199, 194, 0.2),
+      0 2px 4px rgba(0, 0, 0, 0.3);
+  }
+  to {
+    text-shadow: 
+      0 0 15px rgba(78, 152, 131, 0.4),
+      0 0 25px rgba(60, 199, 194, 0.3),
+      0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .vslContainer {
+    .background {
+      .content {
+        padding: 96px 12px 12px;
+        row-gap: 16px;
+
+        .headlineContainer {
+          .headline {
+            font-size: 20px;
+            line-height: 28px;
+          }
+        }
+
+        .videoContainer {
+          .video {
+            max-width: 280px;
+          }
+        }
+      }
+
+      .buttonContainer {
+        .buttonWrapper {
+          .continueButton {
+            width: 90%;
+            max-width: 360px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .vslContainer {
+    .background {
+      .content {
+        .headlineContainer {
+          .headline {
+            font-size: 18px;
+            line-height: 24px;
+          }
+        }
+
+        .videoContainer {
+          .video {
+            max-width: 250px;
+          }
+        }
+      }
+    }
+  }
+}

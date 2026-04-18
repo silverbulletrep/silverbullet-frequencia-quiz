@@ -1,0 +1,86 @@
+* {
+  box-sizing: border-box;
+}
+
+.divScIckxbc {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 16px;
+  background: var(--color-white-solid, #ffffff);
+  padding: 16px 8px;
+  width: 288px;
+  height: 178px;
+  row-gap: 16px;
+
+  .divScDQmiwx {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    align-items: center;
+    align-self: stretch;
+    row-gap: 4px;
+
+    .paraAvanArEspecifiqu {
+      flex-shrink: 0;
+      line-height: 20px;
+      letter-spacing: -0.36px;
+      color: var(--signup-spiriohub-com-Woodsmoke-60, #14131999);
+      font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .pScEgTsrv {
+      display: inline-flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: center;
+      align-self: stretch;
+      margin-right: -1px;
+      margin-left: -1px;
+      padding: 1px 3px;
+
+      .vocSenteVontadeDeDes {
+        flex-shrink: 0;
+        text-align: center;
+        line-height: 24px;
+        letter-spacing: 0;
+        color: var(--signup-spiriohub-com-Bastille, #271f2f);
+        font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .divScBCvmQg {
+    display: flex;
+    flex-shrink: 0;
+    align-items: flex-start;
+    align-self: stretch;
+    justify-content: center;
+    column-gap: 16px;
+
+    .buttonScJMbVjb {
+      display: flex;
+      flex-grow: 1;
+      align-items: center;
+      justify-content: center;
+      border-radius: 16px;
+      background: var(--color-blue-9-20, #14131933);
+      padding: 28px 24px;
+      height: 56px;
+
+      .nO {
+        flex-shrink: 0;
+        line-height: 24px;
+        letter-spacing: 0;
+        color: var(--signup-spiriohub-com-Woodsmoke, #141319);
+        font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        font-weight: 500;
+      }
+    }
+  }
+}

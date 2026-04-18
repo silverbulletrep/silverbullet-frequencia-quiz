@@ -1,0 +1,3538 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>WhatsApp - Johann Müller</title>
+    <link rel="icon" href="https://static.whatsapp.net/rsrc.php/v3/yP/r/rYZqPCBaG70.png" type="image/x-icon">
+
+    <!-- IScroll para rolagem suave -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/iScroll/5.2.0/iscroll.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        :root {
+            --whatsapp-teal: #075E54;
+            --whatsapp-teal-light: #128C7E;
+            --whatsapp-green: #25D366;
+            --whatsapp-light-green: #DCF8C6;
+            --whatsapp-chat-bg: #E5DDD5;
+            --whatsapp-panel-bg: #EDEDED;
+            --whatsapp-drawer-bg: #F0F2F5;
+            --whatsapp-icon-gray: #919191;
+            --whatsapp-text: #303030;
+            --whatsapp-secondary-text: #667781;
+            --whatsapp-outgoing-chat: #DCF8C6;
+            --whatsapp-border: #D1D7DB;
+            --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            position: fixed;
+            background-color: var(--whatsapp-panel-bg);
+            margin: 0;
+            padding: 0;
+            touch-action: manipulation;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            overscroll-behavior: none;
+        }
+
+        .whatsapp-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: var(--whatsapp-panel-bg);
+            overflow: hidden;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            background-color: var(--whatsapp-teal);
+            background-image: linear-gradient(to right, var(--whatsapp-teal), var(--whatsapp-teal-light));
+            color: white;
+            z-index: 100;
+            height: 60px;
+            flex-shrink: 0;
+            position: relative;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 12px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+        }
+
+        .profile-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: white;
+            margin-bottom: 2px;
+        }
+
+        .profile-status {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .header-icons {
+            margin-left: auto;
+            display: flex;
+        }
+
+        .header-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin-left: 8px;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-icon::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .header-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+        }
+
+        .header-icon:active {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(1px);
+        }
+
+        .header-icon:active::after {
+            animation: rippleWhite 0.6s ease-out;
+        }
+
+        @keyframes rippleWhite {
+            0% {
+                opacity: 1;
+                transform: scale(0, 0);
+            }
+
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+        /* Chat Body Styles */
+        .chat-body {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background-color: var(--whatsapp-chat-bg);
+            background-image: url('https://4lifenutrition.site/Assets/background.webp');
+            background-repeat: repeat;
+        }
+
+        /* Footer Styles */
+        .footer {
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-top: 1px solid var(--whatsapp-border);
+            background-color: var(--whatsapp-panel-bg);
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            flex-shrink: 0;
+            height: 60px;
+            padding-bottom: calc(8px + var(--safe-area-inset-bottom));
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Input actions and button styles */
+        .input-actions {
+            display: flex;
+            align-items: center;
+            margin-right: 8px;
+        }
+
+        .action-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 2px;
+            color: var(--whatsapp-icon-gray);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .action-btn:hover {
+            color: var(--whatsapp-teal-light);
+            background-color: rgba(0, 0, 0, 0.03);
+            transform: translateY(-1px);
+        }
+
+        .action-btn:active {
+            background-color: rgba(0, 0, 0, 0.05);
+            transform: translateY(1px);
+        }
+
+        .action-btn:active::after {
+            animation: ripple 0.6s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                opacity: 1;
+                transform: scale(0, 0);
+            }
+
+            20% {
+                transform: scale(25, 25);
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(40, 40);
+            }
+        }
+
+        /* Message input field styles */
+        .message-input-container {
+            flex: 1;
+            position: relative;
+        }
+
+        .message-input {
+            width: 100%;
+            border: none;
+            border-radius: 21px;
+            background-color: white;
+            padding: 9px 12px;
+            font-size: 15px;
+            min-height: 42px;
+            outline: none;
+            color: var(--whatsapp-text);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0 1px 5px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .message-input:focus {
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), inset 0 1px 5px rgba(0, 0, 0, 0.05);
+            transform: translateY(-1px);
+        }
+
+        .message-input::placeholder {
+            color: var(--whatsapp-secondary-text);
+        }
+
+        .send-btn {
+            width: auto;
+            height: 40px;
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 8px;
+            cursor: pointer;
+            background-color: var(--whatsapp-green);
+            background-image: linear-gradient(to right bottom, var(--whatsapp-green), #22c35e);
+            color: white;
+            padding-right: 15px;
+            padding-left: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 7px rgba(0, 0, 0, 0.15);
+            background-image: linear-gradient(to right bottom, #2ad370, var(--whatsapp-green));
+        }
+
+        .send-btn:active {
+            background-color: #22c35e;
+            transform: translateY(1px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .send-btn svg {
+            transition: transform 0.3s ease;
+        }
+
+        .send-btn:hover svg {
+            transform: translateX(2px);
+        }
+
+        /* Loading indicator */
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            width: 100%;
+            max-width: 300px;
+            margin: 0 auto;
+            padding: 0;
+            transition: opacity 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28),
+                filter 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        /* Animação para a saída do perfil */
+        @keyframes fadeOutProfile {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            20% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+
+            100% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+        }
+
+        .loading-dots {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 30px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .loading-dots div {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--whatsapp-green);
+            margin: 0 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            transform-origin: center bottom;
+        }
+
+        .loading-dots div:nth-child(1) {
+            animation: dotBounce 1.2s -0.32s infinite cubic-bezier(.45, .05, .55, .95);
+        }
+
+        .loading-dots div:nth-child(2) {
+            animation: dotBounce 1.2s -0.16s infinite cubic-bezier(.45, .05, .55, .95);
+        }
+
+        .loading-dots div:nth-child(3) {
+            animation: dotBounce 1.2s 0s infinite cubic-bezier(.45, .05, .55, .95);
+        }
+
+        @keyframes dotBounce {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+                background-color: var(--whatsapp-green);
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            }
+
+            30% {
+                transform: translateY(-10px) scale(1.1);
+                background-color: var(--whatsapp-teal-light);
+                box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+            }
+
+            60% {
+                transform: translateY(3px) scale(0.95);
+                background-color: var(--whatsapp-green);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            }
+        }
+
+        .loading-text {
+            margin-top: 20px;
+            font-size: 16px;
+            color: var(--whatsapp-teal);
+            font-weight: 500;
+            animation: pulseText 1.5s infinite alternate ease-in-out;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            text-align: center;
+        }
+
+        @keyframes pulseText {
+            from {
+                opacity: 0.7;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .cta-text {
+            font-size: 12px;
+            color: var(--whatsapp-secondary-text);
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-text svg {
+            width: 14px;
+            height: 14px;
+            margin-right: 4px;
+            fill: var(--whatsapp-green);
+        }
+
+        /* player de áudio personalizado */
+        .whatsapp-audio-player {
+            max-width: 90%;
+            width: 380px;
+            min-width: 180px;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 7.5px;
+            padding: 8px 8px 8px 6px;
+            margin: 5px 0;
+            position: relative;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+            height: 70px;
+        }
+
+        /* Quando o player está dentro de uma mensagem, ele não precisa de seu próprio background e borda */
+        .message-content .whatsapp-audio-player {
+            background-color: transparent;
+            box-shadow: none;
+            padding: 0;
+            margin: 5px 0 8px 0;
+            max-width: 100%;
+            width: 100%;
+        }
+
+        .whatsapp-audio-player .play-button {
+            background-color: white;
+            color: #323333;
+            border: none;
+            border-radius: 50%;
+            width: 43px;
+            height: 43px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            margin: 0 8px 0 2px;
+            flex-shrink: 0;
+            transition: background-color 0.2s;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .whatsapp-audio-player .play-button svg {
+            fill: #00a884;
+        }
+
+        /* Aumentando a área de clique do botão de play */
+        .whatsapp-audio-player .play-button,
+        .audio-reply-player .play-button {
+            width: 55px;
+            height: 55px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .whatsapp-audio-player .play-button::after,
+        .audio-reply-player .play-button::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            z-index: 5;
+            cursor: pointer;
+        }
+
+        .whatsapp-audio-player .waveform {
+            height: 24px;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0 8px;
+        }
+
+        .whatsapp-audio-player .waveform span {
+            flex: 1;
+            height: 100%;
+            min-width: 1.5px;
+            max-width: 2.5px;
+            margin: 0 1px;
+            background-color: rgba(0, 0, 0, 0.12);
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border-radius: 1px;
+        }
+
+        .whatsapp-audio-player .time {
+            font-size: 11px;
+            color: var(--whatsapp-secondary-text);
+            min-width: 42px;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .message-out .whatsapp-audio-player {
+            background-color: #d9fdd3;
+        }
+
+        .message-out .whatsapp-audio-player .waveform span {
+            background-color: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Adicionar suporte para interface mobile */
+        @media (max-width: 480px) {
+            .whatsapp-audio-player {
+                width: 90%;
+                max-width: 320px;
+                min-width: 250px;
+                padding: 6px 6px 6px 4px;
+                height: 75px;
+                /* Aumentando a altura do player */
+            }
+
+            .whatsapp-audio-player .play-button,
+            .audio-reply-player .play-button {
+                width: 36px;
+                height: 36px;
+                margin-right: 6px;
+            }
+
+            .whatsapp-audio-player .play-button svg,
+            .audio-reply-player .play-button svg {
+                width: 37px;
+                height: 75px;
+            }
+
+            .whatsapp-audio-player .waveform {
+                height: 20px;
+                margin: 0 6px;
+            }
+
+            .whatsapp-audio-player .waveform span {
+                min-width: 1px;
+                max-width: 2px;
+                margin: 0 1px;
+            }
+
+            /* Reduzir o número de barras no waveform para dispositivos móveis (correção de largura) */
+            .whatsapp-audio-player .waveform span:nth-child(4n+3) {
+                display: none;
+            }
+
+            .whatsapp-audio-player .time {
+                min-width: 36px;
+                font-size: 10px;
+            }
+
+            /* Ajustar tamanho máximo da mensagem em dispositivos móveis (correção de tamanho)*/
+            .chat-message {
+                max-width: 90%;
+            }
+        }
+
+        /* Adicionar estilo para mensagens de erro de endereço */
+        .address-error {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            font-style: italic;
+        }
+
+        /* Adaptar a bolha de áudio para áudios recebidos */
+        .message-in .whatsapp-audio-player {
+            background-color: white;
+            border-radius: 0px 7.5px 7.5px 7.5px;
+            position: relative;
+        }
+
+        /* Adicionar a seta para o balão de áudio recebido (entrada) */
+        .message-in .whatsapp-audio-player::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 8px;
+            height: 13px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path><path fill="white" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path></svg>');
+            background-repeat: no-repeat;
+        }
+
+        /* Adaptar a bolha de áudio para áudios enviados */
+        .message-out .whatsapp-audio-player {
+            background-color: var(--whatsapp-light-green);
+            border-radius: 7.5px 0px 7.5px 7.5px;
+            position: relative;
+        }
+
+        /* Adicionar a seta para o balão de áudio enviado (saída) */
+        .message-out .whatsapp-audio-player::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -8px;
+            width: 8px;
+            height: 13px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path><path fill="%23DCF8C6" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path></svg>');
+            background-repeat: no-repeat;
+            transform: scaleX(-1);
+        }
+
+        /* Quando o player está dentro de uma mensagem, o fundo deve ser transparente e sem a seta */
+        .message-in .message-content .whatsapp-audio-player,
+        .message-out .message-content .whatsapp-audio-player {
+            background-color: transparent;
+            box-shadow: none;
+            border-radius: 0;
+        }
+
+        .message-in .message-content .whatsapp-audio-player::before,
+        .message-out .message-content .whatsapp-audio-player::before {
+            display: none;
+        }
+
+        /* Estilo para o container de tempo e status dentro do player de áudio */
+        .message-time-container {
+            position: absolute;
+            right: 8px;
+            bottom: -11px;
+            display: flex;
+            align-items: center;
+            font-size: 11px;
+            color: rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+
+        /* Estilos para o chat principal e container de mensagens */
+        .chat-container {
+            position: absolute;
+            top: 60px;
+            bottom: 60px;
+            left: 0;
+            right: 0;
+            z-index: 5;
+            display: none;
+            background-color: var(--whatsapp-chat-bg);
+            background-image: url('https://4lifenutrition.site/Assets/background.webp');
+            background-repeat: repeat;
+            overflow: hidden;
+            /* Importante para o iScroll funcionar */
+            transition: all 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+
+        .messages-container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            min-height: 100%;
+            padding-bottom: 20px;
+        }
+
+        /* Estilos para as bolhas de mensagem WhatsApp */
+        .chat-message {
+            position: relative;
+            max-width: 75%;
+            margin: 4px 8px;
+            font-size: 18px;
+            line-height: 1.4;
+            display: flex;
+            align-items: flex-start;
+            animation: messageAppear 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            transform-origin: left center;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+            transition: all 0.2s ease;
+        }
+
+        .chat-message:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes messageAppear {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+
+            70% {
+                opacity: 1;
+                transform: translateY(-2px) scale(1.01);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes messageAppearIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-20px) scale(0.94);
+            }
+
+            70% {
+                opacity: 1;
+                transform: translateX(2px) scale(1.01);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        @keyframes messageAppearOut {
+            0% {
+                opacity: 0;
+                transform: translateX(20px) scale(0.94);
+            }
+
+            70% {
+                opacity: 1;
+                transform: translateX(-2px) scale(1.01);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(0) scale(1);
+            }
+        }
+
+        .chat-message.message-in {
+            align-self: flex-start;
+            transform-origin: left center;
+            animation: messageAppearIn 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            margin-bottom: 2px;
+        }
+
+        .chat-message.message-out {
+            align-self: flex-end;
+            margin-left: auto;
+            flex-direction: row-reverse;
+            transform-origin: right center;
+            animation: messageAppearOut 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            margin-bottom: 2px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+
+        .message-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .message-out .message-avatar {
+            display: none;
+        }
+
+        .message-content {
+            position: relative;
+            padding: 6px 7px 8px 9px;
+            border-radius: 7.5px;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            word-wrap: break-word;
+            word-break: break-word;
+            hyphens: auto;
+            /* Sistema de largura mais inteligente */
+            width: fit-content;
+            max-width: min(65vw, 320px);
+            min-width: 48px;
+        }
+
+        /* Remover completamente o efeito de brilho que estava causando a caixa transparente feia */
+        .message-content::after {
+            display: none !important;
+        }
+
+        .chat-message:hover .message-content::after {
+            display: none !important;
+        }
+
+        .message-in .message-content {
+            background-color: #ffffff !important;
+            color: #111b21 !important;
+            border-radius: 0px 7.5px 7.5px 7.5px;
+            /* Largura responsiva e inteligente */
+            width: fit-content;
+            max-width: min(85vw, 320px);
+            min-width: 48px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 1px 0.5px rgba(0, 0, 0, 0.13);
+        }
+
+        .message-out .message-content {
+            background-color: #d9fdd3;
+            color: #111b21;
+            border-radius: 7.5px 0px 7.5px 7.5px;
+            /* Largura mais precisa para mensagens enviadas */
+            max-width: min(65vw, 320px);
+        }
+
+        /* Estilo para vídeos dentro dos balões */
+        .message-content iframe {
+            max-width: 100%;
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 4px 0 8px 0;
+            display: block;
+            border: none;
+            background: transparent;
+        }
+
+        /* Ajuste específico para vídeos do YouTube */
+        .message-content iframe[src*="youtube"] {
+            width: min(280px, calc(65vw - 20px));
+            height: calc(min(280px, calc(65vw - 20px)) * 0.5625);
+            /* Proporção 16:9 */
+            max-width: 100%;
+            min-width: 200px;
+            min-height: 112px;
+        }
+
+        /* Ajustes para dispositivos móveis */
+        @media only screen and (max-width: 768px) {
+            .message-content {
+                /* Sistema de largura mais inteligente para mobile */
+                max-width: min(75vw, 280px);
+                min-width: 44px;
+                padding: 6px 7px 8px 9px;
+            }
+
+            .message-out .message-content {
+                max-width: min(75vw, 280px);
+            }
+
+            .message-in .message-content {
+                max-width: min(75vw, 280px);
+            }
+
+            .chat-message {
+                max-width: 85vw;
+                margin-bottom: 2px;
+            }
+
+            /* Ajuste melhorado para vídeos no mobile */
+            .message-content iframe[src*="youtube"] {
+                width: min(240px, calc(75vw - 30px));
+                height: calc(min(240px, calc(75vw - 30px)) * 0.5625);
+                max-width: calc(100% - 10px);
+                min-width: 180px;
+                min-height: 101px;
+            }
+
+            .typing-indicator {
+                max-width: 70px;
+                padding: 6px 10px;
+            }
+
+            .typing-indicator span {
+                width: 6px;
+                height: 6px;
+                margin: 0 1px;
+            }
+        }
+
+        /* Ajustes para telas muito pequenas */
+        @media only screen and (max-width: 480px) {
+            .message-content {
+                max-width: min(80vw, 260px);
+                min-width: 40px;
+                padding: 5px 6px 7px 8px;
+            }
+
+            .message-out .message-content {
+                max-width: min(80vw, 260px);
+            }
+
+            .message-in .message-content {
+                max-width: min(80vw, 260px);
+            }
+
+            .chat-message {
+                max-width: 90vw;
+            }
+
+            /* Vídeos ainda menores para telas muito pequenas */
+            .message-content iframe[src*="youtube"] {
+                width: min(200px, calc(80vw - 25px));
+                height: calc(min(200px, calc(80vw - 25px)) * 0.5625);
+                min-width: 160px;
+                min-height: 90px;
+            }
+        }
+
+        /* Ajustes para telas extra pequenas */
+        @media only screen and (max-width: 360px) {
+            .message-content {
+                max-width: min(85vw, 240px);
+                min-width: 36px;
+            }
+
+            .message-out .message-content {
+                max-width: min(85vw, 240px);
+            }
+
+            .message-in .message-content {
+                max-width: min(85vw, 240px);
+            }
+
+            /* Vídeos para telas extra pequenas */
+            .message-content iframe[src*="youtube"] {
+                width: min(180px, calc(85vw - 20px));
+                height: calc(min(180px, calc(85vw - 20px)) * 0.5625);
+                min-width: 140px;
+                min-height: 79px;
+            }
+        }
+
+        .message-in .message-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 8px;
+            height: 13px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path><path fill="white" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path></svg>');
+            background-repeat: no-repeat;
+            transition: transform 0.3s ease;
+        }
+
+        .message-out .message-content::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: -8px;
+            width: 8px;
+            height: 13px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path><path fill="%23d9fdd3" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path></svg>');
+            background-repeat: no-repeat;
+            transform: scaleX(-1);
+            transition: transform 0.3s ease;
+        }
+
+        .chat-message.message-in:hover .message-content::before {
+            transform: translateX(-1px) scale(1.05);
+        }
+
+        .chat-message.message-out:hover .message-content::before {
+            transform: scaleX(-1) translateX(-1px) scale(1.05);
+        }
+
+        .message-text {
+            margin-bottom: 4px;
+            font-size: 14.2px;
+            line-height: 19px;
+            color: #111b21;
+            font-weight: 400;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .message-text strong {
+            font-weight: 600;
+        }
+
+        .message-text em {
+            font-style: italic;
+        }
+
+        .message-text a {
+            color: #027eb5;
+            text-decoration: underline;
+        }
+
+        .message-text ul {
+            margin: 5px 0;
+            padding-left: 20px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: #667781;
+            float: right;
+            margin-left: 4px;
+            margin-bottom: -2px;
+            margin-top: 4px;
+            font-weight: 400;
+            direction: ltr;
+            unicode-bidi: isolate;
+        }
+
+        /* Ajuste especial para mensagens com reply */
+        .reply-container .message-time {
+            margin-bottom: 0px;
+        }
+
+        .message-status {
+            display: inline-block;
+            width: 16px;
+            height: 11px;
+            margin-left: 3px;
+            vertical-align: text-bottom;
+            position: relative;
+            color: var(--whatsapp-teal-light);
+            font-size: 14px;
+        }
+
+        /* Estilo para a imagem na mensagem */
+        .message-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 5px;
+        }
+
+        /* Estilo para a barra de digitando */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            margin: 8px 16px;
+            max-width: 80px;
+            width: max-content;
+            background-color: white;
+            border-radius: 16px;
+            padding: 8px 12px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.3s ease-out;
+            position: relative;
+        }
+
+        .typing-indicator::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -8px;
+            width: 8px;
+            height: 13px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 13" width="8" height="13"><path opacity=".13" d="M5.188 1H0v11.193l6.467-8.625C7.526 2.156 6.958 1 5.188 1z"></path><path fill="white" d="M5.188 0H0v11.193l6.467-8.625C7.526 1.156 6.958 0 5.188 0z"></path></svg>');
+            background-repeat: no-repeat;
+        }
+
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            margin: 0 1.5px;
+            background-color: var(--whatsapp-teal-light);
+            border-radius: 50%;
+            display: inline-block;
+            animation: bounce 1.3s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite;
+            opacity: 0.8;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation-delay: 0.15s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            60%,
+            100% {
+                transform: translateY(0);
+                opacity: 0.8;
+            }
+
+            30% {
+                transform: translateY(-4px);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Ajustes para iPad e iPhone com entalhe (notch) */
+        @supports (padding-top: env(safe-area-inset-top)) {
+            .header {
+                padding-top: calc(10px + env(safe-area-inset-top));
+                height: calc(60px + env(safe-area-inset-top));
+            }
+
+            .chat-body {
+                height: calc(100% - 60px - 52px - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+            }
+
+            .footer {
+                padding-bottom: calc(8px + env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Media query para dispositivos móveis */
+        @media only screen and (max-width: 768px) {
+
+            /* Garantir que o chat container tenha rolagem própria e independente */
+            .chat-container {
+                position: fixed;
+                top: 60px;
+                /* Altura do header */
+                bottom: 60px;
+                /* Altura do footer */
+                left: 0;
+                right: 0;
+                height: auto;
+                overflow-y: scroll !important;
+                -webkit-overflow-scrolling: touch !important;
+                z-index: 50;
+            }
+
+            /* Manter o footer fixo na parte inferior */
+            .footer {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                z-index: 101;
+            }
+
+            /* O header também fica fixo */
+            .header {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 100;
+            }
+
+            /* Estilos específicos para iOS */
+            .ios-scroll-fix {
+                -webkit-overflow-scrolling: touch !important;
+                position: fixed !important;
+                overflow: scroll !important;
+                height: auto !important;
+            }
+
+            .ios-body-fix {
+                position: fixed !important;
+                width: 100% !important;
+                height: 100% !important;
+                overflow: hidden !important;
+            }
+
+            /* Melhorias de desempenho para rolagem */
+            .chat-container {
+                transform: translateZ(0);
+                -webkit-transform: translateZ(0);
+                backface-visibility: hidden;
+                -webkit-backface-visibility: hidden;
+            }
+
+            /* Estilo para botão de rolagem */
+            #scroll-down-btn {
+                -webkit-tap-highlight-color: transparent;
+                touch-action: manipulation;
+            }
+
+            /* Input de mensagem mais nativo e responsivo */
+            .message-input {
+                -webkit-appearance: none;
+                appearance: none;
+                resize: none;
+            }
+
+            /* Ajuste para o corpo quando o teclado está visível */
+            body.keyboard-open {
+                position: fixed;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            /* Garantir que a área de mensagens use toda a altura disponível */
+            .messages-container {
+                padding-bottom: 60px;
+                /* Espaço adicional para garantir que a última mensagem seja visível */
+            }
+
+            /* Tamanho fixo para a área de chat no iOS */
+            .chat-body {
+                -webkit-overflow-scrolling: touch;
+            }
+
+
+            .typing-indicator {
+                max-width: 70px;
+                padding: 6px 10px;
+            }
+
+            .typing-indicator span {
+                width: 6px;
+                height: 6px;
+                margin: 0 1px;
+            }
+        }
+
+        /* Adicionar CSS para fixar problemas de rolagem */
+        body.chat-started {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .chat-container {
+            overflow-y: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            /* Esconder a barra de rolagem nativa quando o iScroll estiver ativo */
+            scrollbar-width: none !important;
+            /* Firefox */
+            -ms-overflow-style: none !important;
+            /* IE/Edge */
+        }
+
+        .chat-container::-webkit-scrollbar {
+            width: 0px !important;
+            /* Chrome/Safari/Opera */
+            display: none !important;
+        }
+
+        /* Estilizar apenas a barra de rolagem do iScroll */
+        .iScrollVerticalScrollbar {
+            position: absolute;
+            z-index: 100;
+            width: 7px !important;
+            bottom: 2px;
+            top: 2px;
+            right: 2px !important;
+            overflow: hidden;
+        }
+
+        .iScrollIndicator {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.3) !important;
+            border-radius: 4px !important;
+            width: 100%;
+            transition-duration: 0ms;
+            display: block;
+            height: 100px;
+            transform: translate(0px, 0px);
+            transition-timing-function: cubic-bezier(0.33, 0.66, 0.66, 1);
+            border: 0px !important;
+        }
+
+        .messages-container {
+            padding-bottom: 80px !important;
+        }
+
+        /* Estilo para visualização ampliada de imagens */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .image-modal-content {
+            max-width: 90%;
+            max-height: 80%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-icon {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Adicionar CSS para indicador de zoom nas imagens */
+        .message-image-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        /* Adicionar estilos para a funcionalidade de resposta (reply) ao CSS existente */
+        /* Estilos para o componente de resposta */
+        .reply-container {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 3px;
+            padding: 4px 6px;
+            border-left: 3px solid var(--whatsapp-teal-light);
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            position: relative;
+            max-width: 100%;
+            overflow: hidden;
+            margin-top: 2px;
+        }
+
+        .message-in .reply-container {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .message-out .reply-container {
+            background-color: rgba(0, 0, 0, 0.07);
+        }
+
+        .reply-sender {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--whatsapp-teal-light);
+            margin-bottom: 0;
+        }
+
+        .reply-content {
+            font-size: 12px;
+            color: var(--whatsapp-secondary-text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            line-height: 1.2;
+        }
+
+        .reply-image {
+            width: 40px;
+            height: 40px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 8px;
+            flex-shrink: 0;
+            float: right;
+            margin-left: 8px;
+        }
+
+        .reply-wrapper {
+            display: flex;
+            align-items: center;
+            max-width: 100%;
+            justify-content: space-between;
+        }
+
+        .reply-text-container {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* Estilos específicos para áudio com resposta */
+        .message-content .whatsapp-audio-player {
+            margin-top: 5px;
+            display: flex;
+            align-items: center;
+            background-color: transparent;
+            border-radius: 0;
+            box-shadow: none;
+            padding: 0;
+            height: auto;
+            min-height: 55px;
+            /* Aumentado novamente */
+            position: relative;
+            /* Para posicionamento absoluto dos elementos de tempo */
+            padding-bottom: 20px;
+            /* Espaço para os timestamps abaixo */
+        }
+
+        /* Estilos para o player de áudio com resposta */
+        .audio-reply-player {
+            width: 100%;
+            padding: 0 !important;
+            box-shadow: none !important;
+            background-color: transparent !important;
+        }
+
+        .audio-reply-player .play-button {
+            margin-right: 8px;
+            flex-shrink: 0;
+            width: 43px;
+            height: 43px;
+            background-color: white;
+            color: #323333;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 10;
+        }
+
+        .audio-reply-player .play-button svg {
+            fill: #00a884;
+        }
+
+        .audio-reply-player .waveform {
+            flex: 1;
+            margin: 0 8px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        /* Estilo para as barras no waveform */
+        .audio-reply-player .waveform span {
+            flex: 1;
+            height: 100%;
+            min-width: 1.5px;
+            max-width: 2.5px;
+            margin: 0 1px;
+            background-color: rgba(0, 0, 0, 0.12);
+            display: inline-block;
+            transition: background-color 0.3s ease;
+            border-radius: 1px;
+        }
+
+        /* Estilo para as barras ativas no waveform */
+        .audio-reply-player .waveform span.active {
+            background-color: #00a884 !important;
+        }
+
+        /* Ajustes para o container de tempo em áudios com resposta */
+        .message-content .message-time-container {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            bottom: -11px;
+            left: 3px;
+            /* Alinhado com o botão de play como no player sem reply */
+            margin-top: 0;
+            float: none;
+            margin-right: 0;
+        }
+
+        .reply-time {
+            position: absolute !important;
+            bottom: -11px !important;
+            left: 3px !important;
+            /* Alinhado com o botão de play como no player sem reply */
+            font-size: 11px !important;
+            color: rgba(0, 0, 0, 0.6);
+            margin: 0 !important;
+        }
+
+        /* Adaptar para dispositivos móveis */
+        @media (max-width: 480px) {
+            .reply-image {
+                width: 40px;
+                height: 40px;
+            }
+
+            .reply-container {
+                padding: 4px 6px;
+            }
+
+            .audio-reply-player .play-button {
+                width: 36px;
+                height: 36px;
+                margin-right: 6px;
+                background-color: white;
+                color: #323333;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            }
+
+            .audio-reply-player .play-button svg {
+                width: 37px;
+                height: 75px;
+                fill: #00a884;
+            }
+
+            .reply-sender,
+            .reply-content {
+                font-size: 12px;
+            }
+        }
+
+        /* Estilos para avatar em áudios de resposta */
+        .reply-avatar {
+            width: 35px !important;
+            /* Aumentado */
+            height: 35px !important;
+            /* Aumentado */
+            margin-left: 6px !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Para dispositivos móveis, ajustar ainda mais */
+        @media (max-width: 480px) {
+            .reply-avatar {
+                width: 22px !important;
+                height: 22px !important;
+            }
+        }
+
+        .image-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .zoom-icon {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Ajuste para mensagens muito curtas */
+        @media only screen and (max-width: 480px) {
+            .message-content {
+                min-width: 40px;
+            }
+        }
+
+        @media only screen and (max-width: 360px) {
+            .message-content {
+                min-width: 36px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="whatsapp-container">
+        <div class="header">
+            <img src="img/expert-pt.webp" alt="Johann Müller" class="profile-pic">
+            <div class="profile-info">
+                <div class="profile-name">Johann Müller</div>
+                <div class="profile-status">online</div>
+            </div>
+            <div class="header-icons">
+                <div class="header-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M15.9 14.3H15L14.7 14C15.4 13.1 15.9 12 15.9 10.7C15.9 7.6 13.4 5.1 10.3 5.1C7.2 5.1 4.7 7.6 4.7 10.7C4.7 13.8 7.2 16.3 10.3 16.3C11.6 16.3 12.7 15.8 13.6 15.1L13.9 15.4V16.3L18.3 20.7L19.7 19.3L15.9 14.3ZM10.3 14.3C8.3 14.3 6.7 12.7 6.7 10.7C6.7 8.7 8.3 7.1 10.3 7.1C12.3 7.1 13.9 8.7 13.9 10.7C13.9 12.7 12.3 14.3 10.3 14.3Z" />
+                    </svg>
+                </div>
+                <div class="header-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M12 7a2 2 0 1 0-.001-4.001A2 2 0 0 0 12 7zm0 2a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 9zm0 6a2 2 0 1 0-.001 3.999A2 2 0 0 0 12 15z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-body">
+
+
+            <!-- Loading indicator -->
+            <div class="loading" style="display: none;">
+                <div class="loading-dots">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="loading-text">Conectando com Johann Müller...</div>
+            </div>
+
+            <!-- Chat Container (substitui o TypeBot wrapper) -->
+            <div class="chat-container" id="chat-container">
+                <div class="messages-container" id="messages-container"></div>
+            </div>
+
+            <!-- Elemento de áudio escondido para desbloquear áudio no iOS -->
+            <audio id="audio-unlock" preload="auto" playsinline style="display:none">
+                <source
+                    src="data:audio/mpeg;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4LjMyLjEwNAAAAAAAAAAAAAAA//tQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAWGluZwAAAA8AAAACAAADQgD///////////////////////////////////////////8AAAA8TEFNRTMuMTAwAQAAAAAAAAAAABQIJAi4QQAB4AAADUIoLHtWAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+                    type="audio/mpeg">
+            </audio>
+        </div>
+
+        <div class="footer">
+            <div class="input-actions">
+                <div class="action-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48">
+                        </path>
+                    </svg>
+                </div>
+                <div class="action-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                        </path>
+                        <circle cx="12" cy="13" r="4"></circle>
+                    </svg>
+                </div>
+            </div>
+            <div class="message-input-container">
+                <input type="text" class="message-input" id="message-input" placeholder="Escreva aqui">
+            </div>
+            <div class="send-btn" id="send-btn"
+                style="width: 45px; height: 45px; border-radius: 50%; padding: 0; justify-content: center; align-items: center; min-width: 45px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                    <path d="M1.101 21.757L23.8 12.028 1.101 2.3l.011 7.912 13.623 1.816-13.623 1.817-.011 7.912z">
+                    </path>
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Configuração do N8N
+            const N8N_CONFIG = {
+                webhookUrl: 'https://n8n-n8n.6jcwzd.easypanel.host/webhook-test/chat-funel'
+            };
+
+            // Função principal para comunicar com o Agente de IA no N8N
+            async function sendMessageToIA(userInput, isSystemMessage = false) {
+                try {
+                    const payload = {
+                        session_id: chatData.session_id,
+                        type: 'text', // Especifica explicitamente que é uma mensagem de texto
+                        userInput: userInput,
+                        isSystemMessage: isSystemMessage,
+                        agent: {
+                            name: "Johann Müller",
+                            username: "johannmuller_vibracional"
+                        },
+                        userData: {
+                            nome: chatData.userName || '',
+                            telefone: chatData.userPhone || '',
+                            problema: chatData.userProblem || ''
+                        },
+                        context: {
+                            currentStep: chatData.currentStep,
+                            history: chatData.conversaIA || []
+                        },
+                        fonte: 'whatsapp'
+                    };
+
+                    console.log('🚀 Enviando para Agente IA no N8N:', payload);
+
+                    const response = await fetch(N8N_CONFIG.webhookUrl, {
+                        method: 'POST',
+                        mode: 'cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json, text/plain, */*'
+                        },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        const errorBody = await response.text();
+                        console.error('❌ Erro no N8N:', errorBody);
+                        throw new Error(`Erro HTTP: ${response.status}`);
+                    }
+
+                    // MELHOR PRÁTICA: Obter resposta como texto primeiro para evitar erros de parse
+                    const rawResponse = await response.text();
+                    console.log('📥 Resposta bruta do N8N:', rawResponse);
+
+                    if (!rawResponse) {
+                        console.warn('⚠️ N8N respondeu com corpo vazio');
+                        return null;
+                    }
+
+                    try {
+                        let data = JSON.parse(rawResponse);
+
+                        // MELHOR PRÁTICA: Tratar caso o N8N retorne um Array (comum no nó Respond to Webhook)
+                        if (Array.isArray(data) && data.length > 0) {
+                            console.log('📦 N8N retornou um Array, extraindo primeiro item');
+                            data = data[0];
+                        }
+
+                        return data;
+                    } catch (e) {
+                        // Se não for JSON, retorna como objeto de texto para o processUserInput lidar
+                        console.log('📝 Resposta não é JSON, tratando como texto puro');
+                        return { output: rawResponse };
+                    }
+                } catch (error) {
+                    console.error('❌ Falha crítica na comunicação com IA:', error);
+                    return null;
+                }
+            }
+
+            // Elementos da interface
+            const profileSection = document.querySelector('.profile-section');
+            const chatContainer = document.querySelector('.chat-container');
+            const loadingIndicator = document.querySelector('.loading');
+            const messageInput = document.querySelector('#message-input');
+            const sendButton = document.querySelector('#send-btn');
+            const actionButtons = document.querySelectorAll('.action-btn');
+            const startChatBtn = document.getElementById('start-chat-btn');
+            const messagesContainer = document.querySelector('#messages-container');
+
+            // Variável para o iScroll
+            let chatScroll = null;
+
+            // Variável para controlar se novas mensagens devem rolar automaticamente
+            let shouldAutoScroll = true;
+            let userHasScrolled = false;
+            let lastScrollPosition = 0;
+            let isScrolling = false;
+
+            // Modificar o placeholder do input e o botão de enviar
+            if (messageInput) {
+                messageInput.placeholder = 'Escreva aqui';
+            }
+
+            if (sendButton) {
+                // Configuração já definida no HTML
+            }
+
+            // Adicionar animação ao botão de iniciar
+            if (startChatBtn) {
+                setTimeout(() => {
+                    startChatBtn.style.animation = 'pulse 2s infinite';
+                }, 2000);
+
+                // Garantir que o indicador de carregamento esteja centralizado quando visível
+                // Event listener removido - será adicionado apenas uma vez mais abaixo
+            }
+
+            // Dados do usuário e da conversa
+            const chatData = {
+                session_id: 'chat-' + Math.random().toString(36).substr(2, 9),
+                userName: "",
+                userPhone: "",
+                conversaIA: [],
+                isChatStarted: false,
+                waitingForUserInput: false
+            };
+
+            // Constantes para delays entre mensagens
+            const MESSAGE_DELAYS = {
+                AUDIO_LONG: 30000,    // 30 segundos para áudios > 60s
+                AUDIO_SHORT: 15000,   // 15 segundos para áudios < 30s
+                TEXT_SHORT: 3000,     // 3 segundos para textos curtos
+                TEXT_LONG: 12000,     // 12 segundos para textos longos
+                IMAGE: 2000,          // 2 segundos para imagens
+                YOUTUBE: 5000,        // 5 segundos para vídeos do YouTube
+                DEFAULT: 2000         // Delay padrão
+            };
+
+            /**
+            * Normaliza uma URL, removendo caracteres indesejados e garantindo que seja absoluta.
+            * @param {string} url - A URL a ser normalizada.
+            * @returns {string} A URL normalizada.
+            */
+            function normalizeUrl(url) {
+                if (!url || typeof url !== 'string') {
+                    return '';
+                }
+                // Remove colchetes e aspas que podem vir do N8N
+                let cleanedUrl = url.replace(/^\["|"\]$/g, '').replace(/^"|"$/g, '').replace(/^\[|\]$/g, '');
+
+                try {
+                    // Tenta criar um objeto URL para verificar se já é absoluta
+                    new URL(cleanedUrl);
+                    return cleanedUrl; // Já é uma URL absoluta e válida
+                } catch (_) {
+                    // Se falhar, é uma URL relativa. Vamos torná-la absoluta.
+                    // Assumindo que os assets relativos estão em 'https://suplements.tech/Assets/'
+                    const BASE_ASSET_URL = 'https://4lifenutrition.site/Assets/';
+                    return new URL(cleanedUrl, BASE_ASSET_URL).href;
+                }
+            }
+
+            /**
+            * Verifica se uma URL aponta para uma imagem baseada na extensão ou padrão
+            * @param {string} url - A URL a ser verificada
+            * @returns {boolean} Verdadeiro se parecer uma imagem
+            */
+            function isImageUrl(url) {
+                if (!url || typeof url !== 'string') return false;
+
+                // Limpar a URL de parâmetros de busca e fragmentos para verificar a extensão
+                const cleanUrl = url.split('?')[0].split('#')[0].toLowerCase();
+                const extensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.svg', '.bmp', '.ico'];
+
+                // Verificar se termina com uma das extensões conhecidas
+                const hasImageExtension = extensions.some(ext => cleanUrl.endsWith(ext));
+
+                // Verificar se contém padrões comuns de serviço de imagem ou base64
+                const isImagePattern = url.includes('image/') || url.startsWith('data:image/');
+
+                return hasImageExtension || isImagePattern;
+            }
+
+            /**
+            * Calcula o delay apropriado baseado no tipo e conteúdo da mensagem
+            * @param {Object} message - Objeto da mensagem
+            * @param {Object} nextMessage - Próxima mensagem (opcional)
+            * @returns {number} Delay em milissegundos
+            */
+            async function getMessageDelay(message, nextMessage = null) {
+                if (!message) return MESSAGE_DELAYS.DEFAULT;
+
+                switch (message.type) {
+                    case 'audio':
+                        // Tentar obter a duração do áudio
+                        try {
+                            const audio = new Audio(message.audioUrl);
+                            await new Promise((resolve, reject) => {
+                                audio.addEventListener('loadedmetadata', () => {
+                                    resolve(audio.duration);
+                                });
+                                audio.addEventListener('error', reject);
+                                // Timeout de 5 segundos para carregar metadata
+                                setTimeout(reject, 5000);
+                            });
+
+                            return audio.duration > 60 ? MESSAGE_DELAYS.AUDIO_LONG : MESSAGE_DELAYS.AUDIO_SHORT;
+                        } catch (error) {
+                            console.warn('Não foi possível determinar duração do áudio:', error);
+                            return MESSAGE_DELAYS.AUDIO_SHORT;
+                        }
+
+                    case 'text':
+                        // Verificar se é texto curto ou longo
+                        const isLongText = message.content.length > 100 ||
+                            message.content.split('\n').length > 2;
+                        return isLongText ? MESSAGE_DELAYS.TEXT_LONG : MESSAGE_DELAYS.TEXT_SHORT;
+
+                    case 'image':
+                        return MESSAGE_DELAYS.IMAGE;
+
+                    case 'youtube':
+                        return MESSAGE_DELAYS.YOUTUBE;
+
+                    default:
+                        return MESSAGE_DELAYS.DEFAULT;
+                }
+            }
+
+            // Função para desbloquear áudio no iOS
+            function unlockAudioForIOS() {
+                return new Promise((resolve) => {
+                    const isIOS = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
+                    if (!isIOS) {
+                        return resolve(); // Não é iOS, não precisa desbloquear
+                    }
+
+                    const unlockElement = document.getElementById('audio-unlock');
+
+                    if (!unlockElement) {
+                        return resolve(); // Elemento não encontrado
+                    }
+
+                    // Força o carregamento
+                    unlockElement.load();
+
+                    // Tenta reproduzir
+                    const playPromise = unlockElement.play();
+
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                            // Desbloqueado com sucesso
+                            unlockElement.pause();
+                            unlockElement.currentTime = 0;
+                            resolve();
+                        }).catch(() => {
+                            // Falhou no desbloqueio automático, vamos deixar para o evento de toque
+                            resolve();
+                        });
+                    } else {
+                        resolve();
+                    }
+                });
+            }
+
+            // Atualizar a função para usar as novas características visuais
+            function createCustomAudioPlayer(audioUrl, isReply = false, isUser = false) {
+                const playerContainer = document.createElement('div');
+                playerContainer.className = 'whatsapp-audio-player';
+
+                if (isReply) {
+                    playerContainer.classList.add('audio-reply-player');
+                }
+
+                const playButton = document.createElement('button');
+                playButton.className = 'play-button';
+                playButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+
+                // Gerar alturas aleatórias para cada barra para dar aspecto realista
+                const barHeights = [];
+
+                // Verificar se é um dispositivo móvel para adaptar o número de barras
+                const isMobile = window.innerWidth <= 480;
+                const barsCount = isMobile ? (isReply ? 20 : 24) : (isReply ? 30 : 40); // Menos barras para resposta
+
+                for (let i = 0; i < barsCount; i++) {
+                    let height;
+                    if (i < barsCount * 0.15 || i > barsCount * 0.85) {
+                        // Barras mais baixas no início e fim (15% do total)
+                        height = 20 + Math.random() * 25;
+                    } else if (
+                        (i > barsCount * 0.3 && i < barsCount * 0.4) ||
+                        (i > barsCount * 0.6 && i < barsCount * 0.7)
+                    ) {
+                        // Barras mais altas em dois pontos (entre 30-40% e 60-70%)
+                        height = 60 + Math.random() * 35;
+                    } else {
+                        // Barras de altura média no restante
+                        height = 30 + Math.random() * 45;
+                    }
+                    barHeights.push(Math.floor(height));
+                }
+
+                const waveformDiv = document.createElement('div');
+                waveformDiv.className = 'waveform';
+                for (let i = 0; i < barHeights.length; i++) {
+                    const bar = document.createElement('span');
+                    bar.style.height = barHeights[i] + '%';
+                    // Se for resposta, as barras têm tamanho especial
+                    if (isReply) {
+                        // Altura aumentada para maior visibilidade
+                        bar.style.height = (barHeights[i] * 0.9) + '%';
+                        bar.style.minWidth = '2px';
+                        bar.style.maxWidth = '3px';
+                        bar.style.margin = '0 1px';
+                        // Cor mais escura para melhor contraste
+                        bar.style.backgroundColor = 'rgba(0, 0, 0, 0.18)';
+                    }
+                    waveformDiv.appendChild(bar);
+                }
+
+                // Adicionar avatar do Johann Müller no player de áudio (agora no final do waveform)
+                const avatarDiv = document.createElement('div');
+                avatarDiv.className = 'message-avatar';
+                avatarDiv.style.width = '40px';
+                avatarDiv.style.height = '40px';
+                avatarDiv.style.borderRadius = '50%';
+                avatarDiv.style.overflow = 'hidden';
+                avatarDiv.style.marginLeft = '8px';
+                avatarDiv.style.flexShrink = '0';
+                avatarDiv.innerHTML = `<img src="img/expert-pt.webp" alt="Johann Müller" style="width: 100%; height: 100%; object-fit: cover;">`;
+
+                playerContainer.appendChild(playButton);
+                // Remover a barra de progresso separada e usar apenas o waveform
+                playerContainer.appendChild(waveformDiv);
+
+                // Não adicionar o avatar se for um áudio de resposta para evitar redundância
+                if (!isReply) {
+                    playerContainer.appendChild(avatarDiv);
+                } else {
+                    // Para áudios de resposta, adicionamos um avatar maior no final da waveform
+                    const replyAvatarDiv = document.createElement('div');
+                    replyAvatarDiv.className = 'message-avatar reply-avatar';
+                    replyAvatarDiv.style.width = '35px';
+                    replyAvatarDiv.style.height = '35px';
+                    replyAvatarDiv.style.borderRadius = '50%';
+                    replyAvatarDiv.style.overflow = 'hidden';
+                    replyAvatarDiv.style.marginLeft = '6px';
+                    replyAvatarDiv.style.marginRight = '2px';
+                    replyAvatarDiv.style.flexShrink = '0';
+                    replyAvatarDiv.style.alignSelf = 'center';
+                    replyAvatarDiv.innerHTML = `<img src="img/expert-pt.webp" alt="Johann Müller" style="width: 100%; height: 100%; object-fit: cover;">`;
+                    playerContainer.appendChild(replyAvatarDiv);
+
+                    // Adicionar timestamp para mensagens recebidas em áudios com resposta
+                    const messageTimeContainer = document.createElement('div');
+                    messageTimeContainer.className = 'message-time-container';
+                    messageTimeContainer.innerHTML = `
+                        <span class="message-time">${getCurrentTime()}</span>
+                        ${isUser ? '<span class="message-status">✓✓</span>' : ''}
+                    `;
+                    playerContainer.appendChild(messageTimeContainer);
+                }
+
+                // Criar um elemento de áudio real para ser usado pelo player
+                const audioElement = document.createElement('audio');
+                audioElement.style.display = 'none';
+                audioElement.setAttribute('playsinline', '');
+                audioElement.setAttribute('webkit-playsinline', '');
+                audioElement.preload = 'metadata';
+
+                // Adicionar fonte de áudio
+                const mp3Source = document.createElement('source');
+                mp3Source.src = normalizeUrl(audioUrl); // CORREÇÃO: Normaliza a URL do áudio
+                mp3Source.type = 'audio/mpeg';
+                audioElement.appendChild(mp3Source);
+
+                // Adicionar o elemento de áudio ao DOM
+                document.body.appendChild(audioElement);
+
+                let isPlaying = false;
+
+                function updatePlayButton() {
+                    if (isPlaying) {
+                        playButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+                    } else {
+                        playButton.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                    }
+                }
+
+                audioElement.addEventListener('timeupdate', function () {
+                    if (audioElement.duration) {
+                        const percent = (audioElement.currentTime / audioElement.duration) * 100;
+                        // Atualizar a visualização do progresso através das barras do waveform
+                        const barCount = waveformDiv.children.length;
+                        const activeBarCount = Math.floor((audioElement.currentTime / audioElement.duration) * barCount);
+                        for (let i = 0; i < barCount; i++) {
+                            if (i < activeBarCount) {
+                                if (isReply) {
+                                    waveformDiv.children[i].classList.add('active');
+                                } else {
+                                    waveformDiv.children[i].style.backgroundColor = '#00a884';
+                                }
+                            } else {
+                                if (isReply) {
+                                    waveformDiv.children[i].classList.remove('active');
+                                } else {
+                                    waveformDiv.children[i].style.backgroundColor = '';
+                                }
+                            }
+                        }
+                        // Atualizar o tempo no audioTimeDisplay do player
+                        const minutes = Math.floor(audioElement.currentTime / 60);
+                        const seconds = Math.floor(audioElement.currentTime % 60);
+                        const timeText = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+                        // Encontrar o audioTimeDisplay no player
+                        const audioTimeDisplays = playerContainer.querySelectorAll('.time');
+                        if (audioTimeDisplays.length > 0) {
+                            audioTimeDisplays[0].textContent = timeText;
+                        }
+                    }
+                });
+
+                audioElement.addEventListener('ended', function () {
+                    isPlaying = false;
+                    updatePlayButton();
+                    Array.from(waveformDiv.children).forEach(bar => {
+                        if (isReply) {
+                            bar.classList.remove('active');
+                        } else {
+                            bar.style.backgroundColor = '';
+                        }
+                    });
+                });
+
+                audioElement.addEventListener('loadedmetadata', function () {
+                    const minutes = Math.floor(audioElement.duration / 60);
+                    const seconds = Math.floor(audioElement.duration % 60);
+                    const timeText = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+                    // Encontrar o audioTimeDisplay no player
+                    const audioTimeDisplays = playerContainer.querySelectorAll('.time');
+                    if (audioTimeDisplays.length > 0) {
+                        audioTimeDisplays[0].textContent = timeText;
+                    }
+                });
+
+                // botão play/pause personalizado integrado com o player
+                audioElement.addEventListener('play', function () {
+                    isPlaying = true;
+                    updatePlayButton();
+                });
+
+                audioElement.addEventListener('pause', function () {
+                    isPlaying = false;
+                    updatePlayButton();
+                });
+
+                // Força atualizações de UI quando o áudio termina, pausa ou ocorre erro
+                audioElement.addEventListener('ended', function () {
+                    isPlaying = false;
+                    updatePlayButton();
+                });
+
+                audioElement.addEventListener('error', function () {
+                    isPlaying = false;
+                    updatePlayButton();
+                    console.error('Erro ao reproduzir áudio:', audioElement.error);
+                });
+
+                // Melhoria para lidar com interação em dispositivos móveis
+                const handlePlayButtonInteraction = function (e) {
+                    e.stopPropagation(); // Prevenir propagação do evento
+                    e.preventDefault(); // Prevenir comportamento padrão
+
+                    unlockAudioForIOS().then(() => {
+                        // Parar todos os outros áudios tocando
+                        document.querySelectorAll('audio').forEach(audio => {
+                            if (audio !== audioElement && !audio.paused) {
+                                audio.pause();
+                            }
+                        });
+
+                        if (isPlaying) {
+                            audioElement.pause();
+                        } else {
+                            // Reproduzir com abordagem compatível com dispositivos móveis
+                            const playPromise = audioElement.play();
+
+                            if (playPromise !== undefined) {
+                                playPromise
+                                    .then(() => {
+                                        // Reprodução iniciada com sucesso
+                                        isPlaying = true;
+                                        updatePlayButton();
+                                    })
+                                    .catch(error => {
+                                        // Erro na reprodução - geralmente ocorre por interação do usuário ser necessária
+                                        console.error('Erro ao reproduzir áudio:', error);
+                                        isPlaying = false;
+                                        updatePlayButton();
+
+                                        // Tentar novamente com interação explícita
+                                        const unlockAudio = function () {
+                                            document.removeEventListener('click', unlockAudio);
+                                            document.removeEventListener('touchstart', unlockAudio);
+                                            audioElement.play()
+                                                .then(() => {
+                                                    isPlaying = true;
+                                                    updatePlayButton();
+                                                })
+                                                .catch(err => console.error('Segundo erro ao reproduzir:', err));
+                                        };
+
+                                        document.addEventListener('click', unlockAudio, { once: true });
+                                        document.addEventListener('touchstart', unlockAudio, { once: true });
+                                    });
+                            }
+                        }
+                        updatePlayButton();
+                    });
+                };
+
+                // Adicionar eventos para click e touch
+                playButton.addEventListener('click', handlePlayButtonInteraction);
+                playButton.addEventListener('touchstart', handlePlayButtonInteraction, { passive: false });
+
+                // Adicionar evento de clique e touch ao waveform para controlar a posição de reprodução
+                const handleWaveformInteraction = function (e) {
+                    e.stopPropagation(); // Prevenir propagação do evento
+                    e.preventDefault(); // Prevenir comportamento padrão
+
+                    if (audioElement.duration) {
+                        const rect = waveformDiv.getBoundingClientRect();
+                        const clientX = e.clientX || (e.touches && e.touches[0] ? e.touches[0].clientX : 0);
+                        const pos = (clientX - rect.left) / rect.width;
+                        audioElement.currentTime = pos * audioElement.duration;
+
+                        // Se estiver pausado, iniciar a reprodução ao clicar no waveform
+                        if (!isPlaying) {
+                            audioElement.play()
+                                .then(() => {
+                                    isPlaying = true;
+                                    updatePlayButton();
+                                })
+                                .catch(error => console.error('Erro ao reproduzir após seekbar:', error));
+                        }
+                    }
+                };
+
+                waveformDiv.addEventListener('click', handleWaveformInteraction);
+                waveformDiv.addEventListener('touchstart', handleWaveformInteraction, { passive: false });
+
+                // Adicionar o timeDisplay ao player de áudio
+                const audioTimeDisplay = document.createElement('div');
+                audioTimeDisplay.className = 'time';
+                if (isReply) {
+                    audioTimeDisplay.classList.add('reply-time');
+                    audioTimeDisplay.style.position = 'absolute';
+                    audioTimeDisplay.style.right = '0px';
+                    audioTimeDisplay.style.bottom = '2px';
+                    audioTimeDisplay.style.margin = '0';
+                    audioTimeDisplay.style.fontSize = '10px';
+                } else {
+                    audioTimeDisplay.style.position = 'absolute';
+                    audioTimeDisplay.style.right = '8px';
+                    audioTimeDisplay.style.bottom = '0px';
+                }
+                audioTimeDisplay.textContent = '0:00';
+                playerContainer.appendChild(audioTimeDisplay);
+
+                return playerContainer;
+            }
+
+            // Formatar horário atual
+            function getCurrentTime() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                return `${hours}:${minutes}`;
+            }
+
+            // Converter texto simples para HTML com suporte básico a Markdown
+            function convertMarkdownToHtml(text) {
+                if (!text) return '';
+
+                // Negrito (** ou __)
+                text = text.replace(/(\*\*|__)(.*?)\1/g, '<strong>$2</strong>');
+
+                // Itálico (* ou _)
+                text = text.replace(/(\*|_)(.*?)\1/g, '<em>$2</em>');
+
+                // Links [texto](url)
+                text = text.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
+
+                // Listas não ordenadas
+                text = text.replace(/^\s*[\-\*]\s+(.*?)$/gm, '<li>$1</li>');
+                text = text.replace(/<li>(.*?)<\/li>(\n<li>.*?<\/li>)+/g, '<ul>$&</ul>');
+
+                // Quebras de linha
+                text = text.replace(/\n/g, '<br>');
+
+                return text;
+            }
+
+            // Criar elemento de mensagem
+            function createMessageElement(message, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `chat-message ${isUser ? 'message-out' : 'message-in'}`;
+
+                // Adicionar uma pequena animação de atraso para simular o efeito de digitação
+                messageDiv.style.animationDelay = '0.2s';
+
+                // Conteúdo da mensagem
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'message-content';
+
+                // Adicionar componente de resposta se houver
+                if (message.replyTo) {
+                    const replyContainer = document.createElement('div');
+                    replyContainer.className = 'reply-container';
+
+                    const replyWrapper = document.createElement('div');
+                    replyWrapper.className = 'reply-wrapper';
+
+                    const replyTextContainer = document.createElement('div');
+                    replyTextContainer.className = 'reply-text-container';
+
+                    const replySender = document.createElement('div');
+                    replySender.className = 'reply-sender';
+                    replySender.textContent = message.replyTo.sender || 'Johann Müller';
+                    replyTextContainer.appendChild(replySender);
+
+                    const replyContent = document.createElement('div');
+                    replyContent.className = 'reply-content';
+
+                    // Se a mensagem de resposta contém texto
+                    if (message.replyTo.text) {
+                        replyContent.textContent = message.replyTo.text;
+                    } else if (message.replyTo.type === 'image') {
+                        replyContent.textContent = 'Foto';
+                    } else if (message.replyTo.type === 'audio') {
+                        replyContent.textContent = 'Áudio';
+                    }
+
+                    replyTextContainer.appendChild(replyContent);
+                    replyWrapper.appendChild(replyTextContainer);
+
+                    // Se a mensagem de resposta contém uma imagem
+                    if (message.replyTo.imageUrl) {
+                        const replyImage = document.createElement('img');
+                        replyImage.className = 'reply-image';
+                        replyImage.src = message.replyTo.imageUrl;
+                        replyImage.alt = 'Imagem de resposta';
+                        replyWrapper.appendChild(replyImage);
+                    }
+
+                    replyContainer.appendChild(replyWrapper);
+                    contentDiv.appendChild(replyContainer);
+                }
+
+                if (message.type === 'text') {
+                    // Converter texto para HTML com suporte a Markdown
+                    const content = convertMarkdownToHtml(message.content);
+
+                    contentDiv.innerHTML += `
+                        <div class="message-text">${content}</div>
+                        <span class="message-time">${getCurrentTime()}</span>
+                        ${isUser ? '<span class="message-status">✓✓</span>' : ''}
+                    `;
+                    messageDiv.appendChild(contentDiv);
+                } else if (message.type === 'image') {
+                    // Criar container para a imagem para adicionar o ícone de zoom
+                    const imageContainer = document.createElement('div');
+                    imageContainer.className = 'message-image-container';
+
+                    // Criar a imagem com atributos para visualização ampliada
+                    const img = document.createElement('img');
+                    img.src = normalizeUrl(message.imageUrl); // CORREÇÃO: Normaliza a URL da imagem
+                    img.alt = "Imagem";
+                    img.className = "message-image";
+                    img.dataset.fullsize = normalizeUrl(message.imageUrl); // CORREÇÃO: Normaliza a URL da imagem
+
+                    // Adicionar ícone de zoom
+                    const zoomIcon = document.createElement('div');
+                    zoomIcon.className = 'zoom-icon';
+                    zoomIcon.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" fill="white"><path d="M15.7 14.3l-4-4c.8-1.1 1.3-2.5 1.3-4 0-3.9-3.1-7-7-7s-7 3.1-7 7 3.1 7 7 7c1.5 0 2.9-.5 4-1.3l4 4c.2.2.4.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4zm-13.7-8.3c0-2.8 2.2-5 5-5s5 2.2 5 5-2.2 5-5 5-5-2.2-5-5z"/><path d="M8 5h-2v2h-2v2h2v2h2v-2h2v-2h-2z"/></svg>';
+
+                    // Adicionar a imagem e o ícone ao container
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(zoomIcon);
+
+                    // Adicionar texto (se houver) e o container de imagem
+                    contentDiv.innerHTML += message.text ? `<div class="message-text">${message.text}</div>` : '';
+                    contentDiv.appendChild(imageContainer);
+
+                    // Adicionar hora e status
+                    const timeElement = document.createElement('span');
+                    timeElement.className = 'message-time';
+                    timeElement.textContent = getCurrentTime();
+                    contentDiv.appendChild(timeElement);
+
+                    if (isUser) {
+                        const statusElement = document.createElement('span');
+                        statusElement.className = 'message-status';
+                        statusElement.textContent = '✓✓';
+                        contentDiv.appendChild(statusElement);
+                    }
+
+                    messageDiv.appendChild(contentDiv);
+
+                    // Adicionar evento de clique para abrir em tamanho maior
+                    imageContainer.addEventListener('click', function () {
+                        openImageModal(normalizeUrl(message.imageUrl)); // CORREÇÃO: Normaliza a URL da imagem
+                    });
+                } else if (message.type === 'audio') {
+                    if (message.replyTo) {
+                        // O componente de resposta já foi adicionado acima
+                        // Para o áudio, vamos criar o player dentro do contentDiv
+                        const audioPlayer = createCustomAudioPlayer(message.audioUrl, true, isUser);
+                        contentDiv.appendChild(audioPlayer);
+
+                        // Não adicionar o timestamp aqui, ele já é adicionado no próprio player
+                        // Removemos o bloco de código que adiciona o timeContainer
+
+                        messageDiv.appendChild(contentDiv);
+                    } else {
+                        // Para áudio sem resposta, mantemos o comportamento original
+                        // Criar o player de áudio com o texto (se houver)
+                        const audioPlayer = createCustomAudioPlayer(message.audioUrl, false, isUser);
+
+                        // Precisa de texto? Adicione antes do player
+                        if (message.text) {
+                            const textDiv = document.createElement('div');
+                            textDiv.className = 'message-content';
+                            textDiv.innerHTML = `
+                                <div class="message-text">${message.text}</div>
+                                <span class="message-time">${getCurrentTime()}</span>
+                                ${isUser ? '<span class="message-status">✓✓</span>' : ''}
+                            `;
+                            messageDiv.appendChild(textDiv);
+                        }
+
+                        // Adicionar o player de áudio diretamente ao container da mensagem
+                        messageDiv.appendChild(audioPlayer);
+
+                        // Adicionar tempo e status diretamente no player de áudio
+                        const timeContainer = document.createElement('div');
+                        timeContainer.className = 'message-time-container';
+                        timeContainer.style.position = 'absolute';
+                        timeContainer.style.left = '3px';
+                        timeContainer.style.bottom = '4px';
+                        timeContainer.style.display = 'flex';
+                        timeContainer.style.alignItems = 'center';
+                        timeContainer.innerHTML = `
+                            <span class="message-time" style="margin-right: 2px;">${getCurrentTime()}</span>
+                            ${isUser ? '<span class="message-status">✓✓</span>' : ''}
+                        `;
+                        audioPlayer.appendChild(timeContainer);
+                    }
+                } else if (message.type === 'youtube') {
+                    contentDiv.innerHTML += `
+                        <div class="message-text">${message.text || ''}</div>
+                        <iframe width="250" height="140" src="https://www.youtube.com/embed/${message.videoId}?autoplay=1&mute=0" 
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; 
+                        gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <span class="message-time">${getCurrentTime()}</span>
+                        ${isUser ? '<span class="message-status">✓✓</span>' : ''}
+                    `;
+                    messageDiv.appendChild(contentDiv);
+                }
+
+                return messageDiv;
+            }
+
+            // Mostrar indicador de digitação
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'typing-indicator';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                typingDiv.id = 'typing-indicator';
+                messagesContainer.appendChild(typingDiv);
+                scrollToBottom();
+            }
+
+            // Remover indicador de digitação
+            function hideTypingIndicator() {
+                const typingIndicator = document.getElementById('typing-indicator');
+                if (typingIndicator) {
+                    typingIndicator.remove();
+                }
+            }
+
+            // Adicionar mensagem ao chat
+            async function addMessage(message, isUser = false) {
+                const messageElement = createMessageElement(message, isUser);
+                messagesContainer.appendChild(messageElement);
+
+                // Ajustar explicitamente as margens dos timestamps após adicionar ao DOM
+                setTimeout(() => {
+                    const replyContainers = messageElement.querySelectorAll('.reply-container');
+                    const timeElements = messageElement.querySelectorAll('.message-time');
+
+                    timeElements.forEach(el => {
+                        // Verificar se este elemento de tempo está dentro ou após um contêiner de resposta
+                        const isInReplyContainer = el.closest('.reply-container') !== null;
+                        const hasReplyContainerSibling = el.parentElement &&
+                            el.parentElement.querySelector('.reply-container') !== null;
+
+                        if (isInReplyContainer || hasReplyContainerSibling || replyContainers.length > 0) {
+                            el.style.marginBottom = '0px';
+                            el.style.marginLeft = '-8px';
+                        } else {
+                            el.style.marginBottom = '-4px';
+                        }
+                    });
+                }, 0);
+
+                // Calcular o delay apropriado para esta mensagem
+                const delay = await getMessageDelay(message);
+
+                // Atualizar o iScroll e rolar para o fim
+                setTimeout(function () {
+                    // Verificar se há imagens na mensagem e esperar que carreguem
+                    const images = messageElement.querySelectorAll('img');
+                    if (images.length > 0) {
+                        // Se houver imagens, esperar pelo carregamento antes de atualizar
+                        let loadedImages = 0;
+                        images.forEach(img => {
+                            if (img.complete) {
+                                loadedImages++;
+                            } else {
+                                img.onload = function () {
+                                    loadedImages++;
+                                    if (loadedImages === images.length) {
+                                        refreshScrollAndCheckContent();
+                                    }
+                                };
+                                img.onerror = function () {
+                                    loadedImages++;
+                                    if (loadedImages === images.length) {
+                                        refreshScrollAndCheckContent();
+                                    }
+                                };
+                            }
+                        });
+
+                        if (loadedImages === images.length) {
+                            refreshScrollAndCheckContent();
+                        }
+                    } else {
+                        // Se não houver imagens, atualizar diretamente
+                        refreshScrollAndCheckContent();
+                    }
+
+                    function refreshScrollAndCheckContent() {
+                        // Verificar a altura real do conteúdo
+                        const containerHeight = chatContainer.clientHeight;
+                        const contentHeight = messagesContainer.offsetHeight;
+
+                        // Apenas atualizar e rolar se houver conteúdo suficiente
+                        if (contentHeight > containerHeight) {
+                            if (chatScroll) {
+                                chatScroll.refresh();
+
+                                // Verificar se deve rolar para o fim
+                                const isNearBottom = chatScroll ?
+                                    (chatScroll.y > chatScroll.maxScrollY - 150) : true;
+
+                                if ((isUser || isNearBottom) && shouldAutoScroll) {
+                                    // Usar um valor negativo para garantir que não haja espaço em branco no final
+                                    chatScroll.scrollTo(0, chatScroll.maxScrollY, 300);
+                                }
+                            }
+                        }
+                    }
+                }, 100);
+
+                // Retornar o delay calculado para que a função chamadora possa aguardar
+                return delay;
+            }
+
+            // Modificar a função scrollToBottom para ser mais inteligente
+            function scrollToBottom(force = false) {
+                if (chatScroll) {
+                    // Apenas rolar se tiver conteúdo suficiente para justificar rolagem
+                    const containerHeight = chatContainer.clientHeight;
+                    const contentHeight = messagesContainer.offsetHeight;
+
+                    // Não rolar se não houver conteúdo suficiente
+                    if (contentHeight <= containerHeight) {
+                        return;
+                    }
+
+                    // Se force for verdadeiro ou shouldAutoScroll for verdadeiro
+                    if (force || shouldAutoScroll) {
+                        setTimeout(function () {
+                            chatScroll.refresh();
+                            // Evita rolar além do possível
+                            if (chatScroll.maxScrollY < 0) {
+                                chatScroll.scrollTo(0, chatScroll.maxScrollY, 300);
+                            }
+                        }, 100);
+                    }
+                }
+            }
+
+            // Extrair ID do YouTube de uma URL
+            function getYoutubeVideoId(url) {
+                const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+                const match = url.match(regExp);
+                return (match && match[2].length === 11) ? match[2] : null;
+            }
+
+            // Processar entrada do usuário enviando para Agente de IA
+            async function processUserInput(userInput) {
+                if (!userInput.trim()) return;
+
+                // 1. Adicionar mensagem do usuário ao chat local
+                await addMessage({ type: 'text', content: userInput }, true);
+
+                // 2. Limpar campo de entrada
+                messageInput.value = '';
+
+                // 3. Mostrar indicador de digitação
+                showTypingIndicator();
+
+                // 4. Enviar para o Agente de IA no N8N
+                const aiResponse = await sendMessageToIA(userInput);
+
+                // 5. Remover indicador de digitação
+                hideTypingIndicator();
+
+                if (aiResponse) {
+                    // Armazenar no histórico para contexto futuro
+                    if (!chatData.conversaIA) chatData.conversaIA = [];
+
+                    // Extrair texto da resposta de forma ultra flexível
+                    let responseText = "";
+                    if (typeof aiResponse === 'string') {
+                        responseText = aiResponse;
+                    } else {
+                        // Prioridade para campos comuns do N8N e Agentes
+                        responseText = aiResponse.output || aiResponse.text || aiResponse.resposta || aiResponse.message || (aiResponse.message1 && aiResponse.message1.texto) || (typeof aiResponse === 'object' ? JSON.stringify(aiResponse) : String(aiResponse));
+                    }
+
+                    chatData.conversaIA.push({
+                        pergunta: userInput,
+                        resposta: responseText,
+                        timestamp: new Date().toISOString()
+                    });
+
+                    // 6. Exibir as mensagens retornadas pela IA
+                    // Verificar se é o formato de mensagens estruturadas (message1, etc)
+                    if (aiResponse.message1 || aiResponse.message2 || aiResponse.message3) {
+                        await processN8NResponse(aiResponse);
+                    } else {
+                        // Se for uma resposta única ou texto puro, usar a lógica de validação rigorosa
+                        // Convertemos para o formato que showN8NMessage espera para manter consistência
+                        const normalizedResponse = typeof aiResponse === 'string' ? { texto: aiResponse } : {
+                            texto: responseText,
+                            imagem: aiResponse.imageUrl || aiResponse.imagem,
+                            audio: aiResponse.audioUrl || aiResponse.audio,
+                            youtube_id: aiResponse.videoId || aiResponse.youtube_id
+                        };
+
+                        await showN8NMessage(normalizedResponse);
+                    }
+                } else {
+                    // Fallback em caso de erro na rede/webhook
+                    await addMessage({
+                        type: 'text',
+                        content: 'Desculpe, tive um pequeno problema de conexão. Poderia repetir?'
+                    });
+                }
+
+                waitForUserInput();
+            }
+
+            // Iniciar o chat
+            async function startChat() {
+                // Verificar se o chat já foi iniciado para evitar duplicação
+                if (chatData.isChatStarted) return;
+
+                chatData.isChatStarted = true;
+
+                // PIXEL META: Ver Conteúdo - Usuário iniciou interação com o chat
+                try {
+                    await sendMetaConversionEvent('ViewContent', {
+                        country: 'Portugal'
+                    }, {
+                        content_type: 'chat_interaction',
+                        content_name: 'WhatsApp Chat Iniciado',
+                        currency: 'EUR',
+                        source: 'whatsapp_chat'
+                    });
+                } catch (error) {
+                    console.error('Erro ao enviar pixel ViewContent:', error);
+                }
+
+                // Gerar um ID de sessão único
+                chatData.session_id = 'ws_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+
+                // Esconder o perfil e mostrar o chat imediatamente
+                if (profileSection) profileSection.style.display = 'none';
+                if (loadingIndicator) loadingIndicator.style.display = 'none';
+
+                chatContainer.style.display = 'block';
+                chatContainer.style.opacity = '1';
+                chatContainer.style.transform = 'translateY(0)';
+
+                // Definir estilos de rolagem - corrigido para evitar barras duplas
+                chatContainer.style.overflowY = 'hidden';
+                chatContainer.style.WebkitOverflowScrolling = 'touch';
+
+                // Habilitar o campo de entrada
+                messageInput.removeAttribute('readonly');
+
+                // Desbloquear áudio para iOS
+                unlockAudioForIOS();
+
+                // Iniciar fluxo N8N
+                initializeN8NFlow();
+
+                // Inicializar o iScroll para rolagem suave
+                initScrolling();
+
+                // Criar botão de rolagem para o fim
+                createScrollToBottomButton();
+
+                // Adicionar classe para melhorar a rolagem em dispositivos móveis
+                document.body.classList.add('chat-started');
+
+                // Força uma atualização da rolagem após o chat iniciar
+                setTimeout(function () {
+                    if (chatScroll) {
+                        chatScroll.refresh();
+                        scrollToBottom(true);
+                    }
+                }, 100);
+            }
+
+            // Inicializar iScroll para rolagem suave
+            function initScrolling() {
+                // Certificar-se de que o container está visível
+                if (!chatContainer) return;
+
+                // Destruir instância anterior se existir
+                if (chatScroll) {
+                    chatScroll.destroy();
+                    chatScroll = null;
+                }
+
+                // Configurar o iScroll com opções otimizadas para dispositivos móveis
+                chatScroll = new IScroll(chatContainer, {
+                    scrollbars: true,
+                    mouseWheel: true,
+                    interactiveScrollbars: true,
+                    shrinkScrollbars: 'scale',
+                    fadeScrollbars: true,
+                    click: true,
+                    tap: true,
+                    useTransition: true,
+                    useTransform: true,
+                    probeType: 3,
+                    momentum: true,
+                    bounce: false, // Desativar o efeito de "bounce" que pode causar rolagem em área vazia
+                    deceleration: 0.001, // Reduzir a velocidade de desaceleração para evitar rolar demais
+                    // Adicionadas opções para melhorar a rolagem
+                    preventDefaultException: { tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A|IMG)$/ },
+                    disablePointer: true,
+                    disableTouch: false,
+                    disableMouse: false
+                });
+
+                // Detectar quando o usuário rola manualmente
+                chatScroll.on('scrollStart', function () {
+                    userHasScrolled = true;
+
+                    // Verificar se há algum conteúdo
+                    if (messagesContainer.offsetHeight <= chatContainer.clientHeight) {
+                        // Se não houver conteúdo suficiente, cancelar rolagem
+                        this.enabled = false;
+                        // Reativar após um pequeno delay
+                        setTimeout(() => { this.enabled = true; }, 100);
+                    }
+                });
+
+                // Corrigir o problema de rolagem para o nada
+                chatScroll.on('scrollEnd', function () {
+                    // Se o conteúdo for menor que o container, não permitir rolagem
+                    if (messagesContainer.offsetHeight <= chatContainer.clientHeight) {
+                        return;
+                    }
+
+                    // Verificar se o usuário está próximo do fim
+                    const isNearBottom = this.y > this.maxScrollY - 50;
+
+                    // Se estiver próximo do fim, permitir rolagem automática
+                    if (isNearBottom) {
+                        shouldAutoScroll = true;
+                    } else {
+                        shouldAutoScroll = false;
+                    }
+
+                    // Verificar se a rolagem está além do limite permitido
+                    if (this.y < this.maxScrollY) {
+                        // Voltar para o limite máximo de rolagem
+                        this.scrollTo(0, this.maxScrollY, 300);
+                    } else if (this.y > 0) {
+                        // Voltar para o topo se rolar além do início
+                        this.scrollTo(0, 0, 300);
+                    }
+                });
+
+                // Atualizar o iScroll quando o layout mudar
+                window.addEventListener('resize', function () {
+                    if (chatScroll) {
+                        setTimeout(function () {
+                            chatScroll.refresh();
+
+                            // Verificar altura do conteúdo
+                            const containerHeight = chatContainer.clientHeight;
+                            const contentHeight = messagesContainer.offsetHeight;
+
+                            // Ajustar posição se necessário
+                            if (contentHeight <= containerHeight) {
+                                chatScroll.scrollTo(0, 0, 100); // Conteúdo menor que o container, manter no topo
+                            } else if (chatScroll.y < chatScroll.maxScrollY) {
+                                chatScroll.scrollTo(0, chatScroll.maxScrollY, 100); // Corrigir se estiver além do fim
+                            }
+                        }, 200);
+                    }
+                });
+
+                // Garantir que o iScroll seja atualizado periodicamente
+                setInterval(function () {
+                    if (chatScroll) {
+                        chatScroll.refresh();
+
+                        // Verificar e corrigir posições inválidas
+                        if (chatScroll.y < chatScroll.maxScrollY) {
+                            chatScroll.scrollTo(0, chatScroll.maxScrollY, 100);
+                        }
+
+                        // Se o conteúdo for menor que o container, manter no topo
+                        if (messagesContainer.offsetHeight <= chatContainer.clientHeight) {
+                            chatScroll.scrollTo(0, 0, 100);
+                        }
+                    }
+                }, 2000);
+
+                // Rolagem para o fim, mas apenas se tiver conteúdo suficiente
+                if (messagesContainer.offsetHeight > chatContainer.clientHeight) {
+                    scrollToBottom(true);
+                }
+            }
+
+            // Criar botão para rolar para o fim
+            function createScrollToBottomButton() {
+                const scrollBtn = document.createElement('button');
+                scrollBtn.id = 'scroll-to-bottom';
+                scrollBtn.innerHTML = '&darr;';
+                scrollBtn.style.position = 'fixed';
+                scrollBtn.style.bottom = '70px';
+                scrollBtn.style.right = '15px';
+                scrollBtn.style.width = '45px';
+                scrollBtn.style.height = '45px';
+                scrollBtn.style.borderRadius = '50%';
+                scrollBtn.style.background = '#00a884';
+                scrollBtn.style.color = 'white';
+                scrollBtn.style.border = 'none';
+                scrollBtn.style.fontSize = '22px';
+                scrollBtn.style.fontWeight = 'bold';
+                scrollBtn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.3)';
+                scrollBtn.style.cursor = 'pointer';
+                scrollBtn.style.zIndex = '1000';
+                scrollBtn.style.display = 'none';
+                document.body.appendChild(scrollBtn);
+
+                // Mostrar o botão quando rolar para cima
+                if (chatScroll) {
+                    chatScroll.on('scroll', function () {
+                        if (this.y < this.maxScrollY + 100) {
+                            scrollBtn.style.display = 'none';
+                        } else {
+                            scrollBtn.style.display = 'block';
+                        }
+                    });
+                }
+
+                // Rolar para o fim ao clicar
+                scrollBtn.addEventListener('click', function () {
+                    scrollToBottom();
+                });
+            }
+
+            // Preparar para receber entrada do usuário
+            function waitForUserInput() {
+                chatData.waitingForUserInput = true;
+                // Remover o foco automático para evitar que o teclado apareça sozinho
+                // O usuário precisa clicar manualmente para abrir o teclado
+            }
+
+            // Eventos para iniciar o chat (ÚNICO EVENT LISTENER)
+            if (startChatBtn) {
+                startChatBtn.addEventListener('click', function () {
+                    // Verificar se o chat já foi iniciado para evitar cliques múltiplos
+                    if (chatData.isChatStarted) return;
+
+                    // Desabilitar o botão temporariamente para evitar cliques múltiplos
+                    startChatBtn.disabled = true;
+                    startChatBtn.style.opacity = '0.6';
+                    startChatBtn.style.cursor = 'not-allowed';
+
+                    // Certificar-se de que o indicador de carregamento está centralizado
+                    setTimeout(() => {
+                        if (loadingIndicator) {
+                            loadingIndicator.style.left = '50%';
+                            loadingIndicator.style.top = '50%';
+                            loadingIndicator.style.transform = 'translate(-50%, -50%)';
+                        }
+                    }, 300);
+
+                    // Configurar rolagem inicial
+                    setTimeout(function () {
+                        const chatContainer = document.getElementById('chat-container');
+                        if (chatContainer) {
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                        }
+                        scrollToBottom(true);
+                        userHasScrolled = false;
+                        shouldAutoScroll = true;
+                    }, 1000);
+
+                    // Iniciar o chat
+                    startChat();
+                });
+            }
+
+            // Configurar botão de alternância de versão
+            const versionToggle = document.getElementById('version-toggle');
+            const versionIndicator = document.getElementById('version-indicator');
+
+            if (versionToggle && versionIndicator) {
+                // Inicializar com o valor atual
+                versionIndicator.textContent = chatData.experimentID === "v1-main" ? "MAIN" : "EXP";
+                versionToggle.style.backgroundColor = chatData.experimentID === "v1-main" ? "rgba(255,255,255,0.1)" : "rgba(0,255,255,0.2)";
+
+                versionToggle.addEventListener('click', function () {
+                    // Alternar entre main e experimental
+                    if (chatData.experimentID === "v1-main") {
+                        chatData.experimentID = "v2-experimental";
+                        versionIndicator.textContent = "EXP";
+                        versionToggle.style.backgroundColor = "rgba(0,255,255,0.2)";
+                    } else {
+                        chatData.experimentID = "v1-main";
+                        versionIndicator.textContent = "MAIN";
+                        versionToggle.style.backgroundColor = "rgba(255,255,255,0.1)";
+                    }
+
+                    // Salvar a preferência no localStorage
+                    try {
+                        localStorage.setItem('whatsapp_version', chatData.experimentID);
+                    } catch (e) {
+                        console.error('Erro ao salvar versão no localStorage:', e);
+                    }
+
+                    console.log('Versão alterada para:', chatData.experimentID);
+                });
+
+                // Verificar se há uma preferência salva no localStorage
+                try {
+                    const savedVersion = localStorage.getItem('whatsapp_version');
+                    if (savedVersion) {
+                        chatData.experimentID = savedVersion;
+                        versionIndicator.textContent = chatData.experimentID === "v1-main" ? "MAIN" : "EXP";
+                        versionToggle.style.backgroundColor = chatData.experimentID === "v1-main" ? "rgba(255,255,255,0.1)" : "rgba(0,255,255,0.2)";
+                    }
+
+                    // Registrar a versão no console para debug
+                    console.log('Versão carregada do localStorage:', chatData.experimentID);
+                } catch (e) {
+                    console.error('Erro ao ler versão do localStorage:', e);
+                }
+            }
+
+            // Enviar mensagem ao pressionar Enter
+            messageInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter' && !e.shiftKey && chatData.waitingForUserInput) {
+                    e.preventDefault();
+                    const userInput = messageInput.value.trim();
+                    if (userInput) {
+                        chatData.waitingForUserInput = false;
+                        processUserInput(userInput);
+                    }
+                }
+            });
+
+            // Enviar mensagem ao clicar no botão
+            sendButton.addEventListener('click', function () {
+                if (chatData.waitingForUserInput) {
+                    const userInput = messageInput.value.trim();
+                    if (userInput) {
+                        chatData.waitingForUserInput = false;
+                        processUserInput(userInput);
+                    }
+                }
+            });
+
+            // Eventos para desbloquear áudio no iOS
+            document.addEventListener('touchstart', unlockAudioForIOS, { once: true });
+            document.addEventListener('click', unlockAudioForIOS, { once: true });
+
+            // CORREÇÃO: Lidar com o teclado de forma mais robusta
+            if (window.visualViewport) {
+                window.visualViewport.addEventListener('resize', function () {
+                    if (chatData.isChatStarted) {
+                        const keyboardHeight = window.innerHeight - window.visualViewport.height;
+
+                        if (keyboardHeight > 150) {
+                            // Teclado visível
+                            document.body.classList.add('keyboard-open');
+
+                            // Adicionar um atraso para rolagem funcionar após o teclado abrir completamente
+                            setTimeout(scrollToBottom, 300);
+                        } else {
+                            // Teclado fechado
+                            document.body.classList.remove('keyboard-open');
+                        }
+                    }
+                });
+            }
+
+            // Adicionar eventos de toque para dispositivos móveis - REMOVIDO (duplicado)
+
+            // Melhorar tratamento de orientação
+            window.addEventListener('orientationchange', function () {
+                // Aguardar a conclusão da mudança de orientação
+                setTimeout(() => {
+                    if (chatData.isChatStarted) {
+                        scrollToBottom();
+                    }
+                }, 500); // Um pouco mais de tempo para a rotação ser concluída
+            });
+
+            // Prevenir zoom em inputs e eventos de double-tap no iOS
+            document.addEventListener('gesturestart', (e) => e.preventDefault());
+            document.addEventListener('touchmove', (e) => {
+                if (e.scale !== 1) e.preventDefault();
+            }, { passive: false });
+
+            // Criar botão de rolagem para o fim (consolidado)
+            const scrollButton = document.createElement('button');
+            scrollButton.id = 'scroll-down-button';
+            scrollButton.innerHTML = '↓';
+            scrollButton.style.position = 'fixed';
+            scrollButton.style.right = '16px';
+            scrollButton.style.bottom = '70px';
+            scrollButton.style.width = '40px';
+            scrollButton.style.height = '40px';
+            scrollButton.style.borderRadius = '50%';
+            scrollButton.style.backgroundColor = '#00a884';
+            scrollButton.style.color = 'white';
+            scrollButton.style.border = 'none';
+            scrollButton.style.fontSize = '20px';
+            scrollButton.style.fontWeight = 'bold';
+            scrollButton.style.boxShadow = '0 1px 3px rgba(0,0,0,0.3)';
+            scrollButton.style.zIndex = '1000';
+            scrollButton.style.display = 'none';
+            document.body.appendChild(scrollButton);
+
+            // Monitorar eventos de rolagem
+            if (chatContainer) {
+                chatContainer.addEventListener('scroll', function () {
+                    // Detectar quando o usuário está rolando
+                    if (!isScrolling) {
+                        userHasScrolled = true;
+                        isScrolling = true;
+
+                        // Limpar o temporizador se já existir
+                        if (window.scrollTimeout) {
+                            clearTimeout(window.scrollTimeout);
+                        }
+
+                        // Definir temporizador para considerar que a rolagem terminou
+                        window.scrollTimeout = setTimeout(function () {
+                            isScrolling = false;
+
+                            // Se estiver próximo do fim, permitir auto-scroll novamente
+                            if (isNearBottom()) {
+                                userHasScrolled = false;
+                                shouldAutoScroll = true;
+                                hideScrollButton();
+                            } else {
+                                shouldAutoScroll = false;
+                                showScrollButton();
+                            }
+                        }, 150);
+                    }
+
+                    lastScrollPosition = chatContainer.scrollTop;
+                }, { passive: true });
+
+                // Adicionar evento de clique ao botão de rolagem
+                scrollButton.addEventListener('click', function () {
+                    userHasScrolled = false;
+                    shouldAutoScroll = true;
+                    scrollToBottom(true);
+                    hideScrollButton();
+                });
+
+                // Desativar todos os outros listeners que possam interferir
+                chatContainer.ontouchstart = null;
+                chatContainer.ontouchmove = null;
+                chatContainer.ontouchend = null;
+            }
+
+            // Garantir que o messageInput não faça a página rolar automaticamente
+            if (messageInput) {
+                messageInput.addEventListener('focus', function () {
+                    // Evitar que o foco cause rolagem automática
+                    setTimeout(function () {
+                        if (userHasScrolled && !isNearBottom()) {
+                            // Não fazemos nada se o usuário rolou para cima e não está no fim
+                        } else {
+                            scrollToBottom(true);
+                        }
+                    }, 300);
+                });
+            }
+
+            // NOVO: Verificar se o usuário está próximo do final da conversa
+            function isNearBottom() {
+                if (!chatContainer) return true;
+
+                const threshold = 150; // pixels
+                const position = chatContainer.scrollHeight - chatContainer.scrollTop - chatContainer.clientHeight;
+                return position < threshold;
+            }
+
+
+            // Função complementar de espera de resposta do usuário
+            async function waitForInput() {
+                return new Promise((resolve) => {
+                    const messageInput = document.getElementById('message-input');
+                    const sendButton = document.getElementById('send-btn');
+
+                    const handleInput = () => {
+                        const message = messageInput.value.trim();
+                        if (message) {
+                            messageInput.value = '';
+                            addMessage({
+                                type: 'text',
+                                content: message
+                            }, true).then(() => {
+                                // Remove os event listeners
+                                sendButton.removeEventListener('click', handleInput);
+                                messageInput.removeEventListener('keypress', handleEnter);
+
+                                resolve();
+                            }).catch(err => {
+                                console.error('Erro ao adicionar mensagem:', err);
+                                resolve(); // Resolve mesmo com erro para não travar o fluxo
+                            });
+                        }
+                    };
+
+                    const handleEnter = (e) => {
+                        if (e.key === 'Enter') {
+                            handleInput();
+                        }
+                    };
+
+                    // Adiciona event listeners para capturar a resposta
+                    sendButton.addEventListener('click', handleInput);
+                    messageInput.addEventListener('keypress', handleEnter);
+                });
+            }
+
+            // Implementação do fluxo N8N
+            async function initializeN8NFlow() {
+                // Mensagens personalizadas iniciais
+                const welcome1 = 'Espere!! Estamos Acompanhando o seu Exame.';
+                const welcome2 = 'Esta com alguma duvida?';
+
+                await addMessage({ type: 'text', content: welcome1 });
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                await addMessage({ type: 'text', content: welcome2 });
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Notificar N8N que o chat iniciou com estas mensagens automáticas
+                sendMessageToIA(`${welcome1} ${welcome2}`, true);
+
+                chatData.currentStep = 0;
+                waitForUserInput();
+            }
+
+            // Processar resposta do N8N e mostrar mensagens
+            async function processN8NResponse(response) {
+                if (response.userName) chatData.userName = response.userName;
+                if (response.userPhone) chatData.userPhone = response.userPhone;
+
+                if (response.message1) await showN8NMessage(response.message1);
+                if (response.message2) await showN8NMessage(response.message2);
+                if (response.message3) await showN8NMessage(response.message3);
+                if (response.message4) await showN8NMessage(response.message4);
+                if (response.message5) await showN8NMessage(response.message5);
+                if (response.message6) await showN8NMessage(response.message6);
+                if (response.message7) await showN8NMessage(response.message7);
+            }
+
+            // Mostrar mensagem individual do N8N com validação rigorosa
+            async function showN8NMessage(messageData) {
+                if (!messageData) return;
+
+                let delay = parseInt(messageData.delay) * 1000 || 2000;
+
+                // Mostrar indicador de digitação antes do delay
+                showTypingIndicator();
+                await new Promise(resolve => setTimeout(resolve, delay));
+                hideTypingIndicator();
+
+                // Validação rigorosa de tipo de conteúdo - Melhorada para evitar falsos positivos
+                if (messageData.imagem && typeof messageData.imagem === 'string' &&
+                    messageData.imagem.startsWith('http') && isImageUrl(messageData.imagem)) {
+                    await addMessage({
+                        type: 'image',
+                        imageUrl: messageData.imagem,
+                        text: messageData.texto || ''
+                    });
+                } else if (messageData.audio && typeof messageData.audio === 'string' && messageData.audio.startsWith('http')) {
+                    await addMessage({
+                        type: 'audio',
+                        audioUrl: messageData.audio,
+                        text: messageData.texto || ''
+                    });
+                } else if (messageData.youtube_id || (messageData.texto && messageData.texto.includes('youtube.com'))) {
+                    const videoId = messageData.youtube_id || getYoutubeVideoId(messageData.texto);
+                    await addMessage({
+                        type: 'youtube',
+                        videoId: videoId,
+                        text: messageData.texto || ''
+                    });
+                } else if (messageData.texto || typeof messageData === 'string') {
+                    await addMessage({
+                        type: 'text',
+                        content: messageData.texto || (typeof messageData === 'string' ? messageData : '')
+                    });
+                }
+            }
+
+            // Função para mostrar o popup de confirmação de endereço
+            // ═══════════════════════════════════════════════════
+            // SISTEMA EXIT-INTENT — Johann Müller
+            // Lê o checkpoint da URL (?from=) e exibe o gancho correto
+            // ═══════════════════════════════════════════════════
+
+            // 1. Lê o checkpoint da URL
+            const _urlParams = new URLSearchParams(window.location.search);
+            const _checkpointRaw = _urlParams.get('from') || '';
+
+            // 2. Normaliza rotas removendo prefixos redundantes (/main e /pt)
+            function _normalizeCheckpoint(cp) {
+                if (!cp) return '';
+                // Remove /main e /pt (em qualquer ordem ou combinação no início)
+                // Ex: /main/pt/quiz -> /quiz
+                let normalized = cp.replace(/^\/main/, '').replace(/^\/pt/, '');
+                return normalized || '/';
+            }
+            const _checkpoint = _normalizeCheckpoint(_checkpointRaw);
+
+            // 3. Lê os dados do lead do localStorage
+            function _getLeadData() {
+                try {
+                    const raw = localStorage.getItem('lead_cache_app_espiritualidade');
+                    return raw ? JSON.parse(raw) : {};
+                } catch (e) { return {}; }
+            }
+
+            // 4. Histórico de mensagens da conversa (para o payload do agente)
+            window._exitIntentHistory = [];
+
+            // 5. Mapeamento dos 17 ganchos por checkpoint
+            const _OPENING_MESSAGES = {
+                '/quiz': [
+                    "Oi, eu sou o Johann. Percebi que você acabou de chegar aqui...",
+                    "Antes de ir, deixa eu te perguntar uma coisa:",
+                    "Você chegou até aqui procurando uma resposta para algo, né?",
+                    "Não precisa responder — eu já estou vendo o seu caso em tempo real.",
+                    "Mas se quiser que eu inicie sua análise agora, me faz só uma coisa:"
+                ],
+                '/age-selection-men': [
+                    "Entendo a pressa. Mas vou ser honesto contigo:",
+                    "A sua faixa de vida agora muda tudo no que vou te mostrar.",
+                    "Bloqueios energéticos se manifestam de forma diferente em cada fase.",
+                    "Não quero te entregar uma análise genérica.",
+                    "Qual é a sua faixa de idade?"
+                ],
+                '/age-selection-women': [
+                    "Entendo a pressa. Mas vou ser honesto contigo:",
+                    "A sua faixa de vida agora muda tudo no que vou te mostrar.",
+                    "Bloqueios energéticos se manifestam de forma diferente em cada fase.",
+                    "Não quero te entregar uma análise genérica.",
+                    "Qual é a sua faixa de idade?"
+                ],
+                '/women-success': [
+                    "Sabe o que eu ouço mais das pessoas que quase desistiram aqui?",
+                    "'Eu achei que era mais uma coisa que não ia funcionar pra mim.'",
+                    "O que eu descobri, analisando mais de 19.000 casos, é que existe um padrão.",
+                    "E ele tem tudo a ver com o que está acontecendo na sua vida agora.",
+                    "Posso te mostrar isso?"
+                ],
+                '/men-success': [
+                    "Sabe o que eu ouço mais das pessoas que quase desistiram aqui?",
+                    "'Eu achei que era mais uma coisa que não ia funcionar pra mim.'",
+                    "O que eu descobri, analisando mais de 19.000 casos, é que existe um padrão.",
+                    "E ele tem tudo a ver com o que está acontecendo na sua vida agora.",
+                    "Posso te mostrar isso?"
+                ],
+                '/morning-feeling': [
+                    "Espera um segundo antes de fechar isso.",
+                    "A forma como você acorda de manhã é um dos indicadores mais precisos que eu uso.",
+                    "Não é acidente você ter parado exatamente nessa parte.",
+                    "O seu padrão de frequência já está começando a aparecer pra mim.",
+                    "Me responde isso e eu te mostro o que está causando isso."
+                ],
+                '/transition': [
+                    "Ei, entendo — você veio aqui buscar uma resposta, não assistir mais um vídeo.",
+                    "Mas vou ser direto: o que eu vou mostrar nos próximos minutos é exatamente o mecanismo por trás dos seus bloqueios.",
+                    "Sem ver isso, o resultado que você vai receber não vai fazer sentido completo.",
+                    "São menos de 4 minutos. Eu te acompanho aqui enquanto assiste."
+                ],
+                '/vsl': [
+                    "Você saiu exatamente antes da parte que explica o seu caso.",
+                    "Eu sei que parece um vídeo longo — mas o ponto que muda tudo aparece daqui a pouco.",
+                    "É sobre um hábito específico que 99% das pessoas fazem sem perceber e que sabota qualquer tentativa de manifestação.",
+                    "Você quer que eu te adiante qual é?"
+                ],
+                '/quiz-step-1': [
+                    "Espera — esse quiz não é igual ao que você já fez antes.",
+                    "Agora eu estou medindo a sua frequência vibracional em Hz, de verdade.",
+                    "Cada resposta que você der aqui alimenta um modelo que poucas pessoas no mundo conseguem acessar.",
+                    "Isso é o exame. Seu resultado sai no final.",
+                    "Primeira pergunta:"
+                ],
+                '/quiz-step-2': [
+                    "Essa segunda parte é onde a maioria das pessoas se surpreende com o que descobre sobre si mesma.",
+                    "O que você vai responder agora conecta com um padrão que você carrega há anos — provavelmente sem perceber.",
+                    "Continue:"
+                ],
+                '/quiz-step-3': [
+                    "Você está na metade do seu exame.",
+                    "Já consigo ver alguns padrões se formando no seu perfil.",
+                    "Esse próximo ponto é crítico — ele costuma revelar o bloqueio que mais drena sua energia.",
+                    "Me responde:"
+                ],
+                '/quiz-step-4': [
+                    "Você já está mais perto do que imagina.",
+                    "O que vem agora tem a ver com como sua frequência reage às pessoas ao redor de você.",
+                    "Isso influencia diretamente o que você consegue ou não atrair para a sua vida.",
+                    "Continue:"
+                ],
+                '/quiz-step-5': [
+                    "Essa penúltima parte separa um diagnóstico genérico de um exame personalizado de verdade.",
+                    "Dependendo do que você responder aqui, o seu Plano Vibracional vai ser completamente diferente.",
+                    "Não pula essa:"
+                ],
+                '/quiz-step-6': [
+                    "Última pergunta.",
+                    "Sério — depois disso eu já tenho tudo que preciso para fechar o seu perfil vibracional.",
+                    "Essa é a que fecha o ciclo.",
+                    "Me responde e eu começo a processar o seu resultado agora:"
+                ],
+                '/processing': [
+                    "Seu exame está sendo processado agora — de verdade.",
+                    "Estou cruzando suas respostas com os padrões de bloqueio que identifico há 13 anos.",
+                    "Para te entregar o resultado completo e personalizado no canal certo, preciso saber onde você quer receber.",
+                    "Só isso — depois é tudo seu."
+                ],
+                '/resultado': [
+                    "Esse não é um resultado automático.",
+                    "Cada ponto que você viu ali foi gerado a partir das suas respostas específicas.",
+                    "Mas tem uma parte que a página não mostra — o que está causando esse bloqueio na raiz.",
+                    "Isso eu só consigo te explicar aqui, de forma direta.",
+                    "Quer que eu te mostre?"
+                ],
+                '/fim': [
+                    "Eu sei — essa parte é onde a dúvida aparece pra todo mundo.",
+                    "A mente treinada para o fracasso sempre vai criar uma razão para não avançar.",
+                    "Isso, por si só, já é um dos bloqueios que identificamos no seu perfil.",
+                    "Mas antes de você decidir qualquer coisa, me conta:",
+                    "O que está te impedindo de avançar agora?"
+                ],
+                '/audio-upsell': [
+                    "Você acabou de dar o passo que a maioria nunca dá.",
+                    "E agora, com o seu Plano Vibracional ativo, tem uma forma de acelerar os resultados em 3x.",
+                    "Não é um produto extra — é o que potencializa o que você já começou.",
+                    "Quer que eu te explique em 30 segundos como funciona?"
+                ],
+                '/recupera': [
+                    "Você chegou até aqui e parou exatamente no último passo.",
+                    "Não estou aqui pra te pressionar — mas preciso te perguntar uma coisa com sinceridade:",
+                    "O que aconteceu?",
+                    "Às vezes é algo simples que a gente resolve em segundos.",
+                    "Me conta o que travou."
+                ]
+            };
+
+            // 6. Exibe as mensagens de abertura sequencialmente
+            async function _showOpeningMessages(cp) {
+                const messages = _OPENING_MESSAGES[cp] || _OPENING_MESSAGES['/quiz'];
+                let delay = 1200;
+                for (let i = 0; i < messages.length; i++) {
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                    const text = messages[i];
+                    await addMessage({ type: 'text', content: text });
+                    // Registra no histórico para o agente
+                    window._exitIntentHistory.push({ role: 'assistant', content: text });
+                    delay = Math.max(800, text.length * 28);
+                }
+            }
+
+            // 7. Monta o payload completo para o agente IA
+            window._buildAgentPayload = function (userMessage) {
+                const lead = _getLeadData();
+                return {
+                    checkpoint_id: _checkpoint || '/quiz',
+                    genero: lead.genero || null,
+                    idade: lead.idade || null,
+                    problema_principal: lead.problema_principal || lead.selected_option || null,
+                    etapa_atual_do_funil: lead.etapa_atual || null,
+                    respostas_quiz: lead.respostas_quiz || null,
+                    contato: lead.whatsapp || lead.email || null,
+                    message: userMessage,
+                    conversation_history: window._exitIntentHistory.slice()
+                };
+            };
+
+            // 8. Intercepta o envio de mensagens para enriquecer o payload
+            // (o agente de n8n espera o payload via o body do POST)
+            // Esta função é chamada pela lógica de envio existente
+            window._onUserMessage = function (text) {
+                window._exitIntentHistory.push({ role: 'user', content: text });
+            };
+            window._onAgentMessage = function (text) {
+                if (text) window._exitIntentHistory.push({ role: 'assistant', content: text });
+            };
+
+            // 9. Se veio de um exit-intent, exibe as mensagens de abertura após o chat iniciar
+            if (_checkpoint && _OPENING_MESSAGES[_checkpoint]) {
+                // Aguarda o chat inicializar completamente e então exibe os ganchos
+                const _origStartChat = startChat;
+                startChat = function () {
+                    _origStartChat.apply(this, arguments);
+                    setTimeout(function () {
+                        _showOpeningMessages(_checkpoint);
+                    }, 2000);
+                };
+            }
+
+            // Auto-iniciar o chat
+            startChat();
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,161 @@
+/* ── VibrationalBody SVG ── */
+
+.bodyWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+}
+
+.bodyWrapperCompact {
+    max-width: 44px;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.bodySvg {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0 18px rgba(0, 212, 170, 0.08));
+}
+
+/* ── Zone overlays ── */
+.zone {
+    opacity: 0;
+    transition: opacity 600ms ease, fill 600ms ease;
+    pointer-events: none;
+}
+
+.zoneActive {
+    opacity: 1;
+}
+
+/* Severity levels → color */
+.severity1 {
+    fill: rgba(229, 57, 53, 0.35);
+    filter: url(#glowRed);
+    animation: pulseZone 2.4s ease-in-out infinite;
+}
+
+.severity2 {
+    fill: rgba(229, 57, 53, 0.6);
+    filter: url(#glowRed);
+    animation: pulseZone 1.8s ease-in-out infinite;
+}
+
+.severity3 {
+    fill: rgba(26, 26, 26, 0.75);
+    filter: url(#glowDark);
+    animation: pulseZoneDark 2s ease-in-out infinite;
+}
+
+/* ── Scan line animation ── */
+.scanLine {
+    opacity: 0;
+    transition: opacity 400ms ease;
+}
+
+.scanLineActive {
+    opacity: 1;
+    animation: scanDown 1.6s ease-in-out;
+}
+
+/* ── Keyframes ── */
+@keyframes pulseZone {
+
+    0%,
+    100% {
+        opacity: 0.7;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes pulseZoneDark {
+
+    0%,
+    100% {
+        opacity: 0.65;
+    }
+
+    50% {
+        opacity: 0.9;
+    }
+}
+
+@keyframes scanDown {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+/* ── Contorno glow do corpo ── */
+.bodyOutline {
+    fill: none;
+    stroke: #2a3a5e;
+    stroke-width: 1.5;
+    transition: stroke 400ms ease;
+}
+
+.bodyOutlineActive {
+    stroke: #00d4aa;
+    filter: drop-shadow(0 0 6px rgba(0, 212, 170, 0.3));
+}
+
+/* ── Label das zonas ── */
+.zoneLabel {
+    font-family: 'Source Sans 3', 'Source Sans Pro', sans-serif;
+    font-size: 7px;
+    fill: #5a6a8a;
+    text-anchor: middle;
+    pointer-events: none;
+    opacity: 0.7;
+    transition: opacity 400ms ease, fill 400ms ease;
+}
+
+.zoneLabelActive {
+    fill: #e53935;
+    opacity: 1;
+    font-weight: 700;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+    .bodyWrapper {
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 400px) {
+    .bodyWrapper {
+        max-width: 140px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .severity1,
+    .severity2,
+    .severity3 {
+        animation: none;
+    }
+
+    .scanLineActive {
+        animation: none;
+    }
+}

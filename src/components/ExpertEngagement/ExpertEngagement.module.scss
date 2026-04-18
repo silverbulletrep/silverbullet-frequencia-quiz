@@ -1,0 +1,226 @@
+.expertEngagement {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.engagementEnter {
+  animation: engageFadeIn 0.5s ease-out forwards;
+}
+
+.engagementExit {
+  animation: engageFadeOut 0.35s ease-in forwards;
+}
+
+@keyframes engageFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes engageFadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+.expertDialog {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.expertAvatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 2px solid rgba(242, 201, 76, 0.6);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.expertBubble {
+  background: #f6f2e7;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  border-top-left-radius: 4px;
+  padding: 10px 14px;
+  position: relative;
+}
+
+.expertMessage {
+  margin: 0;
+  color: #111111;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.expertCtaBtn {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #f2c94c 0%, #e5b945 100%);
+  color: #0a1a4f;
+  font-weight: 800;
+  font-size: 14px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 4px 16px rgba(242, 201, 76, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ctaLabel {
+  flex: 1;
+  text-align: left;
+}
+
+.expertCtaBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(242, 201, 76, 0.5);
+}
+
+@keyframes ctaClickPulse {
+  0% { transform: scale(1); box-shadow: 0 4px 16px rgba(242, 201, 76, 0.35); }
+  50% { transform: scale(0.98); box-shadow: 0 2px 12px rgba(242, 201, 76, 0.30); }
+  100% { transform: scale(1.03); box-shadow: 0 6px 20px rgba(242, 201, 76, 0.50); }
+}
+
+.expertCtaBtn:active {
+  animation: ctaClickPulse 240ms ease;
+}
+
+.expertCtaRow {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  column-gap: 10px;
+}
+
+.ctaArrow {
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 44px;
+  align-self: center;
+}
+
+.ctaArrowSvg {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transform: scale(0.95);
+  transform-origin: left center;
+  animation: arrowEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.ctaArrowCurve {
+  fill: none;
+  stroke: url(#ctaArrowGrad);
+  stroke-width: 3.8px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 2px 6px rgba(142, 27, 27, 0.25));
+}
+
+.ctaArrowHead {
+  fill: none;
+  stroke: url(#ctaArrowGrad);
+  stroke-width: 2.2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 2px 6px rgba(142, 27, 27, 0.25));
+}
+
+@keyframes arrowEnter {
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.ctaCheckbox {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid rgba(10, 26, 79, 0.75);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45), 0 2px 8px rgba(0, 0, 0, 0.12);
+  flex: 0 0 auto;
+}
+
+.ctaCheckbox::after {
+  content: '';
+  width: 7px;
+  height: 12px;
+  border-right: 2px solid rgba(10, 26, 79, 0.9);
+  border-bottom: 2px solid rgba(10, 26, 79, 0.9);
+  transform: rotate(45deg) scale(0.6);
+  opacity: 0;
+  transition: opacity 140ms ease, transform 200ms ease;
+}
+
+.ctaCheckboxChecked {
+  background: linear-gradient(180deg, #f6f2e7 0%, #ffffff 100%);
+  border-color: rgba(10, 26, 79, 0.9);
+}
+
+.ctaCheckboxChecked::after {
+  opacity: 1;
+  transform: rotate(45deg) scale(1);
+  animation: checkPop 260ms ease-out;
+}
+
+@keyframes checkPop {
+  0% { transform: rotate(45deg) scale(0.4); opacity: 0; }
+  60% { transform: rotate(45deg) scale(1.08); opacity: 1; }
+  100% { transform: rotate(45deg) scale(1); opacity: 1; }
+}
+
+@media (max-width: 480px) {
+  .expertCtaRow {
+    max-width: 360px;
+    column-gap: 8px;
+    grid-template-columns: auto 1fr;
+  }
+  .ctaArrow { width: 70px; height: 36px; }
+  .expertCtaBtn { font-size: 13px; padding: 10px 14px; }
+  .ctaCheckbox { width: 16px; height: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .engagementEnter,
+  .engagementExit {
+    animation: none;
+  }
+}

@@ -1,0 +1,139 @@
+.container {
+    width: 100%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.pathLabel {
+    font-family: "Playfair Display", "Times New Roman", serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+    text-align: center;
+    color: #ff7b6b;
+}
+
+.pathLabelPos {
+    color: var(--color-cta-primary, #F7C800);
+}
+
+.imageWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.pathImage {
+    width: 100%;
+    max-width: 325px;
+    border-radius: 18px;
+    object-fit: cover;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.sliders {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sliderGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sliderHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.sliderLabel {
+    font-size: 12px;
+    font-weight: 600;
+    color: #f8f3e6;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.sliderText {
+    font-size: 11px;
+    color: #ff7b6b;
+    font-weight: 500;
+}
+
+.sliderTextPos {
+    color: var(--color-cta-primary, #F7C800);
+}
+
+.sliderTrack {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.sliderFill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.8s ease;
+}
+
+.fillNeg {
+    background: linear-gradient(90deg, #ff6b5b, #4a3535);
+}
+
+.fillPos {
+    background: linear-gradient(90deg, #5a5a5a, #F7C800);
+}
+
+@media (max-width: 640px) {
+    .grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+
+    .column {
+        gap: 12px;
+    }
+
+    .pathLabel {
+        font-size: 14px;
+    }
+
+    .pathImage {
+        max-width: 212px;
+        border-radius: 14px;
+    }
+
+    .sliders {
+        gap: 10px;
+    }
+
+    .sliderLabel {
+        font-size: 10px;
+    }
+
+    .sliderText {
+        font-size: 10px;
+    }
+
+    .sliderTrack {
+        height: 6px;
+    }
+}

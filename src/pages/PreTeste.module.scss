@@ -1,0 +1,151 @@
+* {
+  box-sizing: border-box;
+}
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--color-grey-98, #f8fafc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px; /* mobile-first, próximo do width 448px do design */
+  padding: 20px 16px 32px;
+}
+
+  .progressBar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+
+    .progressTrack {
+      position: relative;
+      width: 100%;
+      max-width: 448px;
+      height: 8px;
+      border-radius: 9999px;
+      overflow: hidden;
+      background: #C9B6FF33;
+
+    .progressFill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 8px;
+      width: 45px; /* conforme design */
+      background: #3CC7C2;
+      border-radius: 9999px;
+    }
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  row-gap: 12px;
+}
+
+.title {
+  text-align: center;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 24px;
+  font-weight: 900;
+  line-height: 28px;
+  color: #000000;
+  margin: 0;
+}
+
+.subtitle {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  line-height: 22px;
+  color: #000000;
+  text-align: left;
+}
+
+.listIntro {
+  padding-top: 4px;
+}
+
+.listTitle {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+}
+
+.list {
+  padding-left: 19px; /* mesmo recuo do design */
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #000000;
+}
+
+.warning {
+  border-radius: 16px;
+  background: #fef9c3; /* amarelo do design */
+  padding: 15px 16px 16px;
+  text-align: center;
+
+  p {
+    margin: 0;
+    font-family: Inter, Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 22px;
+    color: #000000;
+  }
+}
+
+.emphasis {
+  text-align: center;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 22px;
+  color: #09090b; /* Woodsmoke */
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+}
+
+.continueBtn {
+  border: none;
+  border-radius: 16px;
+  background: #F2C94C;
+  color: #0A1A4F;
+  font-family: Poppins, Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 16px 16px 17px;
+  min-height: 56px;
+  width: 100%;
+  max-width: 448px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background: #DFB43B;
+  }
+}
+
+@media (min-width: 768px) {
+  .container {
+    max-width: 520px;
+  }
+}

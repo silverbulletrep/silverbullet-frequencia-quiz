@@ -1,0 +1,351 @@
+* {
+  box-sizing: border-box;
+}
+
+@import './QuizStep1.module.scss';
+
+.httpsSignupSpiriohub {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+
+  .background {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--color-bg-main);
+    width: 100%;
+    height: 100%;
+    padding-top: 96px;
+
+    .container5 {
+      display: none;
+      flex-direction: column;
+      flex-shrink: 0;
+      align-items: flex-start;
+      align-self: stretch;
+      padding-right: 24px;
+      padding-left: 24px;
+      height: 64px;
+
+      .container4 {
+        display: flex;
+        flex-grow: 1;
+        align-items: center;
+        align-self: stretch;
+        justify-content: space-between;
+
+        .container3 {
+          display: inline-flex;
+          flex-shrink: 0;
+          align-items: center;
+          column-gap: 16px;
+
+          .container {
+            display: flex;
+            flex-shrink: 0;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+
+            .component1 {
+              flex-shrink: 0;
+              width: 19px;
+              height: 16px;
+              color: #0A1A4F;
+            }
+          }
+
+          .container2 {
+            display: inline-flex;
+            flex-shrink: 0;
+            align-items: center;
+            column-gap: 7px;
+
+            .component12 {
+              flex-shrink: 0;
+              width: 57px;
+              height: 20px;
+            }
+
+            .verticalDivider {
+              flex-shrink: 0;
+              background: #F6F7FA;
+              width: 1px;
+              height: 11px;
+            }
+
+            .component13 {
+              flex-shrink: 0;
+              width: 41px;
+              height: 11px;
+            }
+          }
+        }
+
+        .a224 {
+          flex-shrink: 0;
+          line-height: 20px;
+          letter-spacing: -0.42px;
+          color: #6E4DE0;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 14px;
+          font-weight: 500;
+        }
+      }
+
+    .horizontalDivider2 {
+      display: none;
+      flex-shrink: 0;
+      align-items: flex-start;
+      align-self: stretch;
+
+        .horizontalDivider {
+            flex-grow: 1;
+            background: #F6F7FA;
+            height: 1px;
+          }
+      }
+    }
+
+    .container8 {
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      align-items: center;
+      align-self: stretch;
+      justify-content: center;
+      padding: 24px 16px 12px;
+      row-gap: 32px;
+
+      .container6 {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        row-gap: 8px;
+        max-width: 600px;
+
+        .comoVocSeSenteAoAcor {
+          flex-shrink: 0;
+          align-self: stretch;
+          line-height: 36px;
+          letter-spacing: -0.72px;
+          color: #000000;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 24px;
+          font-weight: 500;
+          text-align: center;
+        }
+
+        .selecioneOMaisReleva {
+          flex-shrink: 0;
+          align-self: stretch;
+          line-height: 20px;
+          letter-spacing: 0;
+          color: #6E4DE0;
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 14px;
+          text-align: center;
+        }
+      }
+
+      .container7 {
+        display: flex;
+        flex-direction: column;
+        flex-shrink: 0;
+        align-items: center;
+        row-gap: 12px;
+        width: 100%;
+        max-width: 600px;
+
+        .component2 {
+          display: flex;
+          flex-shrink: 0;
+          align-items: center;
+          align-self: stretch;
+          column-gap: 12px;
+          border: 1px solid #F0F0F4;
+          border-radius: 12px;
+          background: #FFFFFF;
+          padding: 16px 18px;
+          cursor: pointer;
+          transition: background 0.2s ease, border-color 0.2s ease;
+
+          &:hover {
+            background: var(--decor-gold-light);
+            border-color: var(--color-cta-primary);
+          }
+          &:active {
+            background: var(--decor-gold-light);
+            border-color: var(--color-cta-primary);
+          }
+
+          .a {
+            flex-shrink: 0;
+            line-height: 28px;
+            letter-spacing: 0;
+            color: var(--color-cta-primary);
+            font-family: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 22px;
+          }
+
+          .cansadoOuPesado {
+            flex-grow: 1;
+            line-height: 20px;
+            letter-spacing: 0;
+            color: #000000;
+            font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+            font-size: 15px;
+          }
+        }
+
+        .textInput {
+          width: 100%;
+          padding: 20px 24px;
+          border: 1px solid var(--signup-spiriohub-com-White-20, #ffffff33);
+          border-radius: 16px;
+          background: var(--color-violet-13, #201c27);
+          color: var(--signup-spiriohub-com-White, #ffffff);
+          font-family: Poppins, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", SimHei, Arial, Helvetica, sans-serif;
+          font-size: 16px;
+          line-height: 20px;
+          resize: none;
+          outline: none;
+          transition: all 0.2s ease;
+
+          &:focus {
+            border-color: var(--signup-spiriohub-com-White-40, #ffffff66);
+            background: var(--color-violet-17, #2a2530);
+          }
+
+          &::placeholder {
+            color: var(--signup-spiriohub-com-Chatelle, #c3b1c8);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .httpsSignupSpiriohub {
+    .background { padding-top: 88px; }
+  }
+}
+
+@media (max-width: 480px) {
+  .httpsSignupSpiriohub {
+    .background { padding-top: 104px; }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .httpsSignupSpiriohub {
+    .background {
+      .container8 {
+        padding: 16px 12px 12px;
+        row-gap: 24px;
+
+        .container6 {
+          max-width: 100%;
+
+          .comoVocSeSenteAoAcor {
+            font-size: 20px;
+            line-height: 28px;
+          }
+
+          .selecioneOMaisReleva {
+            font-size: 12px;
+            line-height: 18px;
+          }
+        }
+
+        .container7 {
+          max-width: 100%;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+
+          .component2 {
+            align-self: stretch;
+            width: 100%;
+            padding: 14px 16px;
+            min-height: 64px;
+            .a { font-size: 20px; }
+            .cansadoOuPesado { font-size: 14px; }
+          }
+
+          .textInput {
+            grid-column: 1 / -1;
+            padding: 16px 20px;
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .httpsSignupSpiriohub {
+    .background {
+      .container5 {
+        padding-right: 16px;
+        padding-left: 16px;
+      }
+
+      .container8 {
+        padding: 12px 8px 8px;
+        row-gap: 20px;
+
+        .container6 {
+          .comoVocSeSenteAoAcor {
+            font-size: 18px;
+            line-height: 24px;
+          }
+
+          .selecioneOMaisReleva {
+            font-size: 11px;
+            line-height: 16px;
+          }
+        }
+
+        .container7 {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+
+          .component2 {
+            padding: 12px 14px;
+            min-height: 56px;
+            .a { font-size: 18px; }
+            .cansadoOuPesado { font-size: 13px; line-height: 18px; }
+          }
+
+          .textInput {
+            grid-column: 1 / -1;
+            padding: 14px 16px;
+            font-size: 13px;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Forçar 2 colunas em Android (independente da resolução)
+.android {
+  .background {
+    .container8 {
+      .container7 {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+      }
+    }
+  }
+}

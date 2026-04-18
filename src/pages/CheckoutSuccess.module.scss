@@ -1,0 +1,168 @@
+* { box-sizing: border-box; }
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  color: #0f172a;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: #0f192d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.overlayEnter {
+  animation: overlayIn 2500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.overlayExit {
+  animation: overlayOut 1500ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.hidden { display: none; }
+
+.container {
+  width: 100%;
+  max-width: 560px;
+  padding: 24px 16px;
+  display: grid;
+  gap: 16px;
+  justify-items: center;
+}
+
+.checkWrap {
+  width: clamp(96px, 18vw, 168px);
+  height: clamp(96px, 18vw, 168px);
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: rgba(34, 197, 94, 0.08);
+  box-shadow: 0 8px 24px rgba(34, 197, 94, 0.15);
+  animation: popIn 600ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.svg {
+  width: 70%;
+  height: 70%;
+  display: block;
+}
+
+.circle {
+  stroke: #22c55e;
+  stroke-width: 6px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 226;
+  stroke-dashoffset: 226;
+  animation: drawCircle 900ms ease forwards;
+}
+
+.check {
+  stroke: #22c55e;
+  stroke-width: 6px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: drawTick 600ms ease 600ms forwards;
+}
+
+.headline {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.sub {
+  text-align: center;
+  font-size: 14px;
+  color: #334155;
+}
+
+.details {
+  width: 100%;
+  max-width: 480px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.vslContainer {
+  width: 100%;
+  max-width: 520px;
+  min-height: 220px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #0ea5e9 0%, #22c55e 100%);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  color: #ffffff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  opacity: 0;
+  animation: fadeIn 600ms ease forwards;
+}
+
+.vslPlaceholder {
+  width: 100%;
+  max-width: 520px;
+  min-height: 220px;
+  border-radius: 16px;
+  border: 1px dashed #cbd5e1;
+  background: #f8fafc;
+  color: #64748b;
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+
+@keyframes drawCircle {
+  from { stroke-dashoffset: 226; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawTick {
+  from { stroke-dashoffset: 48; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.92); opacity: 0; }
+  60% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes overlayIn {
+  0% { opacity: 0; transform: scale(0.92); filter: blur(6px); }
+  60% { opacity: 1; transform: scale(1.02); filter: blur(0); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+@keyframes overlayOut {
+  0% { opacity: 1; transform: scale(1); }
+  40% { opacity: 0.6; transform: scale(0.98); }
+  100% { opacity: 0; transform: scale(0.94); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .checkWrap { animation: none; }
+  .circle, .check { animation: none; }
+  .vslContainer { animation: none; }
+}

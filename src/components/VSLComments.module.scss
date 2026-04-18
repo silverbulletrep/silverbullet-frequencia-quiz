@@ -1,0 +1,241 @@
+* {
+  box-sizing: border-box;
+}
+
+.commentsContainer {
+  width: 100%;
+  max-width: var(--content-max-width);
+  margin: 16px auto 0;
+  display: grid;
+  row-gap: 12px;
+}
+
+.heading {
+  line-height: 36px;
+  letter-spacing: -0.72px;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.list {
+  display: grid;
+  row-gap: 12px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  border: 1px solid #ffffff1a;
+  border-radius: 16px;
+  box-shadow: 0 10px 20px #0000001a;
+  background: #271f2f;
+  padding: 16px;
+  row-gap: 16px;
+}
+
+.cardTop {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  column-gap: 8px;
+}
+
+.avatar {
+  flex-shrink: 0;
+  border-radius: 22px;
+  width: 44px;
+  height: 44px;
+  overflow: hidden;
+  background: #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.authorRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 1px;
+}
+
+.authorName {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ratingRow {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 4px;
+  padding: 2px 0;
+}
+
+.stars {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 2px;
+  color: #F2C94C;
+}
+
+.ratingText {
+  line-height: 20px;
+  letter-spacing: -0.36px;
+  color: #ffffff99;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.timeAgo {
+  line-height: 20px;
+  letter-spacing: -0.36px;
+  color: #c3b1c8;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.content {
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border: 1px solid #ffffff1a;
+  border-radius: 8px;
+  background: #1f1d28;
+  color: #eaeaf2;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+}
+
+.actionBtn:hover {
+  transform: translateY(-1px);
+  background: #252334;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+
+.actionBtn:focus-visible {
+  outline: 2px solid #3CC7C2;
+  outline-offset: 2px;
+}
+
+.replyBox {
+  display: grid;
+  row-gap: 8px;
+}
+
+.replyInput {
+  width: 100%;
+  border: 1px solid #ffffff1a;
+  border-radius: 8px;
+  background: #1f1d28;
+  color: #eaeaf2;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+
+.sendBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #3CC7C2;
+  border-radius: 8px;
+  background: #0AA88F;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.sendBtn:hover {
+  filter: brightness(1.05);
+}
+
+.inputBox {
+  display: grid;
+  row-gap: 8px;
+  border: 1px solid #ffffff1a;
+  border-radius: 12px;
+  background: #271f2f;
+  padding: 12px;
+}
+
+.commentInput {
+  width: 100%;
+  min-height: 64px;
+  border: 1px solid #ffffff1a;
+  border-radius: 8px;
+  background: #1f1d28;
+  color: #eaeaf2;
+  padding: 10px 12px;
+  font-size: 13px;
+}
+
+.listReplies {
+  display: grid;
+  row-gap: 8px;
+}
+
+.replyItem {
+  border-left: 2px solid #F2C94C;
+  padding-left: 10px;
+  display: grid;
+  row-gap: 4px;
+}
+
+@media (max-width: 768px) {
+  .heading { font-size: 20px; }
+  .card { padding: 12px; }
+  .authorName { font-size: 13px; }
+}
+
+@media (max-width: 480px) {
+  .heading { font-size: 18px; line-height: 28px; }
+  .commentsContainer { row-gap: 10px; }
+  .list { row-gap: 10px; }
+  .card { padding: 12px; row-gap: 12px; }
+  .cardTop { column-gap: 6px; }
+  .avatar { width: 36px; height: 36px; border-radius: 18px; }
+  .authorName { font-size: 12px; }
+  .ratingText { font-size: 11px; }
+  .timeAgo { font-size: 11px; }
+  .content { font-size: 12px; line-height: 18px; }
+  .actions { gap: 6px; }
+  .actionBtn { padding: 6px 10px; font-size: 12px; }
+  .replyItem { padding-left: 8px; }
+}

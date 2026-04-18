@@ -1,0 +1,67 @@
+schema: 1
+story: '3.3'
+story_title: 'Sistema de Transições Fluídas entre Páginas'
+gate: CONCERNS
+status_reason: 'Caminho nativo de View Transitions desabilita direção e duração exigidas, e testes manuais/cross-browser não foram validados.'
+reviewer: 'Quinn (Test Architect)'
+updated: '2026-02-19T12:00:00Z'
+
+top_issues:
+  - id: 'AC2-native-direction'
+    severity: medium
+    description: 'Quando startViewTransition existe, o app força fade e perde animação direcional nos steps 1–6.'
+    refs:
+      - 'src/App.tsx'
+    suggested_owner: dev
+  - id: 'AC1-native-duration'
+    severity: medium
+    description: 'Com View Transitions nativa, duration=0 deixa o tempo de fade fora do mínimo de 200ms.'
+    refs:
+      - 'src/App.tsx'
+    suggested_owner: dev
+  - id: 'AC5-reduced-motion-native'
+    severity: medium
+    description: 'Reduced motion não é aplicado explicitamente no caminho nativo; alinhar para ≤100ms ou sem animação.'
+    refs:
+      - 'src/App.tsx'
+      - 'src/components/PageTransition/PageTransition.jsx'
+    suggested_owner: dev
+
+waiver:
+  active: false
+
+quality_score: 70
+expires: '2026-03-05T12:00:00Z'
+
+evidence:
+  tests_reviewed: 2
+  risks_identified: 4
+  trace:
+    ac_covered: []
+    ac_gaps: [1, 2, 3, 4, 5, 6, 7, 8]
+
+nfr_validation:
+  security:
+    status: PASS
+    notes: 'Sem mudanças de autenticação/dados sensíveis.'
+  performance:
+    status: CONCERNS
+    notes: 'Throttle 3G e regressão não validados; duration nativa depende do browser.'
+  reliability:
+    status: CONCERNS
+    notes: 'Cross-browser não validado; path nativo vs fallback pode divergir.'
+  maintainability:
+    status: PASS
+    notes: 'Estrutura clara, mas documentação de padrões ausente.'
+
+recommendations:
+  immediate:
+    - action: 'Manter animação direcional nos quiz steps mesmo com View Transitions nativa.'
+      refs: ['src/App.tsx']
+    - action: 'Aplicar duração mínima de 200ms no caminho nativo.'
+      refs: ['src/App.tsx']
+    - action: 'Respeitar prefers-reduced-motion também no caminho nativo.'
+      refs: ['src/App.tsx', 'src/components/PageTransition/PageTransition.jsx']
+  future:
+    - action: 'Completar testes cross-browser e performance 3G com evidências.'
+      refs: ['docs/stories/3.3.story.md']
