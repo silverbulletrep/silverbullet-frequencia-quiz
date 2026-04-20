@@ -242,35 +242,7 @@ const TransitionPage = () => {
                   }
                 }
 
-                if (orderedNonOtherKeys.length >= 2) {
-                  const labels = orderedNonOtherKeys
-                    .map((k) => {
-                      const labelKey = `transition_page.headlines.other_labels.${k}`
-                      const label = t(labelKey)
-                      return label && label !== labelKey ? label : null
-                    })
-                    .filter(Boolean)
-                  const joined = labels.join(' + ')
 
-                  if (joined) {
-                    const benefitKey = `transition_page.headlines.benefits_map.${subtitlePrimary}`
-                    const benefitText = t(benefitKey)
-                    const primaryBenefit = benefitText && benefitText !== benefitKey
-                      ? benefitText
-                      : t('transition_page.headlines.benefits_map.other')
-
-                    return <>
-                      <h2 className="lead-headline"><span className="lead-highlight">{joined}</span></h2>
-                      <p className="lead-subheadline">
-                        <Trans
-                          i18nKey="transition_page.headlines.subtitle_template"
-                          values={{ benefit: primaryBenefit }}
-                          components={{ 0: <strong /> }}
-                        />
-                      </p>
-                    </>
-                  }
-                }
               }
 
               const headlineKey = `transition_page.headlines.base_${primary || 'default'}`;

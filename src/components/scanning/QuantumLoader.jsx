@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from 'react-i18next';
 
 const QuantumLoader = ({ progress }) => {
+  const { t } = useTranslation();
   return (
     <div className="flex flex-col items-center justify-center py-4">
       {/* Scanning Ring */}
@@ -114,7 +116,7 @@ const QuantumLoader = ({ progress }) => {
 
       {/* Progresso Numérico Sutil */}
       <div className="mt-2 text-[#D4AF37]/60 text-sm font-mono tracking-[0.3em] font-light">
-        ANALISANDO... {Math.round(progress)}%
+        {t('processing.loader.analyzing')} {Math.round(progress)}%
       </div>
     </div>
   );

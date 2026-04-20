@@ -3,7 +3,8 @@ import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation, Trans } from 'react-i18next';
 import { leadCache } from '../lib/leadCache';
-import resultadoImg from '../../img/resultado-atualizado.webp';
+import resultadoPtImg from '../../img/resultado-atualizado.webp';
+import resultadoDeImg from '../../img/resultado-de-cientific.webp';
 import expertImg from '../../img/expert.webp';
 import expertPtImg from '../../img/expert-pt.webp';
 
@@ -238,38 +239,15 @@ const Resultado = () => {
 
     const gaugePos = score <= 2 ? '18%' : score <= 5 ? '42%' : '78%';
 
-    // Matriz de Copy de Resposta Direta (Diagnóstico de Alta Precisão)
-    const copyMatrix = {
-      abundance: {
-        term: 'Entropia de Abundância',
-        desc: 'Sua assinatura vibracional revela um padrão de esforço sem recompensa.',
-        cons: 'Isso explica por que, mesmo com sua dedicação, os resultados financeiros parecem escorrer pelas mãos, travando sua prosperidade.'
-      },
-      attract: {
-        term: 'Distorção de Campo Afetivo',
-        desc: 'Detectamos uma dessincronia aguda no seu campo de conexão e magnetismo.',
-        cons: 'Isso indica que sua baixa vibração está criando uma barreira de repulsão invisível, gerando ciclos repetitivos de frustração amorosa.'
-      },
-      healing: {
-        term: 'Estagnação Bio-Regenerativa',
-        desc: 'Há um vazamento crítico de frequência nos seus centros de vitalidade.',
-        cons: 'Isso explica essa sensação de cansaço que o descanso não cura, onde você carrega o mundo nas costas e sua saúde plena fica travada.'
-      },
-      energy: {
-        term: 'Ruído Quântico de Ansiedade',
-        desc: 'Identificamos um padrão de aceleração mental descontrolada na sua frequência.',
-        cons: 'Isso impede sua mente de repousar no presente, gerando um estado de alerta constante que trava sua paz interior e clareza.'
-      },
-      other: {
-        term: 'Inércia de Evolução Pessoal',
-        desc: 'Sua frequência mostra um colapso nos pontos de manifestação e progresso.',
-        cons: 'Seus esforços parecem dar em nada e os obstáculos se repetem, o que está travando sua evolução e realização pessoal.'
-      }
+    // Matriz de Copy via i18n (cada locale tem as suas próprias frases)
+    const selectedCopy = {
+      term: t(`result.dynamic_copy.${desireKey}.term`),
+      desc: t(`result.dynamic_copy.${desireKey}.desc`),
+      cons: t(`result.dynamic_copy.${desireKey}.cons`)
     };
 
-    const selectedCopy = copyMatrix[desireKey] || copyMatrix.other;
-    const genderTerm = g === 'mulher' ? 'mulheres' : 'homens';
-    const ageSafeFaixa = faixa || 'de diversas idades';
+    const genderTerm = t(`result.segment.${g === 'mulher' ? 'women' : 'men'}`);
+    const ageSafeFaixa = faixa || t('result.segment.like_you');
 
     return {
       desireKey,
@@ -281,10 +259,10 @@ const Resultado = () => {
       adjectiveKey: 'light',
       symptoms: symptoms.slice(0, 2).join(', '),
       dynamicCopy: {
-        title: 'MANIFESTAÇÃO BLOQUEADA',
-        diagnosis: `Sua assinatura vibracional revela uma <strong>${selectedCopy.term}</strong>. ${selectedCopy.desc}`,
+        title: t('result.alert.title_blocked'),
+        diagnosis: `${selectedCopy.desc} <strong>${selectedCopy.term}</strong>.`,
         consequence: selectedCopy.cons,
-        goodNews: `Boa notícia: <strong>${genderTerm}</strong> entre <strong>${ageSafeFaixa}</strong> respondem rápido aos ajustes de frequência.`
+        goodNews: t('result.dynamic_copy.good_news', { genderTerm, ageFaixa: ageSafeFaixa })
       }
     };
   }, [leadData, t]);
@@ -521,7 +499,7 @@ const Resultado = () => {
                     <p>{t('result.levels.high')}</p>
                   </div>
                 </div>
-                <div className={styles.container13}>
+                <div className={styles.container13} data-alert-text={t('result.alert_badge', 'ALERTA')}>
                   <div className={styles.container12}>
                     <p className={styles.mAnifestaobloqueada}>{translationData?.dynamicCopy?.title || t('result.alert.title_blocked')}</p>
                     <p className={styles.suaBaixaVibraOEstAtr}>
@@ -582,7 +560,7 @@ const Resultado = () => {
                   </div>
                 </div>
                 <div className={styles.modelViewerWrapper}>
-                  <img src={resultadoImg} alt={t('result.visual_result_alt')} onLoad={onImageLoad} style={{ width: '100%', height: '360px', objectFit: 'cover', objectPosition: 'top center' }} />
+                  <img src={isPtRoute ? resultadoPtImg : resultadoDeImg} alt={t('result.visual_result_alt')} onLoad={onImageLoad} style={{ width: '100%', height: '360px', objectFit: 'cover', objectPosition: 'top center' }} />
                 </div>
               </div>
             </div>

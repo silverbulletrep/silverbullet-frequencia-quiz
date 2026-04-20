@@ -8,7 +8,15 @@ import { asset } from '@/lib/asset';
 import { buildRouteStep, buildRouteStepIndex, createFunnelTracker, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry, getDefaultBaseUrl, shouldSendEvent } from '../lib/funnelTracker';
 import { useExitIntent } from '../hooks/useExitIntent';
 
-const EXPERT_IMG = asset('/img/expert-pt.webp');
+const EXPERT_IMG = (() => {
+  try {
+    const pathname = String(window.location.pathname || '');
+    const isPt = pathname.includes('/pt/') || pathname === '/pt' || pathname.endsWith('/pt');
+    return isPt ? asset('/img/expert-pt.webp') : asset('/img/expert.webp');
+  } catch {
+    return asset('/img/expert.webp');
+  }
+})();
 
 const DEBUG = import.meta.env.DEV
 
@@ -22,7 +30,7 @@ const VSL = () => {
   const playerContainerRef = useRef(null);
   const selectedOption = searchParams.get('option') || 'default';
   const [isMindfulnessTransitioning, setIsMindfulnessTransitioning] = useState(false);
-  const [transitionText, setTransitionText] = useState('Respire fundo...');
+  const [transitionText, setTransitionText] = useState('');
 
   useExitIntent();
   const isPtRoute = (() => {
@@ -518,14 +526,14 @@ const VSL = () => {
 
     // Sequence of phrases for guided transition - Rhythm 50-65+
     const mindfulnessPhrases = [
-      "Inspire profunda e <strong>lentamente</strong>…",
-      "Sinta a <strong>leveza</strong> preencher seu corpo",
-      "Agora… <strong>desconecte-se</strong> de tudo que é denso",
-      "Existe um <strong>poder</strong> adormecido em você",
-      "Pense por um <strong>instante</strong>…",
-      "O que está travando sua <strong>energia</strong>?",
-      "Responda ao Exame com sua <strong>alma</strong>",
-      "A <strong>transformação</strong> quântica começa agora."
+      t('vsl.mindfulness.phrase1'),
+      t('vsl.mindfulness.phrase2'),
+      t('vsl.mindfulness.phrase3'),
+      t('vsl.mindfulness.phrase4'),
+      t('vsl.mindfulness.phrase5'),
+      t('vsl.mindfulness.phrase6'),
+      t('vsl.mindfulness.phrase7'),
+      t('vsl.mindfulness.phrase8')
     ];
 
     let currentIdx = 0;
@@ -774,7 +782,7 @@ const VSL = () => {
             }
           }}>
             <div className={styles.balloonMessage}>
-              Estamos a preparar as questões do seu Exame Vibracional. Assista ao vídeo antes de começarmos.
+              {t('vsl.preparing_exam')}
             </div>
             <img src={EXPERT_IMG} className={styles.floatingExpertImg} alt="Johann Müller" />
           </div>
@@ -790,16 +798,16 @@ const VSL = () => {
                     <div className={styles.expertInfo}>
                       {isVideoPaused ? (
                         <>
-                          <div className={styles.expertName} style={{ color: '#ff3c3c' }}>Aviso Importante!</div>
+                          <div className={styles.expertName} style={{ color: '#ff3c3c' }}>{t('vsl.exit_modal.important_warning')}</div>
                           <div className={styles.expertStatus} style={{ color: '#ffaa00' }}>
                             <span style={{ backgroundColor: '#ffaa00', width: 8, height: 8, borderRadius: '50%', display: 'inline-block', boxShadow: '0 0 8px #ffaa00', marginRight: '6px' }}></span>
-                            Despause o Vídeo
+                            {t('vsl.exit_modal.unpause_video')}
                           </div>
                         </>
                       ) : (
                         <>
-                          <div className={styles.expertName}>Johann Müller</div>
-                          <div className={styles.expertStatus}>Exame em Andamento</div>
+                          <div className={styles.expertName}>{t('vsl.exit_modal.expert_name')}</div>
+                          <div className={styles.expertStatus}>{t('vsl.exit_modal.exam_in_progress')}</div>
                         </>
                       )}
                     </div>
@@ -807,24 +815,24 @@ const VSL = () => {
 
                   <div className={styles.exitModalHeader}>
                     <div className={styles.timerTitle} style={isVideoPaused ? { color: '#ffaa00' } : {}}>
-                      {isVideoPaused ? 'O vídeo está em pausa. Dê play par continuar a sua análise.' : 'Estamos a preparar as questões para o seu Exame:'}
+                      {isVideoPaused ? t('vsl.exit_modal.video_paused_msg') : t('vsl.exit_modal.preparing_questions')}
                     </div>
                   </div>
 
                   <div className={styles.modalContent}>
-                    <div className={styles.modalIntro}>Neste Exame Vamos descobrir:</div>
+                    <div className={styles.modalIntro}>{t('vsl.exit_modal.intro')}</div>
                     <ul className={styles.bulletList}>
                       <li className={styles.bulletItem}>
                         <span className={styles.bulletIcon}>✓</span>
-                        <span><strong>O que está a travar</strong> a sua Vida</span>
+                        <span><Trans i18nKey="vsl.exit_modal.bullet1" components={{ strong: <strong /> }} /></span>
                       </li>
                       <li className={styles.bulletItem}>
                         <span className={styles.bulletIcon}>✓</span>
-                        <span><strong>Em que os seus Bloqueios</strong> estão a atrapalhar as suas manifestações</span>
+                        <span><Trans i18nKey="vsl.exit_modal.bullet2" components={{ strong: <strong /> }} /></span>
                       </li>
                       <li className={styles.bulletItem}>
                         <span className={styles.bulletIcon}>✓</span>
-                        <span>E vamos <strong>Desbloquear</strong> tudo isso para sempre</span>
+                        <span><Trans i18nKey="vsl.exit_modal.bullet3" components={{ strong: <strong /> }} /></span>
                       </li>
                     </ul>
                   </div>
@@ -838,7 +846,7 @@ const VSL = () => {
                         setExitModalDismissed(true);
                       }, 1800);
                     }}>
-                    Quero Limpar Os Meus Bloqueios
+                    {t('vsl.exit_modal.cta_button')}
                   </button>
                 </>
               ) : (
@@ -847,8 +855,8 @@ const VSL = () => {
                     <circle className={styles.checkmarkCircle} cx="26" cy="26" r="25" fill="none" />
                     <path className={styles.checkmarkCheck} fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                   </svg>
-                  <h2 className={styles.successTitle}>Sábia Decisão.</h2>
-                  <p className={styles.successText}>O seu exame continuará de imediato. Prepare-se.</p>
+                  <h2 className={styles.successTitle}>{t('vsl.exit_modal.success_title')}</h2>
+                  <p className={styles.successText}>{t('vsl.exit_modal.success_text')}</p>
                 </div>
               )}
             </div>

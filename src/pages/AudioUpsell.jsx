@@ -3,6 +3,7 @@ import styles from './AudioUpsell.module.scss'
 import { useTranslation } from 'react-i18next'
 const BackgroundBorder = React.lazy(() => import('@/components/BackgroundBorder/BackgroundBorder'))
 const PaymentMethodModal = React.lazy(() => import('@/components/PaymentMethodModal'))
+const CheckoutModal = React.lazy(() => import('@/components/CheckoutModal'))
 import { useExitIntent } from '@/hooks/useExitIntent'
 import { motion } from 'framer-motion'
 import { API_BASE_URL, updateLeadPurchase } from '@/lib/api'
@@ -61,6 +62,7 @@ export default function AudioUpsell() {
   const [ctaReady, setCtaReady] = React.useState(false)
   const [loadingCheckout, setLoadingCheckout] = React.useState(false)
   const [showPaymentMethodModal, setShowPaymentMethodModal] = React.useState(false)
+  const [showStripeCheckout, setShowStripeCheckout] = React.useState(false)
   const hasInteractedRef = React.useRef(false)
   const ctaReadyRef = React.useRef(false)
   const DEBUG = import.meta.env.DEV
@@ -482,6 +484,12 @@ export default function AudioUpsell() {
         console.error('[AUDIO] Falha ao enviar checkout_start', { message: error?.message })
       }
 
+      if (!isPtRoute) {
+        setShowStripeCheckout(true)
+        setLoadingCheckout(false)
+        return
+      }
+
       const checkoutUrl = buildHotmartCheckoutUrl({
         baseUrl: HOTMART_UPSELL_CHECKOUT_URL,
         paymentMethod: storedMethod || undefined,
@@ -709,6 +717,26 @@ export default function AudioUpsell() {
             />
           </React.Suspense>
         )}
+
+        <React.Suspense fallback={null}>
+          {showStripeCheckout && (
+            <CheckoutModal
+                onClose={() => setShowStripeCheckout(false)}
+                onSuccess={(data) => {
+                    console.log('[AUDIO_UPSELL] De checkout success:', data)
+                    setShowStripeCheckout(false)
+                    onPaymentSuccess(data)
+                }}
+                amount_cents={4700}
+                currency="eur"
+                metadata={{
+                    origin: 'audio_upsell',
+                    product_name: 'Personalisierter Plan 2.0',
+                    variant: 'audio_upsell'
+                }}
+            />
+          )}
+        </React.Suspense>
       </div>
     </div>
   )

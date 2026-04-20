@@ -71,7 +71,7 @@ export default function CompontTest4() {
         <TransitionFadeWrapper>
         <div className={styles.examPage}>
             <div className={styles.examSubHeader}>
-                <span className={styles.examBadge}><span className={styles.examBadgeDot} />Exame Vibracional</span>
+                <span className={styles.examBadge}><span className={styles.examBadgeDot} />{t('compontTest.feature1')}</span>
                 <span className={styles.examStep}>{STEP}/6</span>
             </div>
             
@@ -109,7 +109,7 @@ export default function CompontTest4() {
                         <VibrationalBody blockages={blk} scanning={false} />
                         {/* {sel && <div className={styles.laserLine} />} */}
                     </div>
-                    <span className={styles.bodyScanLabel}>Sincronização em tempo real</span>
+                    <span className={styles.bodyScanLabel}>{t('compontTest.feature2')}</span>
                 </div>
             </div>
 

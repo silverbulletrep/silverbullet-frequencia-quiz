@@ -81,7 +81,7 @@
       "base_attract": "Atraia <1>VÍNCULOS REAIS</1> hoje — <3>SEM JOGOS</3> emocionais",
       "base_healing": "Desinflame o corpo e <1>RECUPERE ENERGIA</1> — em <3>2 MIN/DIA</3>",
       "base_energy": "Silencie a <1>ANSIEDADE</1> agora — com <3>CLAREZA</3> para decidir",
-      "base_other": "Ative seu <1>OBJETIVO ESPECÍFICO</1> — com método validado",
+      "base_other": "Atinja seu <1>OBJETIVO ESPECÍFICO</1> — com método validado",
       "base_default": "Sua energia é <1>ÚNICA</1> e <3>PODEROSA</3>",
       "benefits_map": {
         "abundance": "abundância real",
@@ -505,6 +505,30 @@
     "engagement": {
       "expert_message": "Este vídeo revela o método de manifestação mais poderoso que a lei da atração!",
       "cta_button": "Assistir Agora"
+    },
+    "expert_dialog": {
+      "headline": "Mensagem Importante",
+      "message": "Enquanto preparamos o seu Plano Vibracional, veja abaixo o que ele pode realmente fazer por si.",
+      "cta_confirm": "Confirmo"
+    },
+    "wait_modal": {
+      "team_alt": "Equipa Quântica a rever os seus dados",
+      "title": "A <1>sua Análise Vibracional</1> revelou algo importante!",
+      "alert_prefix": "🚨 Atenção: Detetámos",
+      "alert_blocks": "Graves Bloqueios",
+      "alert_suffix": "a afetar a {{areas}}...",
+      "alert_default_area": "sua frequência principal",
+      "progress_label": "A ENVIAR SOLUÇÃO: PLANO VIBRACIONAL",
+      "cta_button": "Sim, Quero a Solução",
+      "sub_text": "O vídeo revela como o <1>Plano Vibracional</1> resolve isto.",
+      "area_map": {
+        "abundance": "área Financeira",
+        "attract": "vida Amorosa",
+        "healing": "Saúde Física",
+        "energy": "Saúde Mental",
+        "other": "sua Vida em geral"
+      },
+      "connector_and": "e a"
     }
   },
   "vsl": {
@@ -555,7 +579,34 @@
       "step2": "Medir sua <1>Frequência Hz</1>",
       "step3": "Gerar plano que <1>Elevará sua Vibração</1>"
     },
-    "progress_text": "VSL"
+    "progress_text": "VSL",
+    "preparing_exam": "Estamos a preparar as questões do seu Exame Vibracional. Assista ao vídeo antes de começarmos.",
+    "mindfulness": {
+      "breathe": "Respire fundo...",
+      "phrase1": "Inspire profunda e <strong>lentamente</strong>…",
+      "phrase2": "Sinta a <strong>leveza</strong> preencher seu corpo",
+      "phrase3": "Agora… <strong>desconecte-se</strong> de tudo que é denso",
+      "phrase4": "Existe um <strong>poder</strong> adormecido em você",
+      "phrase5": "Pense por um <strong>instante</strong>…",
+      "phrase6": "O que está travando sua <strong>energia</strong>?",
+      "phrase7": "Responda ao Exame com sua <strong>alma</strong>",
+      "phrase8": "A <strong>transformação</strong> quântica começa agora."
+    },
+    "exit_modal": {
+      "important_warning": "Aviso Importante!",
+      "unpause_video": "Despause o Vídeo",
+      "expert_name": "Johann Müller",
+      "exam_in_progress": "Exame em Andamento",
+      "preparing_questions": "Estamos a preparar as questões para o seu Exame:",
+      "video_paused_msg": "O vídeo está em pausa. Dê play par continuar a sua análise.",
+      "intro": "Neste Exame Vamos descobrir:",
+      "bullet1": "<strong>O que está a travar</strong> a sua Vida",
+      "bullet2": "<strong>Em que os seus Bloqueios</strong> estão a atrapalhar as suas manifestações",
+      "bullet3": "E vamos <strong>Desbloquear</strong> tudo isso para sempre",
+      "cta_button": "Quero Limpar Os Meus Bloqueios",
+      "success_title": "Sábia Decisão.",
+      "success_text": "O seu exame continuará de imediato. Prepare-se."
+    }
   },
   "vsl2": {
     "progress": {
@@ -677,7 +728,122 @@
       }
     },
     "analysis_delay": "Essa análise pode demorar até 20 segundos...",
-    "button_view_result": "ver meu resultado"
+    "button_view_result": "ver meu resultado",
+    "contact_card": {
+      "title": "Como você quer receber seu resultado?",
+      "subtitle": "*WhatsApp garante um acesso rápido",
+      "gmail": "Gmail",
+      "whatsapp": "WhatsApp"
+    },
+    "human_validation": "Análise validada por Especialista",
+    "continue_button": "Ver diagnóstico completo",
+    "footer_line1": "Sistema de Análise Vibracional Spirio v2.4",
+    "footer_line2": "Processamento em Tempo Real",
+    "themes": {
+      "abundance": {
+        "steps": [
+          "Mapeando fluxos de abundância bloqueados...",
+          "Identificando padrões de escassez energética...",
+          "Analisando resistência ao recebimento financeiro...",
+          "Sintonizando frequência de prosperidade 528Hz...",
+          "Validando diagnóstico com especialista..."
+        ],
+        "insights": [
+          "⚠️ Detectado padrão de autossabotagem financeira",
+          "⚠️ Dreno energético identificado no fluxo de entrada",
+          "✨ Potencial de manifestação: Elevado após desbloqueio",
+          "🔍 Sinais de crenças limitantes subconscientes"
+        ],
+        "energyBars": {
+          "vital": "Energia Vital",
+          "blockage": "Densidade dos Bloqueios",
+          "clarity": "Clareza Mental"
+        }
+      },
+      "attract": {
+        "steps": [
+          "Analisando magnetismo pessoal...",
+          "Identificando barreiras emocionais invisíveis...",
+          "Mapeando ciclos repetitivos de relacionamento...",
+          "Calibrando frequência harmônica de atração...",
+          "Validando diagnóstico com especialista..."
+        ],
+        "insights": [
+          "⚠️ Barreira magnética de proteção detectada",
+          "⚠️ Ciclo de rejeição identificado no subconsciente",
+          "✨ Potencial de conexão: Muito alto",
+          "🔍 Necessidade de alinhamento do centro afetivo"
+        ],
+        "energyBars": {
+          "vital": "Magnetismo",
+          "blockage": "Densidade dos Bloqueios",
+          "clarity": "Clareza Mental"
+        }
+      },
+      "healing": {
+        "steps": [
+          "Escaneando dreno de vitalidade celular...",
+          "Identificando bloqueios na regeneração...",
+          "Analisando stress biovibracional acumulado...",
+          "Ativando frequência de restauração quântica...",
+          "Validando diagnóstico com especialista..."
+        ],
+        "insights": [
+          "⚠️ Nível crítico de oxidação energética",
+          "⚠️ Bloqueio na comunicação intercelular",
+          "✨ Capacidade regenerativa: Preservada",
+          "🔍 Sinais de fadiga vibracional crônica"
+        ],
+        "energyBars": {
+          "vital": "Vitalidade",
+          "blockage": "Densidade dos Bloqueios",
+          "clarity": "Clareza Mental"
+        }
+      },
+      "energy": {
+        "steps": [
+          "Mapeando ruído mental e ansiedade...",
+          "Analisando fragmentação do campo de paz...",
+          "Identificando sobrecarga de estímulos...",
+          "Silenciando frequências desarmônicas...",
+          "Validando diagnóstico com especialista..."
+        ],
+        "insights": [
+          "⚠️ Alta frequência de ruído cognitivo",
+          "⚠️ Desalinhamento do eixo de serenidade",
+          "✨ Potencial de clareza: Profundo",
+          "🔍 Sinais de esgotamento do campo áurico"
+        ],
+        "energyBars": {
+          "vital": "Paz Interior",
+          "blockage": "Densidade dos Bloqueios",
+          "clarity": "Clareza Mental"
+        }
+      },
+      "default": {
+        "steps": [
+          "Iniciando escaneamento vibracional completo...",
+          "Mapeando desalinhamentos gerais...",
+          "Analisando fluxo energético primordial...",
+          "Preparando recomendações personalizadas...",
+          "Validando diagnóstico com especialista..."
+        ],
+        "insights": [
+          "⚠️ Desalinhamento vibracional geral detectado",
+          "⚠️ Ruído no campo de manifestação",
+          "✨ Potencial transformador: Presente",
+          "🔍 Necessidade de calibração imediata"
+        ],
+        "energyBars": {
+          "vital": "Energia Geral",
+          "blockage": "Densidade dos Bloqueios",
+          "clarity": "Clareza Mental"
+        }
+      }
+    },
+    "loader": {
+      "analyzing": "ANALISANDO..."
+    }
   },
   "result": {
     "gender_tone": {
@@ -719,7 +885,9 @@
     "cta": {
       "button": "Desbloquear Minha frequência",
       "caption": "Vamos Criar Seu <1>Plano Vibracional</1> com base em seus resultados...",
-      "nudge_text": "VEJA NO BOTÃO ABAIXO: Começamos A Preparar Seu Plano Vibracional!"
+      "nudge_text": "VEJA NO BOTÃO ABAIXO: Começamos A Preparar Seu Plano Vibracional!",
+      "nudge_prefix": "VEJA NO BOTÃO ABAIXO:",
+      "nudge_main": "Começamos A Preparar Seu Plano Vibracional!"
     },
     "desire_meta": {
       "abundance": {
@@ -774,7 +942,36 @@
       "invalid_phone": "Informe um número válido.",
       "save_email_failed": "Não foi possível salvar seu e-mail. Tente novamente.",
       "save_phone_failed": "Não foi possível salvar seu número. Tente novamente."
-    }
+    },
+    "dynamic_copy": {
+      "abundance": {
+        "term": "Entropia de Abundância",
+        "desc": "Sua assinatura vibracional revela um padrão de esforço sem recompensa.",
+        "cons": "Isso explica por que, mesmo com sua dedicação, os resultados financeiros parecem escorrer pelas mãos, travando sua prosperidade."
+      },
+      "attract": {
+        "term": "Distorção de Campo Afetivo",
+        "desc": "Detectamos uma dessincronia aguda no seu campo de conexão e magnetismo.",
+        "cons": "Isso indica que sua baixa vibração está criando uma barreira de repulsão invisível, gerando ciclos repetitivos de frustração amorosa."
+      },
+      "healing": {
+        "term": "Estagnação Bio-Regenerativa",
+        "desc": "Há um vazamento crítico de frequência nos seus centros de vitalidade.",
+        "cons": "Isso explica essa sensação de cansaço que o descanso não cura, onde você carrega o mundo nas costas e sua saúde plena fica travada."
+      },
+      "energy": {
+        "term": "Ruído Quântico de Ansiedade",
+        "desc": "Identificamos um padrão de aceleração mental descontrolada na sua frequência.",
+        "cons": "Isso impede sua mente de repousar no presente, gerando um estado de alerta constante que trava sua paz interior e clareza."
+      },
+      "other": {
+        "term": "Inércia de Evolução Pessoal",
+        "desc": "Sua frequência mostra um colapso nos pontos de manifestação e progresso.",
+        "cons": "Seus esforços parecem dar em nada e os obstáculos se repetem, o que está travando sua evolução e realização pessoal."
+      },
+      "good_news": "Boa notícia: <strong>{{genderTerm}}</strong> entre <strong>{{ageFaixa}}</strong> respondem rápido aos ajustes de frequência."
+    },
+    "alert_badge": "ALERTA"
   },
   "checkout": {
     "get_my_plan": "GARANTIR MEU PLANO",
@@ -860,13 +1057,13 @@
     }
   },
   "checkout_cancel": {
-    "title": "Pagamento cancelado",
-    "message": "Você pode tentar novamente quando quiser."
+    "title": "Checkout cancelado",
+    "message": "Seu processo de checkout foi cancelado. Se você tiver dúvidas, entre em contato conosco."
   },
   "checkout_success": {
-    "title": "Pagamento confirmado",
-    "preparing_vsl": "Preparando conteúdo...",
-    "vsl_label": "VSL"
+    "title": "Compra Confirmada!",
+    "vsl_label": "Vídeo Exclusivo de Acesso",
+    "preparing_vsl": "Preparando seu vídeo exclusivo..."
   },
   "pre_teste": {
     "title_part1": "ANTES DE CONTINUAR, VOCÊ",
@@ -874,21 +1071,21 @@
     "subtitle_part1": "Nosso teste acessa informações energéticas profundas.",
     "subtitle_part2": "Vamos identificar bloqueios ocultos e padrões vibracionais",
     "subtitle_part3": "que você nem sabia que existiam.",
-    "list_title": "O que vamos revelar:",
+    "list_title": "O que vamos analisar:",
     "list_items": {
-      "frequency": "Sua frequência vibracional atual",
-      "blocks": "Bloqueios que afetam todas as áreas da sua vida",
-      "patterns": "Padrões repetitivos em relacionamentos e finanças",
-      "impediment": "Por que você sente que algo te impede de evoluir",
-      "impact": "Como sua energia impacta sua saúde e bem-estar"
+      "frequency": "Sua Frequência Vibracional Atual",
+      "blocks": "Bloqueios Emocionais",
+      "patterns": "Padrões de Pensamento Limitantes",
+      "impediment": "O que impede sua prosperidade",
+      "impact": "Impacto nos Relacionamentos"
     },
-    "warning_title": "⚠️ Atenção:",
-    "warning_text_part1": "87% das pessoas descobrem um",
-    "warning_text_part2": "bloqueio emocional ou energético que nem",
-    "warning_text_part3": "imaginavam ter.",
-    "emphasis_text_part1": "Só continue se estiver preparada para descobrir a",
-    "emphasis_text_part2": "verdade sobre sua frequência.",
-    "button_continue": "Continuar"
+    "warning_title": "AVISO:",
+    "warning_text_part1": "Este teste é baseado em",
+    "warning_text_part2": "princípios de física quântica e neurociência.",
+    "warning_text_part3": "Esteja preparado para respostas honestas.",
+    "emphasis_text_part1": "Sua jornada para uma nova vibração",
+    "emphasis_text_part2": "começa agora.",
+    "button_continue": "Estou pronto para descobrir"
   },
   "quiz_landing": {
     "title": "Qual é o seu gênero?",
@@ -1059,37 +1256,6 @@
     "checkout_safe_title": "Checkout seguro",
     "checkout_safe_text": "Todas as informações são criptografadas e transmitidas com segurança usando protocolo SSL."
   },
-  "checkout_cancel": {
-    "title": "Pagamento cancelado",
-    "message": "Você pode tentar novamente quando quiser."
-  },
-  "checkout_success": {
-    "title": "Compra Confirmada!",
-    "vsl_label": "Vídeo Exclusivo de Acesso",
-    "preparing_vsl": "Preparando seu vídeo exclusivo..."
-  },
-  "pre_teste": {
-    "title_part1": "ANTES DE CONTINUAR, VOCÊ",
-    "title_part2": "PRECISA SABER:",
-    "subtitle_part1": "Nosso teste acessa informações energéticas profundas.",
-    "subtitle_part2": "Vamos identificar bloqueios ocultos e padrões vibracionais",
-    "subtitle_part3": "que você nem sabia que existiam.",
-    "list_title": "O que vamos analisar:",
-    "list_items": {
-      "frequency": "Sua Frequência Vibracional Atual",
-      "blocks": "Bloqueios Emocionais",
-      "patterns": "Padrões de Pensamento Limitantes",
-      "impediment": "O que impede sua prosperidade",
-      "impact": "Impacto nos Relacionamentos"
-    },
-    "warning_title": "AVISO:",
-    "warning_text_part1": "Este teste é baseado em",
-    "warning_text_part2": "princípios de física quântica e neurociência.",
-    "warning_text_part3": "Esteja preparado para respostas honestas.",
-    "emphasis_text_part1": "Sua jornada para uma nova vibração",
-    "emphasis_text_part2": "começa agora.",
-    "button_continue": "Estou pronto para descobrir"
-  },
   "success_page_alt": {
     "men_image": "Grupo de homens reunidos",
     "women_image": "Grupo de mulheres reunidas"
@@ -1125,7 +1291,7 @@
     "accelerate_desc": "Se deseja acelerar o seu processo de atração, esta é a nossa recomendação.",
     "accelerator_badge": "Acelerador de Resultados",
     "paypal_new_slogan": "Não tem Paypal? Aceitamos Cartões Debito/credito❤️",
-    "product_name": "Plano Personalizado",
+    "product_name": "Plano Personalizado 2.0",
     "audio_product": "Plano Personalizado 2.0"
   },
   "vsl_comments": {
@@ -1169,10 +1335,6 @@
     "aria_replies_for": "Respostas para {{name}}",
     "aria_delete_reply": "Excluir resposta",
     "likes_lower": "curtidas"
-  },
-  "checkout_cancel": {
-    "title": "Checkout cancelado",
-    "message": "Seu processo de checkout foi cancelado. Se você tiver dúvidas, entre em contato conosco."
   },
   "vsl_comments_data": {
     "thread_id": "vsl2_main",
@@ -1977,6 +2139,85 @@
     },
     "faq": {
       "title": "Perguntas Frequentes"
+    }
+  },
+  "compontTest": {
+    "feature1": "Exame Vibracional",
+    "feature2": "Sincronização em tempo real"
+  },
+  "johannChat": {
+    "openings": {
+      "age_selection": [
+        "A tua faixa etária é crucial para percebermos a profundidade do bloqueio.",
+        "Podes dizer-me a tua idade para continuarmos?"
+      ],
+      "morning": [
+        "Preciso de saber o que precisas de resolver, só assim te consigo ajudar...",
+        "Podemos continuar ou tens alguma dúvida?"
+      ],
+      "transition": [
+        "Assiste a este vídeo curto!",
+        "Precisas de entender como os bloqueios matam a nossa felicidade.",
+        "Queres continuar ou tens alguma dúvida?"
+      ],
+      "quiz_step": [
+        "Lutar sozinho há tantos anos desgasta qualquer um.",
+        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
+      ],
+      "processing": [
+        "Espere! Aconteceu algo? Esta é a parte mais importante... onde mostramos o seu Resultado.",
+        "Inclusive, já está pronto... clique no botão abaixo e veja!"
+      ],
+      "fim": [
+        "Vi o teu exame e sei que tens carregado o mundo nas costas.",
+        "Posso mostrar-te exatamente o que te falta, sim ou não?"
+      ],
+      "checkout": [
+        "O teu exame disparou um alerta raro.",
+        "Não precisas de continuar a sofrer em silêncio.",
+        "Queres mudar isso hoje, sim ou não?"
+      ],
+      "audio_upsell": [
+        "Muitos parabéns pela tua conquista! 🏆",
+        "É fundamental que ouças o áudio até ao fim agora para selar a tua correção vibracional.",
+        "Podemos continuar, sim ou não?"
+      ],
+      "audio_upsell_pos": [
+        "Rápido — queres acelerar isto agora ou preferes ir mais devagar?"
+      ],
+      "recupera": [
+        "Você chegou até aqui e parou exatamente no último passo.",
+        "Não estou aqui pra te pressionar — mas preciso te perguntar uma coisa com sinceridade:",
+        "O que aconteceu? Me conta o que travou."
+      ],
+      "suporte": [
+        "Olá, estou aqui para ajudar! 🤝",
+        "Qual é a dúvida que te impede de avançar neste momento?"
+      ],
+      "vsl_abandon": [
+        "<b>Seu Exame Vibracional Está Pronto!</b>",
+        "Vamos Agora descobrir: <b>O que está a travar a sua Vida</b>",
+        "✓ Em que os seus Bloqueios estão a atrapalhar as suas manifestações<br/>✓ E vamos Desbloquear tudo isso para sempre"
+      ]
+    },
+    "ui": {
+      "button_vsl_abandon": "Pressiona o botão em baixo para continuar:",
+      "agente_1_fallback_1": [
+        "Espera… posso mostrar-te uma coisa rápida antes de saíres.",
+        "O abandono é o reflexo da rejeição do bloqueio energético pela mudança; o peso no peito é o bloqueio a vencer.",
+        "Leva apenas 30 segundos e pode mudar tudo — queres começar?"
+      ],
+      "agente_1_fallback_2": [
+        "Essa fuga não é tua. É o cansaço acumulado de anos a puxar-te para trás de novo.",
+        "⚠️ Posso mostrar-te onde a tua energia está a vazar, sim ou não?"
+      ],
+      "mentor_tracking": "**Não se preocupe, estou a acompanhar o seu exame pessoalmente!**",
+      "connection_error_short": "Desculpe, tive um breve problema de conexão. Pode repetir?",
+      "connection_error_critical": "🛑 O N8N respondeu, mas ocorreu um erro crítico de React no Chat ao exibir. Pressione F12 e veja no Console.",
+      "button_offer": "Aproveitar Oferta Agora ➔",
+      "button_continue": "Continuar de onde parei ➔",
+      "placeholder": "Mensagem",
+      "online": "online"
     }
   }
 }

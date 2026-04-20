@@ -141,7 +141,7 @@
     margin: 24px 0 12px;
     border-radius: 999px;
     background: linear-gradient(90deg, #ff4f4f 0%, #ffd600 50%, #74ceff 100%);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
   }
 
   .background2 {
@@ -173,9 +173,20 @@
   }
 
   @keyframes pulseDanger {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 79, 79, 0.7); }
-    70% { transform: scale(1.3); box-shadow: 0 0 0 15px rgba(255, 79, 79, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 79, 79, 0); }
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 79, 79, 0.7);
+    }
+
+    70% {
+      transform: scale(1.3);
+      box-shadow: 0 0 0 15px rgba(255, 79, 79, 0);
+    }
+
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(255, 79, 79, 0);
+    }
   }
 
   .background {
@@ -236,16 +247,29 @@
     overflow: hidden;
 
     &::before {
-      content: 'ALERTA';
+      content: attr(data-alert-text);
       position: absolute;
       top: 12px;
-      right: -26px;
-      padding: 2px 30px;
+      right: -34px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 110px;
+      height: 18px;
+      padding: 0 12px;
+
       background: #ff4f4f;
       color: #ffffff;
       font-size: 9px;
       font-weight: 900;
+      line-height: 1;
+      text-align: center;
+      white-space: nowrap;
+
       transform: rotate(45deg);
+      transform-origin: center;
     }
   }
 
@@ -408,600 +432,613 @@
 
 }
 
-  /* Camada de Fundo (Dimmer) para o CTA */
-  .stickyCtaBar {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 0;
-    z-index: 9999;
-    pointer-events: none;
-    transition: background 0.8s ease, backdrop-filter 0.8s ease;
-    
-    background: transparent;
-    backdrop-filter: blur(0px);
-    -webkit-backdrop-filter: blur(0px);
+/* Camada de Fundo (Dimmer) para o CTA */
+.stickyCtaBar {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transition: background 0.8s ease, backdrop-filter 0.8s ease;
 
-    &.urgent {
-      background: linear-gradient(180deg, rgba(7, 10, 25, 0) 0%, rgba(7, 10, 25, 0.6) 100%);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-      pointer-events: auto;
-      cursor: pointer;
-    }
-    
-    height: auto;
-    min-height: 100dvh;
-  }
+  background: transparent;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
 
-  /* Padronização do Painel Inferior (Bottom Sheet Pattern) */
-  .stickyCtaPanel {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  &.urgent {
+    background: linear-gradient(180deg, rgba(7, 10, 25, 0) 0%, rgba(7, 10, 25, 0.6) 100%);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-    max-width: none;
-    padding: 20px 16px calc(14px + env(safe-area-inset-bottom));
-    border: 1px solid rgba(10, 26, 79, 0.08);
-    border-top: 3px solid var(--color-cta-primary, #f7c800);
-    border-radius: 24px 24px 0 0;
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 255, 0.96));
-    box-shadow: 0 -12px 42px rgba(0, 0, 0, 0.22);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    animation: modalUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    
-    // Garante visibilidade total independente do scroll superior
-    z-index: 10000;
+    cursor: pointer;
   }
 
-  .ctaCaption {
-    padding: 12px 16px;
-    border-radius: 16px;
-    background: #f6f2e7;
+  height: auto;
+  min-height: 100dvh;
+}
+
+/* Padronização do Painel Inferior (Bottom Sheet Pattern) */
+.stickyCtaPanel {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: none;
+  padding: 20px 16px calc(14px + env(safe-area-inset-bottom));
+  border: 1px solid rgba(10, 26, 79, 0.08);
+  border-top: 3px solid var(--color-cta-primary, #f7c800);
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 255, 0.96));
+  box-shadow: 0 -12px 42px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  animation: modalUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+
+  // Garante visibilidade total independente do scroll superior
+  z-index: 10000;
+}
+
+.ctaCaption {
+  padding: 12px 16px;
+  border-radius: 16px;
+  background: #f6f2e7;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  position: relative;
+  z-index: 10;
+}
+
+/* Nudge System Styles */
+/* Nudge System Styles (Standard: Luxury Clinical) */
+.nudgeContainer {
+  position: absolute;
+  bottom: calc(100% + 20px);
+  right: 16px;
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  animation: nudgeAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+  z-index: 10001;
+  pointer-events: auto;
+}
+
+.nudgeBubble {
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 20px 20px 0px 20px;
+  border: 1px solid rgba(10, 26, 79, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
+  position: relative;
+  max-width: 240px;
+  transform-origin: bottom right;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: -8px;
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    clip-path: polygon(0 0, 0% 100%, 100% 100%);
+    border-right: 1px solid rgba(10, 26, 79, 0.08);
+    border-bottom: 1px solid rgba(10, 26, 79, 0.08);
+  }
+
+  p {
+    margin: 0;
     color: #111111;
     font-size: 13px;
-    font-weight: 600;
-    line-height: 1.5;
-    text-align: center;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    position: relative;
-    z-index: 10;
-  }
+    line-height: 1.4;
+    font-weight: 500;
+    text-align: left;
 
-  /* Nudge System Styles */
-  /* Nudge System Styles (Standard: Luxury Clinical) */
-  .nudgeContainer {
+    span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #667781;
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    strong {
+      display: block;
+      font-weight: 800;
+      color: #1a1a1a;
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+  }
+}
+
+.nudgeAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid #f7c800;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(247, 200, 0, 0.3);
+  background: #ffffff;
+  flex-shrink: 0;
+  position: relative;
+
+  &::before {
+    content: '';
     position: absolute;
-    bottom: calc(100% + 20px);
-    right: 16px;
-    display: flex;
-    align-items: flex-end;
-    gap: 12px;
-    animation: nudgeAppear 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
-    z-index: 10001;
-    pointer-events: auto;
-  }
-
-  .nudgeBubble {
-    padding: 12px 18px;
-    background: #ffffff;
-    border-radius: 20px 20px 0px 20px;
-    border: 1px solid rgba(10, 26, 79, 0.08);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.14);
-    position: relative;
-    max-width: 240px;
-    transform-origin: bottom right;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: -1px;
-      right: -8px;
-      width: 12px;
-      height: 12px;
-      background: #ffffff;
-      clip-path: polygon(0 0, 0% 100%, 100% 100%);
-      border-right: 1px solid rgba(10, 26, 79, 0.08);
-      border-bottom: 1px solid rgba(10, 26, 79, 0.08);
-    }
-
-    p {
-      margin: 0;
-      color: #111111;
-      font-size: 13px;
-      line-height: 1.4;
-      font-weight: 500;
-      text-align: left;
-      
-      span {
-        display: block;
-        font-size: 10px;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #667781;
-        margin-bottom: 4px;
-        font-weight: 700;
-      }
-
-      strong {
-        display: block;
-        font-weight: 800;
-        color: #1a1a1a;
-        font-size: 14px;
-        letter-spacing: -0.01em;
-      }
-    }
-  }
-
-  .nudgeAvatar {
-    width: 52px;
-    height: 52px;
+    top: 2px;
+    right: 2px;
+    width: 12px;
+    height: 12px;
+    background: #22c55e;
+    border: 2px solid #ffffff;
     border-radius: 50%;
-    border: 3px solid #f7c800;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(247, 200, 0, 0.3);
-    background: #ffffff;
-    flex-shrink: 0;
-    position: relative;
-
-    &::before {
-      content: '';
-      position: absolute;
-      top: 2px;
-      right: 2px;
-      width: 12px;
-      height: 12px;
-      background: #22c55e;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      z-index: 2;
-      animation: pulseGreen 2s infinite;
-    }
-
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.3s ease;
-    }
-
-    &:hover img {
-      transform: scale(1.1);
-    }
+    z-index: 2;
+    animation: pulseGreen 2s infinite;
   }
 
-  @keyframes nudgeAppear {
-    0% {
-      opacity: 0;
-      transform: translateY(20px) scale(0.8);
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
-  }
-
-  @keyframes pulseGreen {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
-  }
-
-  .goldGlow {
-    color: #f7c800;
-    font-weight: 700;
-  }
-
-  .ctaAction {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+  img {
     width: 100%;
-    padding: 18px 20px;
-    border: 0;
-    border-radius: 18px;
-    background: linear-gradient(180deg, var(--color-cta-primary, #f7c800) 0%, var(--color-cta-primary-hover, #e6b800) 100%);
-    color: #111111;
-    font-family: Poppins, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    cursor: pointer;
-    box-shadow: 0 14px 30px rgba(247, 200, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.42);
-    transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
-    animation: pulseButton 2.8s infinite ease-in-out;
-
-    &:hover {
-      filter: brightness(1.02);
-      transform: translateY(-1px);
-      box-shadow: 0 18px 34px rgba(230, 184, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.48);
-    }
-
-    &:active {
-      transform: translateY(1px) scale(0.99);
-    }
-
-    svg {
-      flex-shrink: 0;
-    }
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
   }
 
-  .phoneModalOverlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    height: 100dvh;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: 0;
-    background: linear-gradient(180deg, rgba(7, 10, 25, 0.42) 0%, rgba(7, 10, 25, 0.7) 100%);
-    backdrop-filter: blur(8px) saturate(120%);
-    -webkit-backdrop-filter: blur(8px) saturate(120%);
-    z-index: 3000;
+  &:hover img {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes nudgeAppear {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulseGreen {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+  }
+
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+  }
+
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.goldGlow {
+  color: #f7c800;
+  font-weight: 700;
+}
+
+.ctaAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  padding: 18px 20px;
+  border: 0;
+  border-radius: 18px;
+  background: linear-gradient(180deg, var(--color-cta-primary, #f7c800) 0%, var(--color-cta-primary-hover, #e6b800) 100%);
+  color: #111111;
+  font-family: Poppins, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 14px 30px rgba(247, 200, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+  animation: pulseButton 2.8s infinite ease-in-out;
+
+  &:hover {
+    filter: brightness(1.02);
+    transform: translateY(-1px);
+    box-shadow: 0 18px 34px rgba(230, 184, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.48);
+  }
+
+  &:active {
+    transform: translateY(1px) scale(0.99);
+  }
+
+  svg {
+    flex-shrink: 0;
+  }
+}
+
+.phoneModalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+  height: 100dvh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0;
+  background: linear-gradient(180deg, rgba(7, 10, 25, 0.42) 0%, rgba(7, 10, 25, 0.7) 100%);
+  backdrop-filter: blur(8px) saturate(120%);
+  -webkit-backdrop-filter: blur(8px) saturate(120%);
+  z-index: 3000;
+}
+
+.phoneModal {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: none;
+  max-height: 92vh; // Previne cobrir o header totalmente
+  max-height: 92dvh;
+  padding: 20px 16px calc(14px + env(safe-area-inset-bottom));
+  border: 1px solid rgba(10, 26, 79, 0.08);
+  border-top: 3px solid var(--color-cta-primary, #f7c800);
+  border-radius: 24px 24px 0 0;
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 255, 0.96));
+  color: #111111;
+  box-shadow: 0 -12px 42px rgba(10, 26, 79, 0.22);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: modalUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 3001;
+}
+
+.phoneModalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.expertDialog {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.expertAvatar {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  border: 2px solid rgba(247, 200, 0, 0.65);
+  overflow: hidden;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.expertBubble {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 16px;
+  background: #f6f2e7;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+}
+
+.expertTextMain {
+  margin: 0;
+  color: #111111;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+.phoneInputLabel {
+  display: block;
+  margin: 0;
+  color: #1a1a1a;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.phoneInputWrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid #dddddd;
+  border-radius: 16px;
+  background: #ffffff;
+  overflow: hidden;
+
+  &:focus-within {
+    border-color: var(--color-cta-primary, #f7c800);
+    box-shadow: 0 0 0 3px rgba(247, 200, 0, 0.18);
+  }
+}
+
+.countrySelect {
+  flex: 0 0 105px;
+  min-width: 105px;
+  max-width: 125px;
+  padding: 14px 26px 14px 12px;
+  border: 0;
+  border-right: 1px solid #e7e7e7;
+  background: #f8f8f8;
+  color: #000000;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+
+.phoneInput,
+.phoneInputWithCountry {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  padding: 14px 16px;
+  border: 0;
+  background: #ffffff;
+  color: #000000;
+  font-size: 16px;
+  outline: none;
+
+  &::placeholder {
+    color: #666666;
+  }
+}
+
+.phoneError {
+  margin: 0;
+  color: #ff5d5d;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.phoneModalButton {
+  width: 100%;
+}
+
+.continueButton {
+  width: 100%;
+  padding: 15px 16px;
+  border: 0;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+
+  &.active {
+    background: var(--color-cta-primary, #f7c800);
+    color: #000000;
+    box-shadow: 0 10px 22px rgba(247, 200, 0, 0.22);
+  }
+
+  &.inactive {
+    background: #d9d9d9;
+    color: #777777;
+  }
+}
+
+.privacyNote {
+  margin: 0;
+  color: rgba(10, 26, 79, 0.65);
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+}
+
+@keyframes pulseAura {
+
+  0%,
+  100% {
+    box-shadow: inset 0 0 96px rgba(255, 32, 32, 0.14);
+  }
+
+  50% {
+    box-shadow: inset 0 0 160px rgba(255, 32, 32, 0.26);
+  }
+}
+
+@keyframes pulseDot {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 79, 79, 0.6);
+  }
+
+  50% {
+    transform: scale(1.18);
+    box-shadow: 0 0 0 8px rgba(255, 79, 79, 0);
+  }
+
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 79, 79, 0);
+  }
+}
+
+@keyframes pulseButton {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    box-shadow: 0 14px 30px rgba(247, 200, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  }
+
+  50% {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 38px rgba(247, 200, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.48);
+  }
+}
+
+@keyframes modalUp {
+  0% {
+    transform: translateY(18px) scale(0.98);
+    opacity: 0;
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@media (max-width: 768px) {
+  .mainContent {
+    padding-top: 84px;
+    padding-bottom: calc(236px + env(safe-area-inset-bottom));
+  }
+
+  .container21 {
+    padding: 20px 12px;
+    gap: 20px;
+  }
+
+  .backgroundBorderShad,
+  .modelViewerWrapper {
+    width: 100%;
+  }
+
+  .backgroundBorderShad {
+    padding: 20px 18px;
+    gap: 20px;
   }
 
   .phoneModal {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: none;
-    max-height: 92vh; // Previne cobrir o header totalmente
-    max-height: 92dvh;
-    padding: 20px 16px calc(14px + env(safe-area-inset-bottom));
-    border: 1px solid rgba(10, 26, 79, 0.08);
-    border-top: 3px solid var(--color-cta-primary, #f7c800);
-    border-radius: 24px 24px 0 0;
-    background: linear-gradient(150deg, rgba(255, 255, 255, 0.98), rgba(244, 247, 255, 0.96));
-    color: #111111;
-    box-shadow: 0 -12px 42px rgba(10, 26, 79, 0.22);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    animation: modalUp 0.45s cubic-bezier(0.22, 1, 0.36, 1);
-    z-index: 3001;
+    max-height: 100vh;
+    max-height: 100dvh;
+  }
+}
+
+@media (max-width: 480px) {
+  .container5 {
+    flex-wrap: wrap;
   }
 
-  .phoneModalContent {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
+  .normal325Hz {
+    font-size: 10px;
   }
 
-  .expertDialog {
-    display: flex;
-    align-items: flex-start;
+  .container9 {
+    gap: 6px;
+
+    p {
+      font-size: 9px;
+    }
+  }
+
+  .container13 {
+    padding: 18px 16px;
+  }
+
+  .container19 {
+    grid-template-columns: 1fr;
+  }
+
+  .backgroundBorderShad {
+    padding: 18px 14px;
+  }
+
+  .stickyCtaBar {
+    padding: 0 10px calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .stickyCtaPanel {
+    width: 100%;
     gap: 10px;
-    margin-bottom: 4px;
+    padding: 12px 12px 14px;
+    border-radius: 22px 22px 0 0;
   }
 
-  .expertAvatar {
-    flex: 0 0 46px;
-    width: 46px;
-    height: 46px;
-    border-radius: 999px;
-    border: 2px solid rgba(247, 200, 0, 0.65);
-    overflow: hidden;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
-
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-  }
-
-  .expertBubble {
-    flex: 1 1 auto;
-    min-width: 0;
+  .ctaCaption {
     padding: 10px 12px;
-    border: 1px solid rgba(0, 0, 0, 0.06);
-    border-radius: 16px;
-    background: #f6f2e7;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    font-size: 11px;
   }
 
-  .expertTextMain {
-    margin: 0;
-    color: #111111;
-    font-size: 13px;
-    font-weight: 600;
-    line-height: 1.45;
+  .ctaAction {
+    padding: 16px 18px;
+    font-size: 15px;
   }
 
-  .phoneInputLabel {
-    display: block;
-    margin: 0;
-    color: #1a1a1a;
-    font-size: 12px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  .phoneInputWrapper {
-    display: flex;
-    align-items: stretch;
-    width: 100%;
-    min-width: 0;
-    border: 1px solid #dddddd;
-    border-radius: 16px;
-    background: #ffffff;
-    overflow: hidden;
-
-    &:focus-within {
-      border-color: var(--color-cta-primary, #f7c800);
-      box-shadow: 0 0 0 3px rgba(247, 200, 0, 0.18);
-    }
+  .phoneModal {
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding: 16px 14px calc(16px + env(safe-area-inset-bottom));
+    border-radius: 22px 22px 0 0;
   }
 
   .countrySelect {
-    flex: 0 0 96px;
-    min-width: 96px;
-    max-width: 112px;
-    padding: 14px 26px 14px 12px;
-    border: 0;
-    border-right: 1px solid #e7e7e7;
-    background: #f8f8f8;
-    color: #000000;
-    font-size: 16px;
-    outline: none;
-    cursor: pointer;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: right 8px center;
+    flex-basis: 105px;
+    min-width: 105px;
+  }
+}
+
+@media (max-height: 620px) {
+  .phoneModal {
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding-bottom: calc(14px + env(safe-area-inset-bottom));
   }
 
-  .phoneInput,
-  .phoneInputWithCountry {
-    flex: 1 1 auto;
-    min-width: 0;
-    width: 100%;
+  .expertDialog {
+    gap: 8px;
+    margin-bottom: 0;
+  }
+
+  .stickyCtaPanel {
+    gap: 8px;
+    padding: 10px 10px 12px;
+  }
+
+  .ctaCaption {
+    font-size: 10px;
+    padding: 8px 10px;
+  }
+
+  .ctaAction {
     padding: 14px 16px;
-    border: 0;
-    background: #ffffff;
-    color: #000000;
-    font-size: 16px;
-    outline: none;
-
-    &::placeholder {
-      color: #666666;
-    }
   }
 
-  .phoneError {
-    margin: 0;
-    color: #ff5d5d;
-    font-size: 13px;
-    font-weight: 600;
+  .mainContent {
+    padding-bottom: calc(190px + env(safe-area-inset-bottom));
   }
-
-  .phoneModalButton {
-    width: 100%;
-  }
-
-  .continueButton {
-    width: 100%;
-    padding: 15px 16px;
-    border: 0;
-    border-radius: 16px;
-    font-size: 15px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-
-    &.active {
-      background: var(--color-cta-primary, #f7c800);
-      color: #000000;
-      box-shadow: 0 10px 22px rgba(247, 200, 0, 0.22);
-    }
-
-    &.inactive {
-      background: #d9d9d9;
-      color: #777777;
-    }
-  }
-
-  .privacyNote {
-    margin: 0;
-    color: rgba(10, 26, 79, 0.65);
-    font-size: 11px;
-    line-height: 1.45;
-    text-align: center;
-  }
-
-  @keyframes pulseAura {
-    0%,
-    100% {
-      box-shadow: inset 0 0 96px rgba(255, 32, 32, 0.14);
-    }
-
-    50% {
-      box-shadow: inset 0 0 160px rgba(255, 32, 32, 0.26);
-    }
-  }
-
-  @keyframes pulseDot {
-    0% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(255, 79, 79, 0.6);
-    }
-
-    50% {
-      transform: scale(1.18);
-      box-shadow: 0 0 0 8px rgba(255, 79, 79, 0);
-    }
-
-    100% {
-      transform: scale(1);
-      box-shadow: 0 0 0 0 rgba(255, 79, 79, 0);
-    }
-  }
-
-  @keyframes pulseButton {
-    0%,
-    100% {
-      transform: translateY(0);
-      box-shadow: 0 14px 30px rgba(247, 200, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.42);
-    }
-
-    50% {
-      transform: translateY(-2px);
-      box-shadow: 0 20px 38px rgba(247, 200, 0, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.48);
-    }
-  }
-
-  @keyframes modalUp {
-    0% {
-      transform: translateY(18px) scale(0.98);
-      opacity: 0;
-    }
-
-    100% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .mainContent {
-      padding-top: 84px;
-      padding-bottom: calc(236px + env(safe-area-inset-bottom));
-    }
-
-    .container21 {
-      padding: 20px 12px;
-      gap: 20px;
-    }
-
-    .backgroundBorderShad,
-    .modelViewerWrapper {
-      width: 100%;
-    }
-
-    .backgroundBorderShad {
-      padding: 20px 18px;
-      gap: 20px;
-    }
-
-    .phoneModal {
-      max-height: 100vh;
-      max-height: 100dvh;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .container5 {
-      flex-wrap: wrap;
-    }
-
-    .normal325Hz {
-      font-size: 10px;
-    }
-
-    .container9 {
-      gap: 6px;
-
-      p {
-        font-size: 9px;
-      }
-    }
-
-    .container13 {
-      padding: 18px 16px;
-    }
-
-    .container19 {
-      grid-template-columns: 1fr;
-    }
-
-    .backgroundBorderShad {
-      padding: 18px 14px;
-    }
-
-    .stickyCtaBar {
-      padding: 0 10px calc(10px + env(safe-area-inset-bottom));
-    }
-
-    .stickyCtaPanel {
-      width: 100%;
-      gap: 10px;
-      padding: 12px 12px 14px;
-      border-radius: 22px 22px 0 0;
-    }
-
-    .ctaCaption {
-      padding: 10px 12px;
-      font-size: 11px;
-    }
-
-    .ctaAction {
-      padding: 16px 18px;
-      font-size: 15px;
-    }
-
-    .phoneModal {
-      max-height: 100vh;
-      max-height: 100dvh;
-      padding: 16px 14px calc(16px + env(safe-area-inset-bottom));
-      border-radius: 22px 22px 0 0;
-    }
-
-    .countrySelect {
-      flex-basis: 88px;
-      min-width: 88px;
-    }
-  }
-
-  @media (max-height: 620px) {
-    .phoneModal {
-      max-height: 100vh;
-      max-height: 100dvh;
-      padding-bottom: calc(14px + env(safe-area-inset-bottom));
-    }
-
-    .expertDialog {
-      gap: 8px;
-      margin-bottom: 0;
-    }
-
-    .stickyCtaPanel {
-      gap: 8px;
-      padding: 10px 10px 12px;
-    }
-
-    .ctaCaption {
-      font-size: 10px;
-      padding: 8px 10px;
-    }
-
-    .ctaAction {
-      padding: 14px 16px;
-    }
-
-    .mainContent {
-      padding-bottom: calc(190px + env(safe-area-inset-bottom));
-    }
-  }
-
+}

@@ -46,23 +46,23 @@ export default function CompontTest1() {
     const click = (k) => {
         if (sel) return; setSel(k);
         const ans = { [q.id]: k }; const o = q.options.find(x => x.key === k);
-
+        
         // Offloading de persistência e tracking para não travar a fluidez visual
         const runAnalytics = () => {
             const sv = SEV_N[k] || 1;
             const nb = [{ zone: 'head', severity: Math.min(sv, 3) }, { zone: 'solar', severity: Math.min(sv, 2) }];
             setBlk(nb); try { sessionStorage.setItem('ve_blockages', JSON.stringify(nb)); } catch { }
-
-            if (o) {
+            
+            if (o) { 
                 createFunnelTracker({ baseUrl: getDefaultBaseUrl(), funnelId: QUIZ_FUNNEL_ID, getCountry: () => readStoredCountry() || undefined, debug: DEBUG })
                     .desireSelectedWithStep({ id: '/compont-test-1', index: 7, name: 'exame vibracional 1' }, { desire: o.text, question: q.title, response: [o.text] })
-                    .catch(() => { });
+                    .catch(() => { }); 
             }
-            try {
-                leadCache.setEtapa('CP03 - Quiz');
-                leadCache.mergeQuizAnswers(ans);
-                leadCache.saveQAsForStep('quiz_step_1', [q], ans);
-                logQuizProgress();
+            try { 
+                leadCache.setEtapa('CP03 - Quiz'); 
+                leadCache.mergeQuizAnswers(ans); 
+                leadCache.saveQAsForStep('quiz_step_1', [q], ans); 
+                logQuizProgress(); 
             } catch { }
         };
 
@@ -75,56 +75,56 @@ export default function CompontTest1() {
         setTimeout(() => { const a = {}; sp.forEach((v, k2) => { a[k2] = v; }); Object.assign(a, ans); nav(`/compont-test-2?${new URLSearchParams(a).toString()}`); }, DELAY);
     };
 
-    const fb = sel ? FB[sel] : null;
+    const fb = sel ? FB[sel] : null; 
     const c = fb ? sc(fb.sev) : {};
 
     return (
         <TransitionFadeWrapper>
-            <div className={styles.examPage}>
-                <div className={styles.examSubHeader}>
-                    <span className={styles.examBadge}><span className={styles.examBadgeDot} />Exame Vibracional</span>
-                    <span className={styles.examStep}>{STEP}/6</span>
-                </div>
-
-                <div className={styles.examContent}>
-                    <div className={styles.questionPanel}>
-                        <h2 className={styles.questionTitle}>{q.title}</h2>
-                        <div className={`${styles.optionsGrid} ${styles.optionsGridCascata}`}>
-                            {q.options.map(o => {
-                                const isSel = sel === o.key;
-                                const dis = sel && !isSel;
-                                const emojisMap = {
-                                    sim_drenado: '🥀',
-                                    cabeca_nunca_desliga: '🧠',
-                                    ignoro_pausa: '🏃‍♀️',
-                                    pouco_forte: '🛡️'
-                                };
-                                return (
-                                    <PremiumOptionCard
-                                        key={o.key}
-                                        className={styles.premiumCardFix}
-                                        emoji={emojisMap[o.key]}
-                                        label={o.text}
-                                        isSelected={isSel}
-                                        disabled={dis}
-                                        onClick={() => click(o.key)}
-                                        onPointerDown={() => prefetchPath('/compont-test-2')}
-                                    />
-                                );
-                            })}
-                        </div>
-                    </div>
-
-                    <div className={styles.bodyContainerDesktop}>
-                        <div style={{ position: 'relative', width: '300px', height: '500px' }}>
-                            <VibrationalBody blockages={blk} scanning={false} />
-                            {/* {sel && <div className={styles.laserLine} />} */}
-                        </div>
-                        <span className={styles.bodyScanLabel}>Sincronização em tempo real</span>
+        <div className={styles.examPage}>
+            <div className={styles.examSubHeader}>
+                <span className={styles.examBadge}><span className={styles.examBadgeDot} />{t('compontTest.feature1')}</span>
+                <span className={styles.examStep}>{STEP}/6</span>
+            </div>
+            
+            <div className={styles.examContent}>
+                <div className={styles.questionPanel}>
+                    <h2 className={styles.questionTitle}>{q.title}</h2>
+                    <div className={`${styles.optionsGrid} ${styles.optionsGridCascata}`}>
+                        {q.options.map(o => {
+                            const isSel = sel === o.key;
+                            const dis = sel && !isSel;
+                            const emojisMap = {
+                                sim_drenado: '🥀',
+                                cabeca_nunca_desliga: '🧠',
+                                ignoro_pausa: '🏃‍♀️',
+                                pouco_forte: '🛡️'
+                            };
+                            return (
+                                <PremiumOptionCard 
+                                   key={o.key} 
+                                   className={styles.premiumCardFix}
+                                   emoji={emojisMap[o.key]}
+                                   label={o.text} 
+                                   isSelected={isSel} 
+                                   disabled={dis} 
+                                   onClick={() => click(o.key)} 
+                                   onPointerDown={() => prefetchPath('/compont-test-2')}
+                                />
+                            );
+                        })}
                     </div>
                 </div>
 
-                {/* {fb && (
+                <div className={styles.bodyContainerDesktop}>
+                    <div style={{ position: 'relative', width: '300px', height: '500px' }}>
+                        <VibrationalBody blockages={blk} scanning={false} />
+                        {/* {sel && <div className={styles.laserLine} />} */}
+                    </div>
+                    <span className={styles.bodyScanLabel}>{t('compontTest.feature2')}</span>
+                </div>
+            </div>
+
+            {/* {fb && (
                 <div className={styles.feedbackBuffer}>
                     <div className={`${styles.feedbackBufferInner} ${c.buf}`}>
                         <div className={styles.feedbackBodyMini}>
@@ -141,6 +141,6 @@ export default function CompontTest1() {
                     </div>
                 </div>
             )} */}
-            </div>
+        </div>
         </TransitionFadeWrapper>);
 }

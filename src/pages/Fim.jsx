@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Trans } from 'react-i18next'
 import { API_BASE_URL } from '@/lib/api'
 import { asset } from '@/lib/asset'
 import { leadCache } from '@/lib/leadCache'
@@ -19,6 +19,7 @@ import styles from './Fim.module.scss'
 import expertImg from '../../img/expert.webp'
 import expertPtImg from '../../img/expert-pt.webp'
 import expertTeamImg from '../../img/Equipe-quantica.webp'
+import expertTeamDeImg from '../../img/equipe-de.webp'
 
 const CommentsSection = React.lazy(() => import('./CommentsSection'))
 const FimBelowFold = React.lazy(() => import('./FimBelowFold'))
@@ -96,7 +97,7 @@ export default function Fim() {
       console.error('[FIM] Falha ao inicializar tracker', e);
     }
 
-    try { document.title = 'Fim · Plano Vibracional' } catch { }
+    try { document.title = t('fim.page_title') } catch { }
     const enterDuration = 1000
     const holdAfterOpen = 1500
     const exitDuration = 1000
@@ -561,8 +562,8 @@ export default function Fim() {
                 <img src={isPtRoute ? expertPtImg : expertImg} alt={isPtRoute ? "Especialista" : "Experte"} width="46" height="46" loading="lazy" decoding="async" />
               </div>
               <div className={styles.expertBubble}>
-                <span className={styles.expertMiniHeadline}>{isPtRoute ? "Mensagem Importante" : "Wichtige Nachricht"}</span>
-                <p className={styles.expertMessage}>{isPtRoute ? "Enquanto preparamos o seu Plano Vibracional, veja abaixo o que ele pode realmente fazer por si." : "Wir erstellen Ihren Plan. Das Video enthüllt die wahre Kraft dieser Methode."}</p>
+                <span className={styles.expertMiniHeadline}>{t('fim.expert_dialog.headline')}</span>
+                <p className={styles.expertMessage}>{t('fim.expert_dialog.message')}</p>
               </div>
             </div>
             <div className={styles.expertCtaRow}>
@@ -579,7 +580,7 @@ export default function Fim() {
                 </svg>
               </div>
               <button type="button" className={styles.expertCtaBtn} onClick={handleCtaClick}>
-                <span className={styles.ctaLabel}>{isPtRoute ? "Confirmo" : "Einverstanden"}</span>
+                <span className={styles.ctaLabel}>{t('fim.expert_dialog.cta_confirm')}</span>
                 <span className={`${styles.ctaCheckbox} ${ctaChecked ? styles.ctaCheckboxChecked : ''}`} aria-hidden="true"></span>
               </button>
             </div>
@@ -614,38 +615,32 @@ export default function Fim() {
 
             {/* Imagem da Equipa */}
             <div className={styles.waitModalImagePlaceholder}>
-              <img src={expertTeamImg} alt="Equipa Quântica a rever os seus dados" loading="lazy" decoding="async" />
+              <img src={isPtRoute ? expertTeamImg : expertTeamDeImg} alt={isPtRoute ? "Equipa Quântica a rever os seus dados" : "Quanten Team überprüft Ihre Daten"} loading="lazy" decoding="async" />
             </div>
 
             {/* Título Clean */}
             <h2 className={styles.waitModalTitle}>
-              A <span>sua Análise Vibracional</span> revelou algo importante!
+              <Trans i18nKey="fim.wait_modal.title" components={{ 1: <span /> }} />
             </h2>
 
             {/* Alerta Simplificado */}
             <div className={styles.waitModalAlert}>
               {(() => {
-                const cacheMap = {
-                  abundance: 'área Financeira',
-                  attract: 'vida Amorosa',
-                  healing: 'Saúde Física',
-                  energy: 'Saúde Mental',
-                  other: 'sua Vida em geral'
-                }
+                const areaMap = t('fim.wait_modal.area_map', { returnObjects: true }) || {}
                 const chaves = leadCache.getAll()?.problemaPrincipal || []
                 let areas = ''
                 if (chaves.length > 0) {
-                  const traduzidas = chaves.map(k => cacheMap[k]).filter(Boolean)
+                  const traduzidas = chaves.map(k => areaMap[k]).filter(Boolean)
                   if (traduzidas.length === 1) areas = traduzidas[0]
                   else if (traduzidas.length > 1) {
                     const ultima = traduzidas.pop()
-                    areas = `${traduzidas.join(', ')} e a ${ultima}`
+                    areas = `${traduzidas.join(', ')} ${t('fim.wait_modal.connector_and')} ${ultima}`
                   }
                 }
 
                 return (
                   <>
-                    🚨 Atenção: Detetámos <strong>Graves Bloqueios</strong> a afetar a {areas || 'sua frequência principal'}...
+                    {t('fim.wait_modal.alert_prefix')} <strong>{t('fim.wait_modal.alert_blocks')}</strong> {t('fim.wait_modal.alert_suffix', { areas: areas || t('fim.wait_modal.alert_default_area') })}
                   </>
                 )
               })()}
@@ -657,7 +652,7 @@ export default function Fim() {
                 <div className={styles.waitModalProgressLabel}>
                   {(gatingComplete || displayedHeaderPct >= 97)
                     ? t('fim.status.ready')
-                    : 'A ENVIAR SOLUÇÃO: PLANO VIBRACIONAL'}
+                    : t('fim.wait_modal.progress_label')}
                   {!(gatingComplete || displayedHeaderPct >= 97) && (
                     <span className={styles.dots}>{'.'.repeat(dotsCount)}</span>
                   )}
@@ -673,11 +668,11 @@ export default function Fim() {
               className={styles.waitModalBtn}
               onClick={() => setShowWaitModal(false)}
             >
-              Sim, Quero a Solução
+              {t('fim.wait_modal.cta_button')}
             </button>
 
             <p className={styles.waitModalSubText}>
-              O vídeo revela como o <strong>Plano Vibracional</strong> resolve isto.
+              <Trans i18nKey="fim.wait_modal.sub_text" components={{ 1: <strong /> }} />
             </p>
           </div>
         </div>

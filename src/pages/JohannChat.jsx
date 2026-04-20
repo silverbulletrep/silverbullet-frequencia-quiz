@@ -1,171 +1,60 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import styles from './JohannChat.module.scss';
 import { asset } from '@/lib/asset';
 
-const EXPERT_IMG = asset('/img/expert-pt.webp');
+const isPtRoute = window.location.pathname.startsWith('/pt');
+const EXPERT_IMG = isPtRoute ? asset('/img/expert-pt.webp') : asset('/img/expert.webp');
 
 // --- CONFIGURAÇÃO DOS GANCHOS (17 VARIAÇÕES) ---
-const OPENING_MESSAGES = {
+const getOpeningMessages = (t) => ({
     // Agente 1 (Foco na estagnação palpável) - /quiz a /vsl
     // Agora usando uma função ou lógica para alternar entre Primário e Fallback
     '/quiz': 'AGENTE_1',
-    '/age-selection-men': [
-        "A tua faixa etária é crucial para percebermos a profundidade do bloqueio.",
-        "Podes dizer-me a tua idade para continuarmos?"
-    ],
-    '/ge-selection-men': [
-        "A tua faixa etária é crucial para percebermos a profundidade do bloqueio.",
-        "Podes dizer-me a tua idade para continuarmos?"
-    ],
-    '/age-selection-women': [
-        "A tua faixa etária é crucial para percebermos a profundidade do bloqueio.",
-        "Podes dizer-me a tua idade para continuarmos?"
-    ],
+    '/age-selection-men': t('johannChat.openings.age_selection', { returnObjects: true }),
+    '/ge-selection-men': t('johannChat.openings.age_selection', { returnObjects: true }),
+    '/age-selection-women': t('johannChat.openings.age_selection', { returnObjects: true }),
     '/women-success': 'AGENTE_1',
     '/men-success': 'AGENTE_1',
-    '/morning-feeling': [
-        "Preciso de saber o que precisas de resolver, só assim te consigo ajudar...",
-        "Podemos continuar ou tens alguma dúvida?"
-    ],
-    '/transition': [
-        "Assiste a este vídeo curto!",
-        "Precisas de entender como os bloqueios matam a nossa felicidade.",
-        "Queres continuar ou tens alguma dúvida?"
-    ],
+    '/morning-feeling': t('johannChat.openings.morning', { returnObjects: true }),
+    '/transition': t('johannChat.openings.transition', { returnObjects: true }),
     '/vsl': 'AGENTE_1',
     '/vsl2': 'AGENTE_1',
-
-    // Agente 4 (Hesitação no Exame / Sinceridade) - /quiz-step-1 a /resultado
-    '/quiz-step-1': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-2': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-3': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-4': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-5': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-6': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-9': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/quiz-step-10': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/compont-test-1': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/compont-test-2': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/compont-test-3': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/compont-test-4': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/compont-test-5': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/compont-test-6': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/processing': [
-        "Espere! Aconteceu algo? Esta é a parte mais importante... onde mostramos o seu Resultado.",
-        "Inclusive, já está pronto... clique no botão abaixo e veja!"
-    ],
-    '/resultado': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-    '/resultado-pressel': [
-        "Lutar sozinho há tantos anos desgasta qualquer um.",
-        "Vamos terminar este diagnóstico e resolver isso juntos, sim ou não?"
-    ],
-
-    // Agente (Mentor Atento) - /fim (antes do pitch)
-    '/fim': [
-        "Vi o teu exame e sei que tens carregado o mundo nas costas.",
-        "Posso mostrar-te exatamente o que te falta, sim ou não?"
-    ],
-
-    // Agente 3 (Sinal Dourado) - /fim (pós pitch), /checkout, /fim-funil
-    '/fim-pos-pitch': [
-        "O teu exame disparou um alerta raro.",
-        "Não precisas de continuar a sofrer em silêncio.",
-        "Queres mudar isso hoje, sim ou não?"
-    ],
-    '/checkout': [
-        "O teu exame disparou um alerta raro.",
-        "Não precisas de continuar a sofrer em silêncio.",
-        "Queres mudar isso hoje, sim ou não?"
-    ],
-    '/fim-funil': [
-        "O teu exame disparou um alerta raro.",
-        "Não precisas de continuar a sofrer em silêncio.",
-        "Queres mudar isso hoje, sim ou não?"
-    ],
-
-    // Agente 2 (Via Intravenosa) - /audio-upsell
-    // Agente 2 (Via Intravenosa) - /audio-upsell ANTES do play
-    '/audio-upsell': [
-        "Muitos parabéns pela tua conquista! 🏆",
-        "É fundamental que ouças o áudio até ao fim agora para selar a tua correção vibracional.",
-        "Podemos continuar, sim ou não?"
-    ],
-
-    // Agente 2 - /audio-upsell PÓS play (se o cliente pausar/sair no meio)
-    '/audio-upsell-pos-play': [
-        "Rápido — queres acelerar isto agora ou preferes ir mais devagar?"
-    ],
-
-    '/recupera': [
-        "Você chegou até aqui e parou exatamente no último passo.",
-        "Não estou aqui pra te pressionar — mas preciso te perguntar uma coisa com sinceridade:",
-        "O que aconteceu? Me conta o que travou."
-    ],
-
-    // Rota direta de Atendimento / Suporte (PT-PT)
-    '/suporte': [
-        "Olá, estou aqui para ajudar! 🤝",
-        "Qual é a dúvida que te impede de avançar neste momento?"
-    ],
-
-    // Fallback Específico do VSL de abandono final
+    '/quiz-step-1': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-2': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-3': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-4': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-5': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-6': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-9': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/quiz-step-10': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/compont-test-1': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/compont-test-2': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/compont-test-3': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/compont-test-4': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/compont-test-5': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/compont-test-6': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/processing': t('johannChat.openings.processing', { returnObjects: true }),
+    '/resultado': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/resultado-pressel': t('johannChat.openings.quiz_step', { returnObjects: true }),
+    '/fim': t('johannChat.openings.fim', { returnObjects: true }),
+    '/fim-pos-pitch': t('johannChat.openings.checkout', { returnObjects: true }),
+    '/checkout': t('johannChat.openings.checkout', { returnObjects: true }),
+    '/fim-funil': t('johannChat.openings.checkout', { returnObjects: true }),
+    '/audio-upsell': t('johannChat.openings.audio_upsell', { returnObjects: true }),
+    '/audio-upsell-pos-play': t('johannChat.openings.audio_upsell_pos', { returnObjects: true }),
+    '/recupera': t('johannChat.openings.recupera', { returnObjects: true }),
+    '/suporte': t('johannChat.openings.suporte', { returnObjects: true }),
     '/vsl-abandon': [
-        "<b>Seu Exame Vibracional Está Pronto!</b>",
-        "Vamos Agora descobrir: <b>O que está a travar a sua Vida</b>",
-        "✓ Em que os seus Bloqueios estão a atrapalhar as suas manifestações<br/>✓ E vamos Desbloquear tudo isso para sempre",
+        ...t('johannChat.openings.vsl_abandon', { returnObjects: true }),
         {
             type: 'text',
-            content: "Pressiona o botão em baixo para continuar:",
+            content: t('johannChat.ui.button_vsl_abandon'),
             actionUnlock: true
         }
     ]
-};
+});
 
 const WEBHOOK_URL = "https://n8n-n8n.6jcwzd.easypanel.host/webhook/chat-funel";
 
@@ -241,6 +130,8 @@ const FALLBACK_SEEN_KEY = 'whatsapp_agente1_seen';
 const HOTMART_POST_PITCH_URL = 'https://pay.hotmart.com/N105101154W?offDiscount=DESCONTO+APLICADO&bid=1775256934969';
 
 const JohannChat = () => {
+    const { t, i18n } = useTranslation();
+
     useEffect(() => {
         // Bloquear scroll do body pra prevenir viewport bugs no iOS quando o teclado abre
         const originalBodyOverflow = document.body.style.overflow;
@@ -304,28 +195,23 @@ const JohannChat = () => {
         // 3. Iniciar o chat (ganchos) - blindado contra double-render
         if (!isChatStartedRef.current) {
             isChatStartedRef.current = true;
-            startOpeningSequence(from);
+            // Carrega dinamicamente a constant de acordo com a lingua.
+            const localizedOpenings = getOpeningMessages(t);
+            startOpeningSequence(from, localizedOpenings);
         }
-    }, []);
+    }, [t]);
 
-    const startOpeningSequence = async (cp) => {
-        let opening = OPENING_MESSAGES[cp] || OPENING_MESSAGES['/quiz'];
+    const startOpeningSequence = async (cp, localizedOpenings) => {
+        let opening = localizedOpenings[cp] || localizedOpenings['/quiz'];
 
         // Lógica de Fallback para o Agente 1
         if (opening === 'AGENTE_1') {
             const hasSeenPrimary = localStorage.getItem(FALLBACK_SEEN_KEY) === 'true';
             if (!hasSeenPrimary) {
-                opening = [
-                    "Espera… posso mostrar-te uma coisa rápida antes de saíres.",
-                    "O abandono é o reflexo da rejeição do bloqueio energético pela mudança; o peso no peito é o bloqueio a vencer.",
-                    "Leva apenas 30 segundos e pode mudar tudo — queres começar?"
-                ];
+                opening = t('johannChat.ui.agente_1_fallback_1', { returnObjects: true });
                 localStorage.setItem(FALLBACK_SEEN_KEY, 'true');
             } else {
-                opening = [
-                    "Essa fuga não é tua. É o cansaço acumulado de anos a puxar-te para trás de novo.",
-                    "⚠️ Posso mostrar-te onde a tua energia está a vazar, sim ou não?"
-                ];
+                opening = t('johannChat.ui.agente_1_fallback_2', { returnObjects: true });
             }
         }
 
@@ -340,7 +226,7 @@ const JohannChat = () => {
             if (!isSuporte) {
                 // Garantir que a Array não seja mutada por referência se for do OPENING_MESSAGES
                 opening = [
-                    "**Não se preocupe, estou a acompanhar o seu exame pessoalmente!**",
+                    t('johannChat.ui.mentor_tracking'),
                     ...(Array.isArray(opening) ? opening : [opening])
                 ];
             }
@@ -454,6 +340,7 @@ const JohannChat = () => {
                 sessao_chat_id: chatDataRef.current.session_id,
                 checkpoint_abandono: enrichedCheckpoint,
                 etapa: etapa,
+                language: i18n.language,
                 metodo_pagamento: metodoPagamento,
                 id_lead: funnelLeadId || funilData?.id_lead || funilData?.client_uuid || 'nao_identificado',
                 lead_id_crm: funnelLeadId || funilData?.id_lead || funilData?.client_uuid || 'nao_identificado',
@@ -548,7 +435,7 @@ const JohannChat = () => {
             setMessages(prev => [...prev, {
                 id: Date.now(),
                 type: 'text',
-                content: "Desculpe, tive um breve problema de conexão. Pode repetir?",
+                content: t('johannChat.ui.connection_error_short'),
                 isUser: false,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }]);
@@ -642,7 +529,7 @@ const JohannChat = () => {
             setMessages(prev => [...prev, {
                 id: Date.now(),
                 type: 'text',
-                content: "🛑 O N8N respondeu, mas ocorreu um erro crítico de React no Chat ao exibir. Pressione F12 e veja no Console.",
+                content: t('johannChat.ui.connection_error_critical'),
                 isUser: false,
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }]);
@@ -682,7 +569,7 @@ const JohannChat = () => {
                 <img src={EXPERT_IMG} alt="Johann Müller" className={styles.profilePic} />
                 <div className={styles.profileInfo}>
                     <span className={styles.profileName}>Johann Müller</span>
-                    <span className={styles.profileStatus}>online</span>
+                    <span className={styles.profileStatus}>{t('johannChat.ui.online')}</span>
                 </div>
 
             </header>
@@ -727,7 +614,7 @@ const JohannChat = () => {
                                             className={styles.unlockButton}
                                             onClick={() => handleUnlockNextStep(msg)}
                                         >
-                                            {msg.unlockUrl ? 'Aproveitar Oferta Agora ➔' : 'Continuar de onde parei ➔'}
+                                            {msg.unlockUrl ? t('johannChat.ui.button_offer') : t('johannChat.ui.button_continue')}
                                         </button>
                                     )}
                                     <span className={styles.messageTime}>
@@ -752,7 +639,7 @@ const JohannChat = () => {
                 <div className={styles.messageInputContainer}>
                     <input
                         type="text"
-                        placeholder="Mensagem"
+                        placeholder={t('johannChat.ui.placeholder')}
                         className={styles.messageInput}
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}

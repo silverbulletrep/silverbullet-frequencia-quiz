@@ -4,6 +4,7 @@ import { ChevronDown, ShieldCheck, Star } from 'lucide-react'
 import { leadCache } from '@/lib/leadCache'
 import { buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
 import { buildRouteStep, createFunnelTracker, getDefaultBaseUrl, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry } from '@/lib/funnelTracker'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 import styles from './FimBelowFold.module.scss'
 
@@ -15,12 +16,22 @@ import imgI04 from '../../img/I04.webp'
 const ComparisonCard = React.lazy(() => import('@/components/ComparisonCard'))
 const DiscountBottomSheet = React.lazy(() => import('@/components/DiscountBottomSheet'))
 const PaymentMethodModal = React.lazy(() => import('@/components/PaymentMethodModal'))
+const CheckoutModal = React.lazy(() => import('@/components/CheckoutModal'))
 
 const HOTMART_MAIN_CHECKOUT_URL = 'https://pay.hotmart.com/N105101154W?checkoutMode=10'
 const HOTMART_BANNER_URL = 'https://static-media.hotmart.com/YSQVlHHKs3nV1EiNhuXYKOBuh98=/1024x338/filters:quality(100)/hotmart/checkout_custom/2b1a1971-e4c1-455e-b3a6-11c757c31277/pmojd9f69.png'
 
 export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, onCheckoutSuccess, DEBUG }) {
     const { t } = useTranslation()
+    const location = useLocation()
+    const navigate = useNavigate()
+    const isPtRoute = (() => {
+        try {
+            const p = String(window.location.pathname || '')
+            if (p.includes('/pt/') || p.endsWith('/pt') || p === '/pt') return true
+            return false
+        } catch { return true }
+    })()
     const [showComparisonCard, setShowComparisonCard] = useState(false)
 
     // 🎬 Pré-carrega o vídeo com delay moderado após a montagem em background
@@ -112,6 +123,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
     const [showDiscountSheet, setShowDiscountSheet] = useState(false)
     const [discountSheetVariant, setDiscountSheetVariant] = useState('standard')
     const [showPaymentMethodModal, setShowPaymentMethodModal] = useState(false)
+    const [showStripeCheckout, setShowStripeCheckout] = useState(false)
 
     const checkoutOriginRef = useRef('')
     const offerSectionRef = useRef(null)
@@ -123,7 +135,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
         debug: Boolean(DEBUG)
     })
 
-    const redirectToMainCheckout = async (methodId) => {
+    const handleCheckoutTracking = async (methodId, origin) => {
         const cache = leadCache.getAll()
         const leadId = (() => {
             try {
@@ -136,7 +148,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
         })()
         const email = typeof cache?.email === 'string' ? cache.email.trim() : ''
         const leadIdShort = leadId ? makeLeadIdShort(leadId) : ''
-        const paymentMethod = normalizeHotmartPaymentMethod(methodId)
+        const paymentMethod = methodId ? normalizeHotmartPaymentMethod(methodId) : undefined
         const step = buildRouteStep('/fim', QUIZ_PROGRESS_STEPS.fim, 'Página de Oferta')
 
         if (leadIdShort) {
@@ -148,7 +160,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                 step,
                 { value: 37, currency: 'EUR' },
                 {
-                    checkout_origin: checkoutOriginRef.current || 'fim',
+                    checkout_origin: origin || 'fim',
                     payment_method: paymentMethod || undefined,
                     email_present: Boolean(email),
                     ...(leadIdShort ? { lead_id_short: leadIdShort } : {})
@@ -157,6 +169,16 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
         } catch (error) {
             console.error('[FIM] Erro ao enviar checkout_start', { message: error?.message })
         }
+        
+        return { leadIdShort, email, paymentMethod }
+    }
+
+    const redirectToMainCheckout = async (methodId) => {
+        const { leadIdShort, email, paymentMethod } = await handleCheckoutTracking(methodId, checkoutOriginRef.current)
+        
+        // Anti-Race Condition Buffer: Garante que a promessa de tracking tenha
+        // 80ms de processamento dentro do event loop antes da pagina ser destruida
+        await new Promise(resolve => setTimeout(resolve, 80))
 
         const checkoutUrl = buildHotmartCheckoutUrl({
             baseUrl: HOTMART_MAIN_CHECKOUT_URL,
@@ -466,7 +488,13 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                     }}
                     onContinue={async () => {
                         setShowDiscountSheet(false)
-                        setShowPaymentMethodModal(true)
+                        if (isPtRoute) {
+                            setShowPaymentMethodModal(true)
+                        } else {
+                            const origin = checkoutOriginRef.current || 'fim'
+                            await handleCheckoutTracking('', origin)
+                            setShowStripeCheckout(true)
+                        }
                     }}
                     variant={discountSheetVariant}
                 />
@@ -483,6 +511,26 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                         await redirectToMainCheckout(paymentMethod)
                     }}
                 />
+            </React.Suspense>
+
+            <React.Suspense fallback={null}>
+                {showStripeCheckout && (
+                    <CheckoutModal
+                        onClose={() => setShowStripeCheckout(false)}
+                        onSuccess={(data) => {
+                            console.log('[FIM] De checkout sucess:', data)
+                            setShowStripeCheckout(false)
+                            navigate('/de/audio-upsell')
+                        }}
+                        amount_cents={3700}
+                        currency="eur"
+                        email={(() => { try { return leadCache.getAll()?.email || '' } catch { return '' } })()}
+                        metadata={{
+                            origin: checkoutOriginRef.current || 'fim',
+                            product_name: t('checkout_modal.product_name', 'Personalisierter Plan')
+                        }}
+                    />
+                )}
             </React.Suspense>
 
 

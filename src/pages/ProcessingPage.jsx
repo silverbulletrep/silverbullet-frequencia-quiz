@@ -30,7 +30,8 @@ import { useExitIntent } from '../hooks/useExitIntent';
 const DEBUG = import.meta.env.DEV;
 
 // Constantes de assets baseadas no VSL
-const expertImg = asset('/img/expert-pt.webp');
+const isPtRoute = window.location.pathname.startsWith('/pt');
+const expertImg = isPtRoute ? asset('/img/expert-pt.webp') : asset('/img/expert.webp');
 
 const ProcessingPage = () => {
   const { t } = useTranslation();
@@ -39,8 +40,26 @@ const ProcessingPage = () => {
 
   // 1. Extração de Dados e Definição de Tema
   const leadData = useMemo(() => leadCache.getAll(), []);
-  const themeKey = leadData.selected_option || 'default';
+  const rawThemeKey = leadData.selected_option || 'default';
+  const themeKey = ['abundance', 'attract', 'healing', 'energy'].includes(rawThemeKey) ? rawThemeKey : 'default';
   const theme = PROCESSING_THEMES[themeKey] || PROCESSING_THEMES.default;
+
+  const translatedInsights = useMemo(() => {
+    return t(`processing.themes.${themeKey}.insights`, { returnObjects: true }) || theme.insights;
+  }, [t, themeKey, theme.insights]);
+
+  const translatedBars = useMemo(() => {
+    const barsDict = t(`processing.themes.${themeKey}.energyBars`, { returnObjects: true });
+    const configBars = { ...theme.energyBars };
+    if (barsDict && typeof barsDict === 'object') {
+      Object.keys(configBars).forEach(k => {
+        if (barsDict[k]) {
+          configBars[k] = { ...configBars[k], label: barsDict[k] };
+        }
+      });
+    }
+    return configBars;
+  }, [t, themeKey, theme.energyBars]);
 
   // 2. Estados de Progressão
   const [currentProgress, setCurrentProgress] = useState(0);
@@ -159,10 +178,10 @@ const ProcessingPage = () => {
               >
                 <div className={styles.contactTextContent}>
                   <h3 className={styles.contactTitle}>
-                    Como você quer receber seu resultado?
+                    {t('processing.contact_card.title')}
                   </h3>
                   <p className={styles.contactSubtext}>
-                    *WhatsApp garante um acesso rápido
+                    {t('processing.contact_card.subtitle')}
                   </p>
                 </div>
                 
@@ -283,7 +302,7 @@ const ProcessingPage = () => {
                         times: [0, 0.4, 0.6, 0.8, 1]
                       }}
                     >
-                      Ver diagnóstico completo
+                      {t('processing.continue_button')}
                     </motion.button>
                   </motion.div>
                 )}
@@ -302,7 +321,7 @@ const ProcessingPage = () => {
                   className="mt-2 flex items-center gap-2 bg-[#D4AF37]/10 border border-[#D4AF37]/20 px-4 py-2 rounded-full"
                 >
                   <span className="text-[#D4AF37] text-xs font-bold uppercase tracking-wider">
-                    Análise validada por Especialista
+                    {t('processing.human_validation')}
                   </span>
                   <div className="flex -space-x-2">
                     {[1, 2, 3].map(i => (
@@ -317,14 +336,14 @@ const ProcessingPage = () => {
 
             {/* 4. Feed de Insights e Barras de Energia */}
             <div className="w-full flex flex-col items-center">
-              <InsightFeed insights={theme.insights} currentProgress={currentProgress} />
-              <EnergyBars bars={theme.energyBars} progress={currentProgress} />
+              <InsightFeed insights={translatedInsights} currentProgress={currentProgress} />
+              <EnergyBars bars={translatedBars} progress={currentProgress} />
             </div>
 
             {/* Rodapé Sutil */}
             <div className="mt-8 [@media(max-height:700px)]:mt-4 opacity-30 text-white text-[10px] uppercase tracking-[0.2em] text-center">
-              Sistema de Análise Vibracional Spirio v2.4<br/>
-              Processamento em Tempo Real
+              {t('processing.footer_line1')}<br/>
+              {t('processing.footer_line2')}
             </div>
 
           </div>

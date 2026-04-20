@@ -93,7 +93,49 @@ export async function upsertLead(payload: {
   }
 }
 
+export async function createPaymentIntent(payload: { amount_cents: number; currency: string; email?: string; metadata?: Record<string, any> }): Promise<any> {
+  const operacao = 'stripe.create_payment_intent'
+  const dados_entrada = { ...payload }
+  try {
+    console.log(`[FRONT] Iniciando operação: ${operacao}`, { dados_entrada })
+    const { data } = await requestWithFallback<any>('post', '/api/stripe/payment-intent', dados_entrada)
+    console.log(`[FRONT] Operação concluída com sucesso: ${operacao}`, {
+      id_resultado: data?.id,
+      timestamp: new Date().toISOString(),
+    })
+    return data
+  } catch (err: unknown) {
+    const error = err as Error & { stack?: string; message?: string }
+    console.error(`[FRONT] Erro na operação: ${operacao}: ${error.message}`, {
+      dados_entrada,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+    })
+    throw err
+  }
+}
 
+export async function createCheckoutSession(payload: { amount_cents: number; currency: string; email?: string; metadata?: Record<string, any> }): Promise<any> {
+  const operacao = 'stripe.create_checkout_session'
+  const dados_entrada = { ...payload }
+  try {
+    console.log(`[FRONT] Iniciando operação: ${operacao}`, { dados_entrada })
+    const { data } = await requestWithFallback<any>('post', '/api/stripe/checkout-session', dados_entrada)
+    console.log(`[FRONT] Operação concluída com sucesso: ${operacao}`, {
+      id_resultado: data?.id || data?.session?.id,
+      timestamp: new Date().toISOString(),
+    })
+    return data
+  } catch (err: unknown) {
+    const error = err as Error & { stack?: string; message?: string }
+    console.error(`[FRONT] Erro na operação: ${operacao}: ${error.message}`, {
+      dados_entrada,
+      stack: error.stack,
+      timestamp: new Date().toISOString(),
+    })
+    throw err
+  }
+}
 
 export async function getApiHealth(): Promise<{ success: boolean; ready?: boolean; message?: string }> {
   const operacao = 'api.health'
