@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, useElements, useStripe, CardNumberElement, CardExpiryElement, CardCvcElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js'
+import { createPortal } from 'react-dom'
 import styles from './CheckoutModal.module.scss'
 import { createPaymentIntent, API_BASE_URL, createPayPalOrder, capturePayPalOrder, finalizePayPalEmail } from '@/lib/api'
 import { leadCache } from '@/lib/leadCache'
@@ -913,7 +914,7 @@ export default function CheckoutModal({ amount_cents, currency = 'eur', email, m
     || (typeof window !== 'undefined' && /(?:\?|&)stripe_debug=1(?:&|$)/.test(String(window.location?.search || '')))
 
   if (!PUBLISHABLE_KEY) {
-    return (
+    return createPortal(
       <div className={styles.overlay}>
         <div className={styles.modal}>
           <div className={styles.header}>
@@ -926,11 +927,12 @@ export default function CheckoutModal({ amount_cents, currency = 'eur', email, m
             </div>
           </div>
         </div>
-      </div>
+      </div>,
+      document.body
     )
   }
 
-  return (
+  return createPortal(
     <div className={styles.overlay}>
       <div className={`${styles.modal} ${isAudioUpsell ? styles.audioUpsellAura : ''}`}>
         <button
@@ -1012,6 +1014,7 @@ export default function CheckoutModal({ amount_cents, currency = 'eur', email, m
           )}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   )
 }
