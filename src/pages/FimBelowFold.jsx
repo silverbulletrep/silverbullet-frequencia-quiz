@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, ShieldCheck, Star } from 'lucide-react'
 import { leadCache } from '@/lib/leadCache'
@@ -21,7 +21,19 @@ const CheckoutModal = React.lazy(() => import('@/components/CheckoutModal'))
 const HOTMART_MAIN_CHECKOUT_URL = 'https://pay.hotmart.com/N105101154W?checkoutMode=10'
 const HOTMART_BANNER_URL = 'https://static-media.hotmart.com/YSQVlHHKs3nV1EiNhuXYKOBuh98=/1024x338/filters:quality(100)/hotmart/checkout_custom/2b1a1971-e4c1-455e-b3a6-11c757c31277/pmojd9f69.png'
 
-export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, onCheckoutSuccess, DEBUG }) {
+export default function FimBelowFold({
+    isOfferVisible,
+    displayedHeaderPct = 0,
+    onCheckoutSuccess,
+    DEBUG,
+    giftThemeActive = false,
+    discountThemeActive = false,
+    showDiscountModal = false,
+    checkoutResumeMode = null,
+    onCheckoutOpen,
+    onCheckoutResumeHandled,
+    onDiscountActivated
+}) {
     const { t } = useTranslation()
     const location = useLocation()
     const navigate = useNavigate()
@@ -32,18 +44,27 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
             return false
         } catch { return true }
     })()
+    const isDeRoute = (() => {
+        try {
+            const p = String(window.location.pathname || '')
+            if (p.includes('/de/') || p.endsWith('/de') || p === '/de') return true
+            return false
+        } catch { return false }
+    })()
     const [showComparisonCard, setShowComparisonCard] = useState(false)
 
     // 🎬 Pré-carrega o vídeo com delay moderado após a montagem em background
     const [offerVideoSrc, setOfferVideoSrc] = useState(null)
     useEffect(() => {
+        if (isDeRoute) return;
+
         const timer = setTimeout(() => {
             if (!offerVideoSrc) {
                 setOfferVideoSrc('https://fundaris.space/mokup-video/app.webm')
             }
         }, 15000); // 15s após entrar na tela (não pesa no load inicial, e ainda dá tempo)
         return () => clearTimeout(timer);
-    }, [offerVideoSrc])
+    }, [offerVideoSrc, isDeRoute])
 
     // 🔥 Estratégia de Performance: Pre-load do Checkout Hotmart
     useEffect(() => {
@@ -150,6 +171,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
         const leadIdShort = leadId ? makeLeadIdShort(leadId) : ''
         const paymentMethod = methodId ? normalizeHotmartPaymentMethod(methodId) : undefined
         const step = buildRouteStep('/fim', QUIZ_PROGRESS_STEPS.fim, 'Página de Oferta')
+        const checkoutValue = discountThemeActive ? 33 : 37
 
         if (leadIdShort) {
             try { leadCache.setLeadIdShort(leadIdShort) } catch { }
@@ -158,24 +180,26 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
         try {
             await tracker.checkoutStart(
                 step,
-                { value: 37, currency: 'EUR' },
+                { value: checkoutValue, currency: 'EUR' },
                 {
                     checkout_origin: origin || 'fim',
                     payment_method: paymentMethod || undefined,
                     email_present: Boolean(email),
-                    ...(leadIdShort ? { lead_id_short: leadIdShort } : {})
+                    ...(leadIdShort ? { lead_id_short: leadIdShort } : {}),
+                    discount_active: discountThemeActive,
+                    gift_active: giftThemeActive
                 }
             )
         } catch (error) {
             console.error('[FIM] Erro ao enviar checkout_start', { message: error?.message })
         }
-        
-        return { leadIdShort, email, paymentMethod }
+
+        return { leadIdShort, email, paymentMethod, checkoutValue }
     }
 
     const redirectToMainCheckout = async (methodId) => {
         const { leadIdShort, email, paymentMethod } = await handleCheckoutTracking(methodId, checkoutOriginRef.current)
-        
+
         // Anti-Race Condition Buffer: Garante que a promessa de tracking tenha
         // 80ms de processamento dentro do event loop antes da pagina ser destruida
         await new Promise(resolve => setTimeout(resolve, 80))
@@ -190,6 +214,66 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
         window.location.href = checkoutUrl
     }
 
+    const handleCheckoutClose = useCallback(() => {
+        if (DEBUG) {
+            console.log('[CHECKOUT] Closing Stripe checkout modal', {
+                route: window.location.pathname,
+                discountThemeActive,
+                showDiscountModal
+            });
+        }
+        setShowStripeCheckout(false);
+        if (!isPtRoute && !discountThemeActive && onDiscountActivated) {
+            const targetTime = Date.now() + (300 * 1000);
+            onDiscountActivated(targetTime);
+            sessionStorage.setItem('discount_timer_end', targetTime.toString());
+        }
+    }, [DEBUG, isPtRoute, discountThemeActive, onDiscountActivated, showDiscountModal]);
+
+    const handleCheckoutIdle = useCallback(() => {
+        if (DEBUG) {
+            console.warn('[RETENTION] Checkout idle detected; preparing discount modal takeover', {
+                route: window.location.pathname,
+                discountThemeActive,
+                showDiscountModal
+            });
+        }
+        if (!isPtRoute && !discountThemeActive && onDiscountActivated) {
+            const targetTime = Date.now() + (300 * 1000);
+            setShowStripeCheckout(false);
+            onDiscountActivated(targetTime);
+            return;
+        }
+        setShowStripeCheckout(false);
+    }, [DEBUG, isPtRoute, discountThemeActive, onDiscountActivated, showDiscountModal]);
+
+    const checkoutEmail = useMemo(() => {
+        try {
+            return leadCache.getAll()?.email || '';
+        } catch {
+            return '';
+        }
+    }, []);
+
+    const checkoutMetadata = useMemo(() => ({
+        origin: checkoutOriginRef.current || 'fim',
+        product_name: t('checkout_modal.product_name', 'Personalisierter Plan'),
+        discount_active: discountThemeActive,
+        gift_active: giftThemeActive
+    }), [discountThemeActive, giftThemeActive, t]);
+
+    useEffect(() => {
+        if (checkoutResumeMode !== 'discount') return
+        if (DEBUG) {
+            console.log('[RETENTION] Reopening checkout in discount mode', {
+                route: window.location.pathname,
+                discountThemeActive
+            })
+        }
+        setShowStripeCheckout(true)
+        onCheckoutResumeHandled && onCheckoutResumeHandled()
+    }, [DEBUG, checkoutResumeMode, discountThemeActive, onCheckoutResumeHandled])
+
     return (
         <>
             <section
@@ -201,29 +285,37 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                     <React.Suspense fallback={null}><ComparisonCard /></React.Suspense>
                 )}
 
-                {/* 🎬 Vídeo de Oferta — carregado apenas após o container ser revelado */}
-                <div className={styles.offerVideoWrap}>
-                    {offerVideoSrc ? (
-                        <video
-                            className={styles.offerVideo}
-                            src={offerVideoSrc}
-                            playsInline
-                            autoPlay
-                            muted
-                            loop
-                            preload="auto"
-                            aria-label="Apresentação do produto"
-                        />
-                    ) : (
-                        <div className={styles.offerVideoPlaceholder} aria-hidden="true" />
-                    )}
-                </div>
+                {/* 🎬 Vídeo de Oferta — removido COMPLETAMENTE do DOM em /de */}
+                {!isDeRoute && (
+                    <div className={styles.offerVideoWrap}>
+                        {offerVideoSrc ? (
+                            <video
+                                className={styles.offerVideo}
+                                src={offerVideoSrc}
+                                playsInline
+                                autoPlay
+                                muted
+                                loop
+                                preload="auto"
+                                aria-label="Apresentação do produto"
+                            />
+                        ) : (
+                            <div className={styles.offerVideoPlaceholder} aria-hidden="true" />
+                        )}
+                    </div>
+                )}
 
                 <div id="plan-receipt-anchor" className={styles.anchorReceipt} aria-label="Resumo de valores">
                     <div className={styles.receiptHeader}>
                         <span className={styles.receiptTitle}>{t('fim.receipt.summary')}</span>
                     </div>
                     <div className={styles.receiptBody}>
+                        {giftThemeActive && (
+                            <div className={styles.summaryRowGift}>
+                                <span>🎁 {t('fim_gift.title')}</span>
+                                <span className={styles.giftPriceFree}>{t('surprise_modal.phase4.card_access_value')}</span>
+                            </div>
+                        )}
                         <div className={styles.receiptRow}>
                             <span>{t('fim.offer.items.geniality.title')}</span>
                             <span>97€</span>
@@ -257,6 +349,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                             checkoutOriginRef.current = 'fim_discount_direct'
                             setDiscountSheetVariant('standard')
                             setShowDiscountSheet(true)
+                            if (onCheckoutOpen) onCheckoutOpen()
                         }}
                         onKeyDown={(e) => {
                             if (e.key === 'Enter' || e.key === ' ') {
@@ -266,7 +359,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                         }}
                     >
                         <span className={styles.finalPrice}>{t('fim.receipt.today')}</span>
-                        <span className={styles.finalPrice}>€37,00</span>
+                        <span className={styles.finalPrice}>€{discountThemeActive ? '33,00' : '37,00'}</span>
                     </div>
                 </div>
 
@@ -280,60 +373,69 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
 
                 <h2 className={styles.offerTitle}>{t('fim.offer.title')}</h2>
                 <div className={styles.offerGrid}>
-                    {[
-                        {
-                            title: t('fim.offer.items.geniality.title'),
-                            teaser: t('fim.offer.items.geniality.teaser'),
-                            price: t('fim.offer.items.geniality.price'),
-                            description: t('fim.offer.items.geniality.desc'),
-                        },
-                        {
-                            title: t('fim.offer.items.decoder.title'),
-                            teaser: t('fim.offer.items.decoder.teaser'),
-                            price: t('fim.offer.items.decoder.price'),
-                            description: t('fim.offer.items.decoder.desc'),
-                        },
-                        {
-                            title: t('fim.offer.items.regeneration.title'),
-                            teaser: t('fim.offer.items.regeneration.teaser'),
-                            price: t('fim.offer.items.regeneration.price'),
-                            description: t('fim.offer.items.regeneration.desc'),
-                        },
-                        {
-                            title: t('fim.offer.items.shield.title'),
-                            teaser: t('fim.offer.items.shield.teaser'),
-                            price: t('fim.offer.items.shield.price'),
-                            description: t('fim.offer.items.shield.desc'),
-                        },
-                        {
-                            title: t('fim.offer.items.guide.title'),
-                            teaser: t('fim.offer.items.guide.teaser'),
-                            price: t('fim.offer.items.guide.price'),
-                            description: t('fim.offer.items.guide.desc'),
-                        },
-                    ].map((item, idx) => (
-                        <div key={item.title} className={styles.offerItem}>
-                            <div className={styles.offerHeader}>
-                                <div className={styles.offerTitleRow}>
-                                    <span className={styles.offerIndex}>{idx + 1}.</span>
-                                    <span className={styles.offerName}>{item.title}</span>
-                                </div>
-                                <span className={styles.offerPrice}>{item.price}</span>
-                            </div>
-                            <p className={styles.offerTeaser}>{item.teaser}</p>
-                            <button
-                                type="button"
-                                className={styles.offerMore}
-                                onClick={() => setExpandedIndex((prev) => (prev === idx ? -1 : idx))}
-                                aria-expanded={expandedIndex === idx}
+                    {(() => {
+                        const items = [
+                            {
+                                title: t('fim.offer.items.geniality.title'),
+                                teaser: t('fim.offer.items.geniality.teaser'),
+                                price: t('fim.offer.items.geniality.price'),
+                                description: t('fim.offer.items.geniality.desc'),
+                            },
+                            {
+                                title: t('fim.offer.items.decoder.title'),
+                                teaser: t('fim.offer.items.decoder.teaser'),
+                                price: t('fim.offer.items.decoder.price'),
+                                description: t('fim.offer.items.decoder.desc'),
+                            },
+                            {
+                                title: t('fim.offer.items.regeneration.title'),
+                                teaser: t('fim.offer.items.regeneration.teaser'),
+                                price: t('fim.offer.items.regeneration.price'),
+                                description: t('fim.offer.items.regeneration.desc'),
+                            },
+                            {
+                                title: t('fim.offer.items.shield.title'),
+                                teaser: t('fim.offer.items.shield.teaser'),
+                                price: t('fim.offer.items.shield.price'),
+                                description: t('fim.offer.items.shield.desc'),
+                            },
+                            {
+                                title: t('fim.offer.items.guide.title'),
+                                teaser: t('fim.offer.items.guide.teaser'),
+                                price: t('fim.offer.items.guide.price'),
+                                description: t('fim.offer.items.guide.desc'),
+                            },
+                        ];
+
+                        return items.map((item, idx) => (
+                            <div
+                                key={item.title}
+                                className={styles.offerItem}
                             >
-                                {expandedIndex === idx ? t('fim.offer.view_less') : t('fim.offer.view_more')}
-                            </button>
-                            {expandedIndex === idx && (
-                                <p className={styles.offerDescription}>{item.description}</p>
-                            )}
-                        </div>
-                    ))}
+                                <div className={styles.offerHeader}>
+                                    <div className={styles.offerTitleRow}>
+                                        <span className={styles.offerIndex}>{idx + 1}.</span>
+                                        <span className={styles.offerName}>{item.title}</span>
+                                    </div>
+                                    <span className={styles.offerPrice}>
+                                        {item.price}
+                                    </span>
+                                </div>
+                                <p className={styles.offerTeaser}>{item.teaser}</p>
+                                <button
+                                    type="button"
+                                    className={styles.offerMore}
+                                    onClick={() => setExpandedIndex((prev) => (prev === idx ? -1 : idx))}
+                                    aria-expanded={expandedIndex === idx}
+                                >
+                                    {expandedIndex === idx ? t('fim.offer.view_less') : t('fim.offer.view_more')}
+                                </button>
+                                {expandedIndex === idx && (
+                                    <p className={styles.offerDescription}>{item.description}</p>
+                                )}
+                            </div>
+                        ));
+                    })()}
                 </div>
 
                 <div className={styles.testimonialsSection}>
@@ -443,7 +545,7 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
                         }}
                     >
                         <span className={styles.finalPrice}>{t('fim.receipt.today')}</span>
-                        <span className={styles.finalPrice}>€37,00</span>
+                        <span className={styles.finalPrice}>€{discountThemeActive ? '33,00' : '37,00'}</span>
                     </div>
                 </div>
 
@@ -514,21 +616,22 @@ export default function FimBelowFold({ isOfferVisible, displayedHeaderPct = 0, o
             </React.Suspense>
 
             <React.Suspense fallback={null}>
-                {showStripeCheckout && (
+                {showStripeCheckout && !showDiscountModal && (
                     <CheckoutModal
-                        onClose={() => setShowStripeCheckout(false)}
+                        key={`stripe-checkout:${discountThemeActive ? 'discount' : 'standard'}:${discountThemeActive ? 3300 : 3700}`}
+                        onClose={handleCheckoutClose}
+                        onIdle={handleCheckoutIdle}
                         onSuccess={(data) => {
                             console.log('[FIM] De checkout sucess:', data)
                             setShowStripeCheckout(false)
                             navigate('/de/audio-upsell')
                         }}
-                        amount_cents={3700}
+                        amount_cents={discountThemeActive ? 3300 : 3700}
                         currency="eur"
-                        email={(() => { try { return leadCache.getAll()?.email || '' } catch { return '' } })()}
-                        metadata={{
-                            origin: checkoutOriginRef.current || 'fim',
-                            product_name: t('checkout_modal.product_name', 'Personalisierter Plan')
-                        }}
+                        email={checkoutEmail}
+                        metadata={checkoutMetadata}
+                        giftThemeActive={giftThemeActive}
+                        discountThemeActive={discountThemeActive}
                     />
                 )}
             </React.Suspense>

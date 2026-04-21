@@ -29,7 +29,7 @@ function formatCurrency(amountCents, currency) {
 function normalizeAmountCents(amountCents, currency) {
   const raw = Number(amountCents || 0)
   const cur = String(currency || '').toLowerCase()
-  const allowed = cur === 'brl' ? [100, 990, 1470, 1980] : cur === 'eur' ? [3700, 2400, 4700] : []
+  const allowed = cur === 'brl' ? [100, 990, 1470, 1980] : cur === 'eur' ? [3700, 3300, 2400, 4700] : []
   if (!Number.isFinite(raw)) return 0
   if (allowed.length) {
     if (allowed.includes(raw)) return raw
@@ -39,7 +39,20 @@ function normalizeAmountCents(amountCents, currency) {
   return raw
 }
 
-function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, metadata, onSuccess, setClientSecret, setPaymentIntentDiag }) {
+function InnerCheckout({
+  clientSecret,
+  onClose,
+  amount_cents,
+  currency,
+  email,
+  metadata,
+  onSuccess,
+  setClientSecret,
+  setPaymentIntentDiag,
+  onIdle,
+  giftThemeActive,
+  discountThemeActive
+}) {
   const { t, i18n } = useTranslation()
   const stripe = useStripe()
   const elements = useElements()
@@ -47,6 +60,12 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
   const [errorMsg, setErrorMsg] = useState('')
   const [loading, setLoading] = useState(false)
   const [paypalReady, setPaypalReady] = useState(false)
+  const [paypalActive, setPaypalActive] = useState(false)
+  const paypalActiveRef = useRef(false)
+  
+  useEffect(() => {
+    paypalActiveRef.current = paypalActive
+  }, [paypalActive])
   const [cardholderName, setCardholderName] = useState('')
   const [cardholderTouched, setCardholderTouched] = useState(false)
   const [contactEmail, setContactEmail] = useState(String(email || ''))
@@ -78,6 +97,7 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
   const paypalOrderIdRef = useRef('')
   const paypalCreatePromiseRef = useRef(null)
   const paypalCapturePromiseRef = useRef(null)
+  const lastIntentConfigRef = useRef({ amount_cents: null, currency: null })
   const isAudioUpsell = String(metadata?.variant || '').toLowerCase() === 'audio_upsell'
   const productName = String(metadata?.product_name || (isAudioUpsell ? t('checkout_modal.product_name', 'Personalisierter Plan 2.0') : t('checkout_modal.product_name_default', 'Personalisierter Plan'))).trim()
   const contentId = isAudioUpsell ? 'audio_upsell' : 'plan_personalizado'
@@ -104,15 +124,96 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
     } catch { }
   }, [contactEmail, contactPhone])
 
+  const onCloseRef = useRef(onClose);
+  const onIdleRef = useRef(onIdle);
+  const idleDebugEnabled = (import.meta.env && import.meta.env.DEV)
+    || (typeof window !== 'undefined' && /(?:\?|&)idle_debug=1(?:&|$)/.test(String(window.location?.search || '')))
+
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    onIdleRef.current = onIdle;
+  }, [onIdle]);
+
+  // ── Retention: 15s Idle Detection (Desktop + Mobile Touch) ──
+  useEffect(() => {
+    const isPtRoute = window.location.pathname.includes('/pt/') || window.location.pathname.endsWith('/pt') || window.location.pathname === '/pt';
+
+    // Só em rotas alemãs e se o desconto não estiver ativo
+    if (isPtRoute || discountThemeActive) {
+      if (idleDebugEnabled) {
+        console.log('[IDLE] Disabled for this route/theme active state', {
+          isPtRoute,
+          discountThemeActive
+        });
+      }
+      return;
+    }
+
+    let idleTimer;
+    const IDLE_THRESHOLD = 15000; // 15 segundos
+
+    const resetIdleTimer = (event) => {
+      if (idleTimer) {
+        clearTimeout(idleTimer);
+      }
+      if (idleDebugEnabled) {
+        console.log('[IDLE] Timer reset', {
+          eventType: event?.type || 'initial',
+          path: window.location.pathname
+        });
+      }
+      idleTimer = setTimeout(() => {
+        if (paypalActiveRef.current) {
+          if (idleDebugEnabled) {
+            console.log('[IDLE] Ignored. PayPal checkout is currently active.');
+          }
+          return;
+        }
+        if (idleDebugEnabled) {
+          console.warn('[IDLE] Threshold reached. Requesting retention takeover.', {
+            path: window.location.pathname,
+            thresholdMs: IDLE_THRESHOLD
+          });
+        }
+        if (onIdleRef.current) {
+          onIdleRef.current();
+        } else {
+          onCloseRef.current && onCloseRef.current();
+        }
+      }, IDLE_THRESHOLD);
+    };
+
+    // Listen globally for ANY interaction
+    const events = ['mousedown', 'mousemove', 'keydown', 'touchstart', 'scroll', 'click'];
+    events.forEach(evt => window.addEventListener(evt, resetIdleTimer, { passive: true }));
+
+    if (idleDebugEnabled) {
+      console.log('[IDLE] System started (15s)', {
+        path: window.location.pathname,
+        thresholdMs: IDLE_THRESHOLD
+      });
+    }
+    resetIdleTimer();
+
+    return () => {
+      if (idleDebugEnabled) {
+        console.log('[IDLE] System paused');
+      }
+      if (idleTimer) clearTimeout(idleTimer);
+      events.forEach(evt => window.removeEventListener(evt, resetIdleTimer));
+    };
+  }, [discountThemeActive, idleDebugEnabled]); // 🟢 Removido onClose do dep array (estabilizado via useRef)
 
   async function ensureClientSecret(normalizedEmail) {
-    let secret = String(clientSecret || '').trim()
-    if (secret) return secret
     const initOperacao = 'payment_element.init'
     const allowedBRL = [100, 990, 1470, 1980]
-    const allowedEUR = [3700, 2400, 4700]
+    const allowedEUR = [2400, 3300, 3700, 4700]
     const cur = String(currency || '').toLowerCase() || 'brl'
     let amt = Number(amount_cents || 0)
+    const existingSecret = String(clientSecret || '').trim()
     if (cur === 'brl' && !allowedBRL.includes(amt)) {
       const scaled = Math.round(amt * 100)
       amt = allowedBRL.includes(scaled) ? scaled : 100
@@ -120,14 +221,22 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
       const scaled = Math.round(amt * 100)
       amt = allowedEUR.includes(scaled) ? scaled : allowedEUR[0]
     }
+    const matchesCachedIntent = !!existingSecret
+      && lastIntentConfigRef.current.amount_cents === amt
+      && lastIntentConfigRef.current.currency === cur
+    if (matchesCachedIntent) return existingSecret
     const initDadosEntrada = { amount_cents: amt, currency: cur, email: normalizedEmail }
     try {
       console.log(`[CHECKOUT] Iniciando operação: ${initOperacao}`, { dados_entrada: initDadosEntrada })
       const cachedLeadId = typeof window !== 'undefined' ? (window.localStorage.getItem('lead_id') || leadCache.getAll()?.lead_id) : '';
       const combinedMetadata = { ...(metadata || {}), lead_id: cachedLeadId };
       const data = await createPaymentIntent({ amount_cents: amt, currency: cur, email: normalizedEmail, metadata: combinedMetadata })
-      secret = String(data?.client_secret || '')
+      const secret = String(data?.client_secret || '')
       setClientSecret(secret)
+      lastIntentConfigRef.current = {
+        amount_cents: amt,
+        currency: cur
+      }
       setPaymentIntentDiag({
         livemode: data?.livemode,
         payment_method_types: data?.payment_method_types,
@@ -139,6 +248,7 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
         id_resultado: data?.id,
         timestamp: new Date().toISOString(),
       })
+      return secret
     } catch (error) {
       console.error(`[CHECKOUT] Erro na operação: ${error.message}`, {
         dados_entrada: initDadosEntrada,
@@ -161,7 +271,6 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
       }
       return ''
     }
-    return secret
   }
 
   async function handleStripeSuccess(paymentIntent, emailToSend, phoneToSend) {
@@ -190,6 +299,23 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
     } catch { }
     try { leadCache.setEmail(String(emailResolved || '').trim()) } catch { }
     try { onClose && onClose() } catch { }
+  }
+
+  async function dispatchPayPalFinalize(payload) {
+    try {
+      const result = await finalizePayPalEmail(payload)
+      if (!result?.success) {
+        throw new Error(result?.error || 'Falha ao finalizar compra PayPal')
+      }
+      return result
+    } catch (error) {
+      const message = error?.message || 'Falha ao finalizar compra PayPal'
+      console.error('[CHECKOUT] Erro ao disparar finalize-email do PayPal', {
+        message,
+        orderID: payload?.orderID,
+      })
+      throw new Error(message)
+    }
   }
 
   async function onConfirm() {
@@ -431,6 +557,10 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
       paypal.Buttons({
         fundingSource: paypal.FUNDING.PAYPAL,
         style: { layout: isNarrowViewport ? 'vertical' : 'horizontal', color: 'gold', shape: 'rect', label: 'buynow' },
+        onClick: (data, actions) => {
+          setPaypalActive(true);
+          return actions.resolve ? actions.resolve() : undefined;
+        },
         createOrder: async (dataArg, actions) => {
           if (paypalOrderIdRef.current) return paypalOrderIdRef.current
           if (paypalCreatePromiseRef.current) return await paypalCreatePromiseRef.current
@@ -467,6 +597,7 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
           })
         },
         onApprove: async (data, actions) => {
+          setPaypalActive(false);
           if (paypalCapturePromiseRef.current) return await paypalCapturePromiseRef.current
           const runCapture = async () => {
             try {
@@ -507,6 +638,16 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
                 setErrorMsg('Pedido PayPal inválido. Recarregue a página.')
                 return
               }
+              const finalizePayload = {
+                orderID,
+                email: emailResolved,
+                phone: phonePayload || undefined,
+                client_uuid: clientUuid,
+                event_source_url: eventSourceUrl,
+                fbp,
+                fbc,
+              }
+              await dispatchPayPalFinalize(finalizePayload)
 
               try {
                 const tracker = createFunnelTracker({
@@ -532,7 +673,11 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
           })
           return await paypalCapturePromiseRef.current
         },
+        onCancel: (data) => {
+          setPaypalActive(false);
+        },
         onError: (err) => {
+          setPaypalActive(false);
           if (String(err?.name || '') === 'RATE_LIMIT_REACHED') {
             setPaypalRateLimited(true)
           }
@@ -576,8 +721,13 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
       fbp: paypalFinalizeContext?.fbp,
       fbc: paypalFinalizeContext?.fbc,
     }
-
-    // We do not call finalize here, we let Fim.jsx do it.
+    try {
+      await dispatchPayPalFinalize(payload)
+    } catch (error) {
+      setPaypalFinalizeLoading(false)
+      setPaypalFinalizeError(error?.message || 'Falha ao finalizar compra PayPal')
+      return
+    }
 
     setPaypalFinalizeLoading(false)
     setShowPaypalEmailModal(false)
@@ -851,7 +1001,17 @@ function InnerCheckout({ clientSecret, onClose, amount_cents, currency, email, m
   )
 }
 
-export default function CheckoutModal({ amount_cents, currency = 'eur', email, metadata, onClose, onSuccess }) {
+export default function CheckoutModal({
+  amount_cents,
+  currency = 'eur',
+  email,
+  metadata,
+  onClose,
+  onSuccess,
+  onIdle,
+  giftThemeActive = false,
+  discountThemeActive = false
+}) {
   const { t } = useTranslation()
   const location = useLocation()
   const isFimRoute = location?.pathname === '/fim'
@@ -859,6 +1019,11 @@ export default function CheckoutModal({ amount_cents, currency = 'eur', email, m
   const [paymentIntentDiag, setPaymentIntentDiag] = useState(null)
   const isAudioUpsell = String(metadata?.variant || '').toLowerCase() === 'audio_upsell'
   const normalizedAmountCents = useMemo(() => normalizeAmountCents(amount_cents, currency), [amount_cents, currency])
+
+  React.useEffect(() => {
+    setClientSecret('')
+    setPaymentIntentDiag(null)
+  }, [normalizedAmountCents, currency])
 
   React.useEffect(() => {
     const v = Number(normalizedAmountCents || 0) / 100
@@ -975,6 +1140,20 @@ export default function CheckoutModal({ amount_cents, currency = 'eur', email, m
         </div>
 
         <div className={`${styles.summaryCard} ${isAudioUpsell ? styles.electricEdge : ''}`}>
+          {(giftThemeActive || discountThemeActive) && (
+            <div className={styles.retentionBadgesRow}>
+              {giftThemeActive && (
+                <div className={styles.giftBadgeCheckout}>
+                  {t('checkout_modal_badges.gift_badge')}
+                </div>
+              )}
+              {discountThemeActive && (
+                <div className={styles.discountBadgeCheckout}>
+                  {t('checkout_modal_badges.discount_badge')}
+                </div>
+              )}
+            </div>
+          )}
           <div className={styles.summaryRowFirst}>
             <p className={styles.planLabel}>{productName}</p>
             {isFimRoute && <p className={styles.oldPrice}>330€</p>}
@@ -1004,7 +1183,20 @@ export default function CheckoutModal({ amount_cents, currency = 'eur', email, m
             </>
           )}
           <Elements stripe={stripePromise} options={options}>
-            <InnerCheckout clientSecret={clientSecret} onClose={onClose} amount_cents={normalizedAmountCents} currency={currency} email={email} metadata={metadata} onSuccess={onSuccess} setClientSecret={setClientSecret} setPaymentIntentDiag={setPaymentIntentDiag} />
+            <InnerCheckout
+              clientSecret={clientSecret}
+              onClose={onClose}
+              amount_cents={normalizedAmountCents}
+              currency={currency}
+              email={email}
+              metadata={metadata}
+              onSuccess={onSuccess}
+              setClientSecret={setClientSecret}
+              setPaymentIntentDiag={setPaymentIntentDiag}
+              onIdle={onIdle}
+              giftThemeActive={giftThemeActive}
+              discountThemeActive={discountThemeActive}
+            />
           </Elements>
           {debugEnabled && (
             <div className={styles.stripeDebug}>

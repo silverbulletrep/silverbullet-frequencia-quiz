@@ -6,7 +6,6 @@ import StandardDiscountContent from './StandardDiscountContent'
 export default function DiscountBottomSheet({ open, onClose, onContinue, variant = 'standard', spotsLeft = 27 }) {
   const operacao = 'bottom_sheet.open'
   const dados_entrada = { open }
-  try { console.log(`[FIM] Iniciando operação: ${operacao}`, { dados_entrada }) } catch { }
   const sheetRef = useRef(null)
   const [closing, setClosing] = useState(false)
   useEffect(() => {

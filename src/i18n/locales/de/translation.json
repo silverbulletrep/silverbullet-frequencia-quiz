@@ -2146,5 +2146,71 @@
       "placeholder": "Nachricht",
       "online": "online"
     }
+  },
+  "surprise_modal": {
+    "headline": "Herzlichen Glückwunsch!",
+    "subheadline": "Sie wurden ausgewählt, ein limitiertes Geschenk zu erhalten!",
+    "phase1": {
+      "subhead": "Wenn diese Nachricht bei Ihnen erschienen ist, bedeutet das, dass wir nach der Analyse Ihres energetischen Profils Sie für ein Überraschungsgeschenk ausgewählt haben.",
+      "card_age": "Alter",
+      "card_gender": "Geschlecht",
+      "card_goal": "Ziel",
+      "gender_map": {
+        "mulher": "Weiblich",
+        "homem": "Männlich",
+        "outro": "Divers"
+      },
+      "goal_map": {
+        "abundance": "Reichtum",
+        "attract": "Beziehung",
+        "healing": "Gesundheit",
+        "energy": "Mentale Gesundheit",
+        "other": "Transformation"
+      }
+    },
+    "phase2": {
+      "subhead": "Es kann Ihre Ergebnisse um bis zu 7 Mal steigern. Aufgrund seines Wertes werden nur die nächsten {{slots}} Personen, die auf den personalisierten Plan zugreifen, es erhalten.",
+      "badge_participants": "Teilnehmer: {{count}}",
+      "chart_label_normal": "Normal",
+      "chart_label_gift": "Mit Geschenk",
+      "chart_x_label": "Zeit (Tage)",
+      "chart_y_label": "Vibration (Hz)"
+    },
+    "phase3": {
+      "subhead": "Um Ihr exklusives Geschenk zu erhalten:",
+      "step1": "Auf den <strong>grünen Button</strong> klicken",
+      "step2": "Zahlungsdaten bestätigen und Zugang per E-Mail erhalten",
+      "step3": "Transformationsreise beginnen und Träume verwirklichen!"
+    },
+    "phase4": {
+      "subhead": "Starten Sie Ihre Transformationsreise und erhalten Sie ein besonderes Geschenk!",
+      "card_participants": "Gesamtteilnehmer",
+      "card_slots": "Plätze für Geschenk",
+      "card_access": "Zugang",
+      "card_access_value": "Sofort",
+      "cta_primary": "MEINEN PLAN ZUGREIFEN & GESCHENK ERHALTEN",
+      "cta_secondary": "Ich habe eine Frage"
+    }
+  },
+  "discount_modal": {
+    "headline": "Achtung! Ihr Rabatt ist Aktiviert!",
+    "subhead": "10% OFF auf den gesamten Vibrationsplan",
+    "timer_label": "aktiv für",
+    "timer_expired": "Abgelaufen",
+    "cta": "Rabatt Aktivieren!",
+    "minutes": "Minuten"
+  },
+  "checkout_modal_badges": {
+    "gift_badge": "🎁 Überraschungsgeschenk inklusive",
+    "discount_badge": "10% RABATT aktiv"
+  },
+  "fim_gift": {
+    "title": "Überraschungsgeschenk",
+    "teaser": "Ein exklusives Geschenk, das Ihre Ergebnisse um das 7-fache steigern kann.",
+    "desc": "Ein personalisierter Frequenz-Booster, speziell für Ihr energetisches Profil kalibriert."
+  },
+  "johann_chat_gift": {
+    "gift_opening_1": "Ich habe bemerkt, dass Sie das Überraschungsgeschenk erhalten haben! 🎁",
+    "gift_opening_2": "Kann ich Ihnen bei Ihren Fragen helfen, ja oder nein?"
   }
 }

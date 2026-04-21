@@ -683,3 +683,34 @@
 :global(.esconder) {
     display: none;
 }
+
+/* ── Retention Modal Mutações ── */
+.summaryRowGift {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    border-radius: 10px;
+    margin-bottom: 12px;
+    animation: giftAppear 0.5s ease-out;
+
+    span:first-child {
+        color: #3b82f6;
+        font-weight: 700;
+        font-size: 14px;
+    }
+
+    .giftPriceFree {
+        color: #3b82f6 !important;
+        font-weight: 900 !important;
+        text-transform: uppercase;
+        font-size: 13px;
+    }
+}
+
+@keyframes giftAppear {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

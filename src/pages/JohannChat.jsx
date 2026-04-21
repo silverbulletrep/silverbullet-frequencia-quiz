@@ -181,7 +181,7 @@ const JohannChat = () => {
         const searchParams = new URLSearchParams(location.search);
         let from = searchParams.get('from') || '/quiz';
         // Normalizar
-        from = from.replace(/^\/main/, '').replace(/^\/pt/, '') || '/quiz';
+        from = from.replace(/^\/main/, '').replace(/^\/(pt|de)/, '') || '/quiz';
         chatDataRef.current.checkpointId = from;
 
         // 2. Carregar dados do lead do localStorage

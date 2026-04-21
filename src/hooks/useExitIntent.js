@@ -6,7 +6,10 @@ const CHECKPOINT_KEY = 'ei_checkpoint';
 const EXCLUDED_PATHS = new Set([
     '/chat-whatsapp',
     '/pt/chat-whatsapp',
-    '/main/chat-whatsapp'
+    '/de/chat-whatsapp',
+    '/main/chat-whatsapp',
+    '/main/pt/chat-whatsapp',
+    '/main/de/chat-whatsapp'
 ]);
 
 /**
@@ -20,7 +23,7 @@ export function ExitIntentGlobal() {
     const getTargetUrl = useCallback((fromPath) => {
         const path = window.location.pathname;
         const prefix = path.startsWith('/main') ? '/main' : '';
-        const langPrefix = (path.includes('/pt/') || path === '/pt') ? '/pt' : '';
+        const langPrefix = (path.includes('/de/') || path === '/de') ? '/de' : (path.includes('/pt/') || path === '/pt') ? '/pt' : '';
         const checkpoint = fromPath || sessionStorage.getItem(CHECKPOINT_KEY) || '/quiz';
 
         return `${prefix}${langPrefix}/chat-whatsapp?from=${encodeURIComponent(checkpoint)}`;
@@ -58,7 +61,7 @@ export function ExitIntentGlobal() {
 
     // --- 1. Lógica de Back-Trap (Mobile & Navegador) ---
     useEffect(() => {
-        const cleanPath = location.pathname.replace(/^\/main/, '').replace(/^\/pt/, '') || '/';
+        const cleanPath = location.pathname.replace(/^\/main/, '').replace(/^\/(pt|de)/, '') || '/';
         if (EXCLUDED_PATHS.has(cleanPath)) return;
 
         const currentPath = location.pathname;
@@ -92,7 +95,7 @@ export function ExitIntentGlobal() {
         let lastHref = window.location.href;
 
         const handlePopState = (e) => {
-            const currentPath = window.location.pathname.replace(/^\/main/, '').replace(/^\/pt/, '') || '/';
+            const currentPath = window.location.pathname.replace(/^\/main/, '').replace(/^\/(pt|de)/, '') || '/';
             if (EXCLUDED_PATHS.has(currentPath)) return;
 
             if (window.location.href === lastHref) {
@@ -115,7 +118,7 @@ export function ExitIntentGlobal() {
 
     // --- 2. Lógica de Exit-Intent (PC - Mouse) ---
     useEffect(() => {
-        const cleanPath = location.pathname.replace(/^\/main/, '').replace(/^\/pt/, '') || '/';
+        const cleanPath = location.pathname.replace(/^\/main/, '').replace(/^\/(pt|de)/, '') || '/';
         if (EXCLUDED_PATHS.has(cleanPath)) return;
 
         const handleMouseLeave = (e) => {

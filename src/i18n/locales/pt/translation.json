@@ -2219,5 +2219,71 @@
       "placeholder": "Mensagem",
       "online": "online"
     }
+  },
+  "surprise_modal": {
+    "headline": "Parabéns!",
+    "subheadline": "Você foi selecionado para receber um presente limitado!",
+    "phase1": {
+      "subhead": "Se essa mensagem apareceu para você, significa que após analisarmos seu perfil energético, você foi selecionado para receber um presente surpresa.",
+      "card_age": "Idade",
+      "card_gender": "Sexo",
+      "card_goal": "Objetivo",
+      "gender_map": {
+        "mulher": "Feminino",
+        "homem": "Masculino",
+        "outro": "Outro"
+      },
+      "goal_map": {
+        "abundance": "Riqueza",
+        "attract": "Amor",
+        "healing": "Saúde",
+        "energy": "Saúde Mental",
+        "other": "Transformação"
+      }
+    },
+    "phase2": {
+      "subhead": "Ele é capaz de aumentar seus resultados em até 7 vezes. Por causa de seu valor apenas as próximas {{slots}} pessoas a acessar o plano personalizado irão recebê-lo.",
+      "badge_participants": "Participantes: {{count}}",
+      "chart_label_normal": "Normal",
+      "chart_label_gift": "Com Presente",
+      "chart_x_label": "Tempo (Dias)",
+      "chart_y_label": "Vibração (Hz)"
+    },
+    "phase3": {
+      "subhead": "Para receber seu presente exclusivo, basta:",
+      "step1": "Clicar no <strong>botão verde</strong>",
+      "step2": "Confirmar dados de pagamento e receber o acesso em seu e-mail",
+      "step3": "Iniciar jornada de transformação e conquistar os seus sonhos!"
+    },
+    "phase4": {
+      "subhead": "Inicie sua jornada de transformação e receba um presente especial!",
+      "card_participants": "Total de Participantes",
+      "card_slots": "Vagas para presente",
+      "card_access": "Acesso",
+      "card_access_value": "Imediato",
+      "cta_primary": "ACESSAR MEU PLANO E RECEBER PRESENTE",
+      "cta_secondary": "Tenho dúvida"
+    }
+  },
+  "discount_modal": {
+    "headline": "Atenção! Desconto Ativado!",
+    "subhead": "10% OFF em TODO plano vibracional",
+    "timer_label": "ativo por",
+    "timer_expired": "Expirado",
+    "cta": "Ativar Desconto!",
+    "minutes": "minutos"
+  },
+  "checkout_modal_badges": {
+    "gift_badge": "🎁 Presente Surpresa Incluso",
+    "discount_badge": "10% DESCONTO ativo"
+  },
+  "fim_gift": {
+    "title": "Presente Surpresa",
+    "teaser": "Um presente exclusivo que pode aumentar seus resultados em até 7 vezes.",
+    "desc": "Um impulsionador de frequência personalizado, calibrado para o seu perfil energético."
+  },
+  "johann_chat_gift": {
+    "gift_opening_1": "Vi que recebeste o presente surpresa! 🎁",
+    "gift_opening_2": "Posso ajudar-te com qualquer dúvida. O que gostarias de saber?"
   }
 }

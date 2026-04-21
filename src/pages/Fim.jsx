@@ -20,6 +20,8 @@ import expertImg from '../../img/expert.webp'
 import expertPtImg from '../../img/expert-pt.webp'
 import expertTeamImg from '../../img/Equipe-quantica.webp'
 import expertTeamDeImg from '../../img/equipe-de.webp'
+import SurpriseGiftModal from '../components/retention/SurpriseGiftModal'
+import DiscountModal from '../components/retention/DiscountModal'
 
 const CommentsSection = React.lazy(() => import('./CommentsSection'))
 const FimBelowFold = React.lazy(() => import('./FimBelowFold'))
@@ -59,7 +61,8 @@ export default function Fim() {
 
   // "3.5s Budget" Strategy removed - rendering immediately for CLS stability
 
-  const TARGET_MS_BAR = 867 * 1000 // Sincronizado: 14 minutos e 27 segundos
+  const TARGET_SECONDS = isPtRoute ? 872 : 865 // PT: 14:27 | DE: 14:20
+  const TARGET_MS_BAR = TARGET_SECONDS * 1000
   const [gatingComplete, setGatingComplete] = useState(false)
 
   const [headerPct, setHeaderPct] = useState(0)
@@ -69,6 +72,20 @@ export default function Fim() {
   const [showWaitModal, setShowWaitModal] = useState(false)
   const [hasShownWaitModal, setHasShownWaitModal] = useState(false)
   const [modalProgress, setModalProgress] = useState(0)
+
+  // Retention Modals States
+  const [giftThemeActive, setGiftThemeActive] = useState(false)
+  const [discountThemeActive, setDiscountThemeActive] = useState(false)
+  const [showSurpriseModal, setShowSurpriseModal] = useState(false)
+  const [showDiscountModal, setShowDiscountModal] = useState(false)
+  const [hasOpenedCheckout, setHasOpenedCheckout] = useState(false)
+  const [checkoutResumeMode, setCheckoutResumeMode] = useState(null)
+  const [discountTimerEnd, setDiscountTimerEnd] = useState(() => {
+    const saved = sessionStorage.getItem('discount_timer_end');
+    return saved ? parseInt(saved, 10) : null;
+  })
+  const [videoCurrentTime, setVideoCurrentTime] = useState(0)
+  const [headerTimerDisplay, setHeaderTimerHeader] = useState('')
 
   // Trigger deferred load removed
 
@@ -150,6 +167,7 @@ export default function Fim() {
             duration: payload.duration,
             source: 'postMessage'
           }
+          setVideoCurrentTime(payload.currentTime || 0)
         }
       } catch { }
     }
@@ -159,6 +177,62 @@ export default function Fim() {
       try { delete window.__fimVideoDebug } catch { }
     }
   }, [gatingComplete])
+
+  // Trigger Logic for SurpriseGiftModal (Modal 01) with VTurb Delegate
+  const [surpriseTargetMet, setSurpriseTargetMet] = useState(false);
+  const surpriseTimerRef = useRef(null);
+
+  useEffect(() => {
+    if (gatingComplete) {
+      // Just keep this old log for debug continuity without erroring if videoCurrentTime exists
+      console.log(`[GATING] Offer released. VideoTime: ${videoCurrentTime}s`);
+    }
+  }, [gatingComplete, videoCurrentTime]);
+
+  useEffect(() => {
+    if (surpriseTargetMet === true && !showSurpriseModal && !surpriseTimerRef.current) {
+      console.log(`[DEBUG] Surprise gift target met. Starting 20s delayed activation timer...`);
+      surpriseTimerRef.current = setTimeout(() => {
+        setSurpriseTargetMet('EVALUATE');
+      }, 20000);
+    }
+  }, [surpriseTargetMet, showSurpriseModal]);
+
+  useEffect(() => {
+    if (
+      surpriseTargetMet === 'EVALUATE' &&
+      !hasOpenedCheckout &&
+      !discountThemeActive &&
+      !showSurpriseModal &&
+      !giftThemeActive
+    ) {
+      console.warn('[RETENTION] !!! SURPRISE GIFT THRESHOLD REACHED !!!', {
+        hasOpenedCheckout,
+        discountActive: discountThemeActive
+      });
+      setShowSurpriseModal(true);
+      setSurpriseTargetMet('DONE');
+    }
+  }, [surpriseTargetMet, hasOpenedCheckout, discountThemeActive, showSurpriseModal, giftThemeActive]);
+
+  // Header Timer Update for Discount Theme
+  useEffect(() => {
+    if (!discountThemeActive || !discountTimerEnd) return;
+
+    const updateHeaderTimer = () => {
+      const now = Date.now();
+      const end = parseInt(discountTimerEnd, 10);
+      const remaining = Math.max(0, Math.floor((end - now) / 1000));
+
+      const mins = Math.floor(remaining / 60);
+      const secs = remaining % 60;
+      setHeaderTimerHeader(remaining > 0 ? `${mins}:${secs.toString().padStart(2, '0')}` : t('discount_modal.timer_expired'));
+    };
+
+    updateHeaderTimer();
+    const interval = setInterval(updateHeaderTimer, 1000);
+    return () => clearInterval(interval);
+  }, [discountThemeActive, discountTimerEnd, t]);
 
 
 
@@ -188,9 +262,11 @@ export default function Fim() {
   }, [])
 
   useEffect(() => {
-    const DELAY_SECONDS = 867 // Sincronizado com TARGET_MS_BAR (14:27) conforme pedido
+    const DELAY_SECONDS = isPtRoute ? 867 : 860 // Sincronizado com TARGET_MS_BAR
+    const SURPRISE_DELAY_SECONDS = isPtRoute ? 1023 : 1016 // Surprise Gift Trigger
     const cleanup = []
     const shownRef = { current: false }
+    const surpriseShownRef = { current: false }
     const ensureLink = (rel, href, attrs = {}) => {
       if (!href) return
       if (document.querySelector(`link[rel="${rel}"][href="${href}"]`)) return
@@ -216,12 +292,20 @@ export default function Fim() {
 
       const ensureHidden = () => {
         try {
-          if (shownRef.current) return
-          const els = document.querySelectorAll('.esconder')
-          els.forEach((el) => {
-            const cs = window.getComputedStyle(el)
-            if (cs && cs.display !== 'none') el.style.display = 'none'
-          })
+          if (!shownRef.current) {
+            const els = document.querySelectorAll('.esconder')
+            els.forEach((el) => {
+              const cs = window.getComputedStyle(el)
+              if (cs && cs.display !== 'none') el.style.display = 'none'
+            })
+          }
+          if (!surpriseShownRef.current) {
+            const sEls = document.querySelectorAll('.esconder-surprise-gift')
+            sEls.forEach((el) => {
+              const cs = window.getComputedStyle(el)
+              if (cs && cs.display !== 'none') el.style.display = 'none'
+            })
+          }
         } catch { }
       }
 
@@ -229,6 +313,8 @@ export default function Fim() {
         try {
           ensureHidden()
           smart.displayHiddenElements(DELAY_SECONDS, ['.esconder'], { persist: false })
+          console.log(`[DEBUG] VTurb API call: displayHiddenElements for surprise gift at ${SURPRISE_DELAY_SECONDS}s`);
+          smart.displayHiddenElements(SURPRISE_DELAY_SECONDS, ['.esconder-surprise-gift'], { persist: false })
         } catch { }
       }
 
@@ -259,19 +345,52 @@ export default function Fim() {
         cleanup.push(() => mo.disconnect())
       })
 
-      const checkInterval = window.setInterval(() => {
-        if (shownRef.current) return
-        try {
-          const targets = document.querySelectorAll('.esconder')
-          for (let i = 0; i < targets.length; i++) {
-            const cs = window.getComputedStyle(targets[i])
-            if (cs && cs.display !== 'none') {
-              shownRef.current = true
-              setGatingComplete(true)
-              break
-            }
+      const surpriseTargets = document.querySelectorAll('.esconder-surprise-gift')
+      surpriseTargets.forEach((el) => {
+        const mo = new MutationObserver(() => {
+          const target = document.querySelector('.esconder-surprise-gift') || el
+          const cs = target ? window.getComputedStyle(target) : null
+          if (!surpriseShownRef.current && cs && cs.display !== 'none') {
+            surpriseShownRef.current = true
+            console.log(`[DEBUG] VTurb MutationObserver triggered: .esconder-surprise-gift became visible.`);
+            setSurpriseTargetMet(true)
           }
-        } catch { }
+        })
+        mo.observe(el, { attributes: true, attributeFilter: ['style', 'class', 'hidden'] })
+        cleanup.push(() => mo.disconnect())
+      })
+
+      const checkInterval = window.setInterval(() => {
+        if (!shownRef.current) {
+          try {
+            const targets = document.querySelectorAll('.esconder')
+            for (let i = 0; i < targets.length; i++) {
+              const cs = window.getComputedStyle(targets[i])
+              if (cs && cs.display !== 'none') {
+                shownRef.current = true
+                setGatingComplete(true)
+                break
+              }
+            }
+          } catch { }
+        }
+        if (!surpriseShownRef.current) {
+          try {
+            const sTargets = document.querySelectorAll('.esconder-surprise-gift')
+            for (let i = 0; i < sTargets.length; i++) {
+              const cs = window.getComputedStyle(sTargets[i])
+              if (cs && cs.display !== 'none') {
+                surpriseShownRef.current = true
+                console.log(`[DEBUG] VTurb Interval check triggered: .esconder-surprise-gift became visible.`);
+                setSurpriseTargetMet(true)
+                break
+              }
+            }
+          } catch { }
+        }
+        if (shownRef.current && surpriseShownRef.current) {
+          window.clearInterval(checkInterval)
+        }
       }, 500)
       cleanup.push(() => window.clearInterval(checkInterval))
 
@@ -319,11 +438,11 @@ export default function Fim() {
       if (waitTarget) {
         observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
-             // Quando estiver perto da view (+300px), carrega o script e remove observer
-             if (entry.isIntersecting) {
-                loadPlayerScripts();
-                observer.disconnect();
-             }
+            // Quando estiver perto da view (+300px), carrega o script e remove observer
+            if (entry.isIntersecting) {
+              loadPlayerScripts();
+              observer.disconnect();
+            }
           });
         }, { rootMargin: '300px' });
         observer.observe(waitTarget);
@@ -455,27 +574,74 @@ export default function Fim() {
     return () => { try { clearTimeout(t) } catch { } };
   }, [showWaitModal]);
 
+  const handleCheckoutOpen = useCallback(() => setHasOpenedCheckout(true), []);
+
+  const handleDiscountActivated = useCallback((targetTime) => {
+    if (DEBUG) {
+      console.log('[RETENTION] Activating discount modal takeover', {
+        targetTime,
+        route: window.location.pathname
+      });
+    }
+    setDiscountThemeActive(true);
+    setDiscountTimerEnd(targetTime);
+    setShowDiscountModal(true);
+    sessionStorage.setItem('discount_timer_end', targetTime.toString());
+  }, [DEBUG]);
+
   return (
     <main className={styles.page} role="main" aria-label="Finalização do plano vibracional">
 
       {DEBUG && (
-        <button
-          onClick={handleDebugClick}
-          style={{
-            position: 'fixed',
-            bottom: '10px',
-            right: '10px',
-            zIndex: 9999,
-            padding: '8px 12px',
-            backgroundColor: 'rgba(255, 0, 0, 0.7)',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          Debug: Liberar Conteúdo
-        </button>
+        <div style={{ position: 'fixed', bottom: '10px', right: '10px', zIndex: 9999, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <button
+            onClick={handleDebugClick}
+            style={{
+              padding: '8px 12px',
+              backgroundColor: 'rgba(255, 0, 0, 0.7)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '11px',
+              fontWeight: '800'
+            }}
+          >
+            DEBUG: LIBERAR CONTEÚDO
+          </button>
+          <button
+            onClick={() => setShowSurpriseModal(true)}
+            style={{
+              padding: '8px 12px',
+              backgroundColor: 'rgba(59, 130, 246, 0.8)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+              fontSize: '11px',
+              fontWeight: '800'
+            }}
+          >
+            DEBUG: MODAL PRESENTE
+          </button>
+          {!isPtRoute && (
+            <button
+              onClick={() => setShowDiscountModal(true)}
+              style={{
+                padding: '8px 12px',
+                backgroundColor: 'rgba(239, 68, 68, 0.8)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                fontSize: '11px',
+                fontWeight: '800'
+              }}
+            >
+              DEBUG: MODAL DESCONTO
+            </button>
+          )}
+        </div>
       )}
 
       <div ref={introRef} className={`${styles.introOverlay} ${introState === 'enter' ? styles.introEnter : introState === 'exit' ? styles.introExit : styles.hidden}`} aria-hidden={introState === 'hidden'}>
@@ -526,18 +692,39 @@ export default function Fim() {
             <div className={styles.progressBar}><div className={styles.progressFill} style={{ transform: `scaleX(${displayedHeaderPct / 100})` }} /></div>
             <div className={styles.progressPercent}>{displayedHeaderPct}%</div>
           </div>
-          {(gatingComplete || displayedHeaderPct >= 100) && (
-            <button
-              type="button"
-              className={styles.accessPlanBtn}
-              onClick={() => {
-                const el = document.getElementById('plan-receipt-anchor')
-                if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
-              }}
-            >
-              {t('fim.cta.access_plan')}
-            </button>
-          )}
+          <div className={styles.headerIconsRow}>
+            {(gatingComplete || displayedHeaderPct >= 100) && (
+              <button
+                type="button"
+                className={styles.accessPlanBtn}
+                onClick={() => {
+                  const el = document.getElementById('plan-receipt-anchor')
+                  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+                }}
+              >
+                {t('fim.cta.access_plan')}
+              </button>
+            )}
+            {(giftThemeActive || showSurpriseModal) && (
+              <div
+                className={styles.giftIconHeader}
+                onClick={() => setShowSurpriseModal(true)}
+                title={t('fim_gift.title')}
+              >
+                🎁
+              </div>
+            )}
+            {discountThemeActive && (
+              <div className={styles.discountBadgeHeader}>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '4px' }}>
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                  <line x1="7" y1="7" x2="7.01" y2="7"></line>
+                </svg>
+                <span style={{ color: '#ef4444', fontWeight: '900' }}>10% OFF</span>
+                <span className={styles.timerValueHeader} style={{ marginLeft: '6px', borderLeft: '1px solid rgba(239,68,68,0.3)', paddingLeft: '6px', color: '#ef4444' }}>{headerTimerDisplay}</span>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -591,6 +778,7 @@ export default function Fim() {
           className={`${styles.videoCard}${(engagementState === 'entering' || engagementState === 'visible') ? ` ${styles.videoRingGold}` : ringVariant === 'green' ? ` ${styles.videoRingGreen}` : ''}`}
           aria-label="Pré-visualização de vídeo"
         >
+          <div className="esconder-surprise-gift" style={{ display: 'none' }} aria-hidden="true"></div>
           <vturb-smartplayer
             id={smartplayerId}
             style={{ display: 'block', margin: '0 auto', width: '100%' }}
@@ -602,7 +790,15 @@ export default function Fim() {
             isOfferVisible={gatingComplete || displayedHeaderPct >= 100}
             displayedHeaderPct={displayedHeaderPct}
             DEBUG={DEBUG}
+            giftThemeActive={giftThemeActive}
+            discountThemeActive={discountThemeActive}
+            showDiscountModal={showDiscountModal}
+            checkoutResumeMode={checkoutResumeMode}
+            onCheckoutOpen={handleCheckoutOpen}
+            onCheckoutResumeHandled={() => setCheckoutResumeMode(null)}
+            onDiscountActivated={handleDiscountActivated}
           />
+
 
           <CommentsSection />
         </React.Suspense>
@@ -677,6 +873,52 @@ export default function Fim() {
           </div>
         </div>
       )}
+
+      {/* Retention Modals */}
+      <SurpriseGiftModal
+        open={showSurpriseModal}
+        onClose={() => {
+          setShowSurpriseModal(false);
+          setGiftThemeActive(true);
+          sessionStorage.setItem('gift_theme_active', 'true');
+
+          // Scroll automático para a oferta
+          setTimeout(() => {
+            const el = document.getElementById('plan-receipt-anchor')
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }, 300);
+        }}
+        onRedirectChat={() => {
+          navigate(`${isPtRoute ? '/pt' : '/de'}/chat-whatsapp?from=/fim-gift`);
+        }}
+        leadData={leadCache.getAll()}
+        isPtRoute={isPtRoute}
+      />
+
+      <DiscountModal
+        open={showDiscountModal}
+        onClose={() => {
+          if (DEBUG) {
+            console.log('[RETENTION] Discount modal closed');
+          }
+          setShowDiscountModal(false);
+        }}
+        onActivate={() => {
+          const targetTime = Date.now() + (300 * 1000);
+          if (DEBUG) {
+            console.log('[RETENTION] Discount CTA accepted; discounted checkout can resume', {
+              targetTime
+            });
+          }
+          setDiscountThemeActive(true);
+          setDiscountTimerEnd(targetTime);
+          setShowDiscountModal(false);
+          setCheckoutResumeMode('discount');
+          sessionStorage.setItem('discount_timer_end', targetTime.toString());
+          const el = document.getElementById('plan-receipt-anchor');
+          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }}
+      />
 
     </main>
   )
