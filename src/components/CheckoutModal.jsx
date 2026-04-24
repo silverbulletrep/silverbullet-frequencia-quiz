@@ -180,8 +180,6 @@ function InnerCheckout({
         }
         if (onIdleRef.current) {
           onIdleRef.current();
-        } else {
-          onCloseRef.current && onCloseRef.current();
         }
       }, IDLE_THRESHOLD);
     };

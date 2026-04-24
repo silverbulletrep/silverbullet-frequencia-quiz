@@ -474,6 +474,9 @@ export default function AudioUpsell() {
           step,
           { value: 37, currency: 'EUR' },
           {
+            journey_type: 'upsell',
+            purchase_kind: 'upsell',
+            product_id: 'elevate_up01',
             checkout_origin: origin || 'audio_upsell',
             payment_method: storedMethod || undefined,
             email_present: Boolean(email),

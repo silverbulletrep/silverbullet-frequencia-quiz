@@ -182,6 +182,9 @@ export default function FimBelowFold({
                 step,
                 { value: checkoutValue, currency: 'EUR' },
                 {
+                    journey_type: 'front',
+                    purchase_kind: 'main',
+                    product_id: 'elevate_front',
                     checkout_origin: origin || 'fim',
                     payment_method: paymentMethod || undefined,
                     email_present: Boolean(email),
