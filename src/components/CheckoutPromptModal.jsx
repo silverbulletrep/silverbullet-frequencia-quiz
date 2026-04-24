@@ -51,7 +51,8 @@ export default function CheckoutPromptModal({ amount_cents = 3700, currency = 'e
         const fbp = fbpMatch ? decodeURIComponent(fbpMatch[1]) : undefined
         const fbc = fbcMatch ? decodeURIComponent(fbcMatch[1]) : undefined
         const ua = (typeof navigator !== 'undefined' && navigator.userAgent) ? navigator.userAgent : ''
-        const sessionData = await createCheckoutSession({ amount_cents, currency, email, metadata: { ...metadata, origin: 'checkout_prompt_modal', fbp, fbc, ua } })
+        const finalOrigin = (metadata && metadata.origin) ? metadata.origin : 'checkout_prompt_modal'
+        const sessionData = await createCheckoutSession({ amount_cents, currency, email, metadata: { ...metadata, origin: finalOrigin, fbp, fbc, ua } })
         const url = sessionData?.session?.url || sessionData?.url
         if (url) {
           console.log('[POPUP] Redirecionando para Stripe Checkout', { opId, url })
@@ -88,7 +89,8 @@ export default function CheckoutPromptModal({ amount_cents = 3700, currency = 'e
           const fbp = fbpMatch ? decodeURIComponent(fbpMatch[1]) : undefined
           const fbc = fbcMatch ? decodeURIComponent(fbcMatch[1]) : undefined
           const ua = (typeof navigator !== 'undefined' && navigator.userAgent) ? navigator.userAgent : ''
-          return { ...metadata, origin: 'checkout_prompt_modal', fbp, fbc, ua }
+          const finalOrigin = (metadata && metadata.origin) ? metadata.origin : 'checkout_prompt_modal'
+          return { ...metadata, origin: finalOrigin, fbp, fbc, ua }
         })()}
         onClose={onClose}
       />
