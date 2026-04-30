@@ -9,7 +9,8 @@ const EXCLUDED_PATHS = new Set([
     '/de/chat-whatsapp',
     '/main/chat-whatsapp',
     '/main/pt/chat-whatsapp',
-    '/main/de/chat-whatsapp'
+    '/main/de/chat-whatsapp',
+    '/alma-gemea'
 ]);
 
 /**

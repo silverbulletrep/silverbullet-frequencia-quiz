@@ -2147,6 +2147,56 @@
       "online": "online"
     }
   },
+  "alma_gemea": {
+    "page": {
+      "headline": "WER IST IHRE SEELENVERWANDTE?",
+      "subtitle": "Tippen Sie auf das Video unten, um es zu entdecken..."
+    },
+    "transition": {
+      "phrase1": "Die Astrologin-Künstlerin bereitet\n<strong>Die Zeichnung</strong>\nIhrer Seelenverwandten vor...",
+      "phrase2": "✨ <strong>Verbindet sich</strong> mit Ihrer\nastralen Frequenz...",
+      "phrase3": "🌙 <strong>Kanalisiert</strong> die Energie\nder Sterne..."
+    },
+    "chat": {
+      "askName": "✨ Bevor ich enthülle, was die Karten verbergen... Wie heißen Sie?",
+      "tiragem1Intro": "{nome}... die Karten haben bereits begonnen zu schwingen. Wählen Sie eine Karte.",
+      "tiragem1RevealF": "{nome}, Der Kaiser erschien. Es gibt einen Mann mit großer Präsenz, der dazu bestimmt ist, Ihren Weg zu kreuzen. Er trägt eine Energie des Schutzes und der Führung... ich spüre, dass er bereits in Ihrer Nähe ist.",
+      "tiragem1RevealM": "{nome}, Die Hohepriesterin erschien. Es gibt eine geheimnisvolle Frau, voller Intuition und emotionaler Tiefe. Sie spürt bereits Ihre Energie... die Verbindung zwischen Ihnen ist stärker als Sie sich vorstellen.",
+      "tiragem1Btn": "Weiter mit der Lektüre...",
+      "tiragem2Intro": "{nome}, die Karten wollen mehr enthüllen... Wählen Sie erneut.",
+      "tiragem2Reveal": "{nome}, Die Liebenden! Diese Karte bestätigt: Es gibt eine tiefe Verbindung zwischen zwei Seelen, die sich suchen. Das Schicksal will sie vereinen... aber etwas muss vorher enthüllt werden.",
+      "tiragem2Btn": "Tiefer gehen...",
+      "tiragem3Intro": "⚠️ Es gibt etwas, das die Geister darauf bestehen, dass ich enthülle. Letzte Ziehung.",
+      "tiragem3Reveal": "{nome}, Der Mond erschien... ich spüre, dass etwas auf Ihrem Weg verborgen ist, ein Nebel, der Sie daran hindert, die Wahrheit über diese Verbindung zu sehen. Es ist nicht böse gemeint, aber Sie drehen sich im Kreis... da ist etwas, das Sie noch nicht gesehen haben. Eine unsichtbare Barriere, die wir beleuchten müssen.",
+      "phone": "{nome}, Sehen Sie auf dem Handy auf dem Tisch, was die Menschen über diese Prüfung im Internet sagen 📱",
+      "final": "{nome}, jetzt, da Sie die Wahrheit kennen, gibt es einen Weg, diese Verbindung freizuschalten und Ihre Seelenverwandte anzuziehen. Tippen Sie auf die Schaltfläche unten, um Ihre Vibrationsuntersuchung zu starten und diese Energie umzukehren.",
+      "ctaBtn": "✨ Ich möchte meine Vibrationsuntersuchung →",
+      "panelHint_name": "✨ Geben Sie Ihren Namen ein",
+      "placeholder_name": "Ihr Name...",
+      "startBtn": "Meine Lektüre starten →",
+      "panelHint_cards": "🌙 Konzentrieren Sie sich... und wählen Sie Ihre Karte",
+      "audioWaitToast": "🔮 Warten Sie, bis die Kartenlegerin fertig gesprochen hat...",
+      "progressLabel": "Sie haben bereits angesehen",
+      "card_aria": "Karte",
+      "close_btn": "Schließen"
+    },
+    "cards": {
+      "emperor": "Der Kaiser",
+      "highpriestess": "Die Hohepriesterin",
+      "lovers": "Die Liebenden",
+      "moon": "Der Mond"
+    },
+    "animation": {
+      "lua_to_deck": 29,
+      "lua_fan_reveal": 39
+    },
+    "authority": {
+      "name": "Johann Müller",
+      "badge": "🇩🇪 Der Einzige in Deutschland",
+      "copy": "Hat <strong>+19.000 Menschen</strong> geholfen, energetische Blockaden zu lösen, <em>finanziellen Wohlstand</em> freizuschalten und <em>wahre Beziehungen</em> zu finden — mit der kostenlosen Vibrationsuntersuchung."
+    },
+    "cta_button": "Meine Vibrationsuntersuchung starten →"
+  },
   "surprise_modal": {
     "headline": "Herzlichen Glückwunsch!",
     "subheadline": "Sie wurden ausgewählt, ein limitiertes Geschenk zu erhalten!",

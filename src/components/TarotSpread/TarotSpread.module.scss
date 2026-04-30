@@ -1,0 +1,256 @@
+/**
+ * 🎴 TarotSpread.module.scss
+ * 
+ * Design: Cosmic Mysticism — cartas com visual de grimório
+ * 
+ * Layout das cartas:
+ *   - Mobile:  cartas menores (90px × 140px)
+ *   - Desktop: cartas médias (110px × 170px)
+ * 
+ * Efeitos:
+ *   - Verso: gradiente roxo escuro + padrão geométrico
+ *   - Frente: símbolo grande + nome + glow colorido
+ *   - Hover:  elevação + glow externo
+ *   - Seleção: scale 1.55x via framer-motion
+ */
+
+/* ── CONTAINER GERAL ── */
+.tarotContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 20px 8px;
+  width: 100%;
+  /* Não permite que as cartas ampliadadas vazem do scroll */
+  overflow: visible;
+}
+
+/* Texto de instrução / loading */
+.tarotHint {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(13px, 3.5vw, 16px);
+  color: rgba(224, 195, 252, 0.85);
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.5px;
+  filter: drop-shadow(0 0 8px rgba(155, 89, 255, 0.3));
+}
+
+/* ── FASE EMBARALHAR ── */
+
+/* Pilha de cartas empilhadas (centralizadas) */
+.shufflePile {
+  position: relative;
+  width: 100px;
+  height: 160px;
+  margin: 20px auto;
+
+  /* Cada carta da pilha fica sobreposta */
+  > * {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+
+.shuffleCard {
+  width: 100px;
+  height: 160px;
+  border-radius: 12px;
+  transform-origin: 50% 90%; /* Pivô na base para efeito de embaralhar */
+}
+
+/* ── FASE DISTRIBUIÇÃO ── */
+
+/* Linha horizontal das 3 cartas */
+.spreadRow {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 28px);
+  width: 100%;
+  /* Extra padding lateral para não cortar o glow ou scale */
+  padding: 24px 12px 48px 12px;
+  position: relative;
+}
+
+/* Wrapper de cada carta (posicionamento + clique) */
+.cardWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  /* Permite overflow do scale sem cortar */
+  overflow: visible;
+}
+
+/* Número abaixo da carta */
+.cardNumber {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(224, 195, 252, 0.5);
+  letter-spacing: 1px;
+}
+
+/* Glow pulsante ao hover (posicionado atrás da carta) */
+.cardHoverGlow {
+  position: absolute;
+  inset: -8px;
+  border-radius: 16px;
+  background: radial-gradient(circle, rgba(155, 89, 255, 0.2) 0%, transparent 70%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cardWrapper:hover .cardHoverGlow {
+  opacity: 1;
+}
+
+/* Container que recebe o scale do framer-motion */
+.cardInner {
+  /* Define tamanho base da carta */
+  width: clamp(80px, 22vw, 108px);
+  height: clamp(130px, 35vw, 170px);
+  border-radius: 12px;
+  /* Sombra profunda para dar profundidade */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+/* ── VERSO DA CARTA (CSS PREMIUM) ── */
+.cardBack {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #0d0b2e;
+  border: 2px solid #5a189a;
+  padding: 6px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.cardBackInner {
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #1a0b4d 0%, #3c096c 50%, #1a0b4d 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border: 1px solid rgba(255, 215, 0, 0.1);
+}
+
+.cardBackPattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 2px 2px, rgba(155, 89, 255, 0.05) 1px, transparent 0);
+  background-size: 8px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardBackIcon {
+  font-size: 32px;
+  filter: drop-shadow(0 0 10px rgba(155, 89, 255, 0.5));
+  opacity: 0.8;
+}
+
+.cardBackFrame {
+  position: absolute;
+  inset: 5px;
+  border: 1px solid rgba(224, 195, 252, 0.15);
+  border-radius: 4px;
+  pointer-events: none;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border: 1px dashed rgba(255, 215, 0, 0.05);
+    border-radius: 6px;
+  }
+}
+
+/* ── FRENTE DA CARTA (revelada) ── */
+.cardFront {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(160deg, #0D0B2E 0%, #1A0533 100%);
+  border: 2px solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Glow radial colorido no fundo da frente */
+.cardFrontGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.cardFrontOverlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(13, 11, 46, 0.9) 0%, transparent 100%);
+  padding: 12px 4px 6px;
+  display: flex;
+  justify-content: center;
+  z-index: 2;
+}
+
+/* Nome da carta */
+.cardFrontName {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(9px, 2.5vw, 12px);
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 10px currentColor;
+  padding: 0 6px;
+}
+
+/* ── RESPONSIVIDADE ── */
+@media (max-width: 360px) {
+  .spreadRow {
+    gap: 10px;
+    padding: 16px 4px 40px 4px;
+  }
+  .cardInner {
+    width: 76px;
+    height: 124px;
+  }
+  .shuffleCard,
+  .shufflePile {
+    width: 88px;
+    height: 145px;
+  }
+}
+
+@media (min-width: 600px) {
+  .cardInner {
+    width: 120px;
+    height: 190px;
+  }
+}

@@ -2220,6 +2220,56 @@
       "online": "online"
     }
   },
+  "alma_gemea": {
+    "page": {
+      "headline": "QUEM É A SUA ALMA GÊMEA?",
+      "subtitle": "Toque no vídeo abaixo para descobrir..."
+    },
+    "transition": {
+      "phrase1": "A Artista Astróloga está\n<strong>Preparando o Desenho</strong>\nda sua Alma Gêmea...",
+      "phrase2": "✨ <strong>Conectando</strong> com sua\nfrequência astral...",
+      "phrase3": "🌙 <strong>Canalizando</strong> a energia\ndas estrelas..."
+    },
+    "chat": {
+      "askName": "✨ Antes de revelar o que as cartas escondem... Qual é o seu nome?",
+      "tiragem1Intro": "{nome}... as cartas já começaram a vibrar. Escolha uma carta.",
+      "tiragem1RevealF": "{nome}, O Imperador surgiu. Existe um homem com grande presença que está destinado a cruzar o seu caminho. Ele carrega uma energia de proteção e liderança... sinto que já está próximo de você.",
+      "tiragem1RevealM": "{nome}, A Sacerdotisa surgiu. Há uma mulher misteriosa, cheia de intuição e profundidade emocional. Ela já sente a sua energia... a conexão entre vocês é mais forte do que imagina.",
+      "tiragem1Btn": "Continuar a leitura...",
+      "tiragem2Intro": "{nome}, as cartas querem revelar mais... Escolha novamente.",
+      "tiragem2Reveal": "{nome}, Os Amantes! Essa carta confirma: existe uma conexão profunda entre duas almas que se procuram. O destino quer unir vocês... mas algo precisa ser revelado antes.",
+      "tiragem2Btn": "Ir mais fundo...",
+      "tiragem3Intro": "⚠️ Há algo que os espíritos insistem que eu revele. Última tiragem.",
+      "tiragem3Reveal": "{nome}, A Lua surgiu... sinto que há algo escondido no seu caminho, uma neblina que impede você de enxergar a verdade sobre essa conexão. Não é por mal, mas você está andando em círculos... há algo que você ainda não viu. Uma barreira invisível que precisamos iluminar.",
+      "phone": "{nome}, Veja no celular da mesa o que as pessoas falam sobre esse exame na internet 📱",
+      "final": "{nome}, agora que você conhece a verdade, existe um caminho para desbloquear essa conexão e atrair a sua alma gêmea. Toque no botão abaixo para iniciar o seu Exame Vibracional e reverter essa energia.",
+      "ctaBtn": "✨ Quero fazer meu Exame Vibracional →",
+      "panelHint_name": "✨ Digite seu nome",
+      "placeholder_name": "Seu nome...",
+      "startBtn": "Iniciar minha leitura →",
+      "panelHint_cards": "🌙 Concentre-se... e escolha sua carta",
+      "audioWaitToast": "🔮 Espere a Tarologa terminar de falar...",
+      "progressLabel": "Você já assistiu",
+      "card_aria": "Carta",
+      "close_btn": "Fechar"
+    },
+    "cards": {
+      "emperor": "O Imperador",
+      "highpriestess": "A Sacerdotisa",
+      "lovers": "Os Amantes",
+      "moon": "A Lua"
+    },
+    "animation": {
+      "lua_to_deck": 29,
+      "lua_fan_reveal": 39
+    },
+    "authority": {
+      "name": "Johann Müller",
+      "badge": "🇵🇹 O único em Portugal",
+      "copy": "Ajudou <strong>+19.000 pessoas</strong> a derreter bloqueios energéticos, desbloquear a <em>prosperidade financeira</em> e <em>relacionamentos verdadeiros</em> — com o Exame Vibracional Gratuito."
+    },
+    "cta_button": "Quero fazer meu Exame Vibracional →"
+  },
   "surprise_modal": {
     "headline": "Parabéns!",
     "subheadline": "Você foi selecionado para receber um presente limitado!",

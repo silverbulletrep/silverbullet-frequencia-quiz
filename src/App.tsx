@@ -46,6 +46,7 @@ const CompontTest5 = lazy(() => import("@/pages/CompontTest5"));
 const CompontTest6 = lazy(() => import("@/pages/CompontTest6"));
 const ProcessingPage2 = lazy(() => import("@/pages/ProcessingPage2"));
 const ResultadoPage2 = lazy(() => import("@/pages/ResultadoPage2"));
+const AlmaGemea = lazy(() => import("@/pages/AlmaGemea"));
 
 import { useTranslation } from "react-i18next";
 
@@ -151,6 +152,7 @@ export default function App() {
             <Route path="/compont-test-6" element={<CompontTest6 />} />
             <Route path="/processing2" element={<ProcessingPage2 />} />
             <Route path="/resultado2" element={<ResultadoPage2 />} />
+            <Route path="/alma-gemea" element={<AlmaGemea />} />
             <Route path="/other" element={<div className="text-center text-xl">Other Page - Coming Soon</div>} />
           </Routes>
         </PageTransition>
