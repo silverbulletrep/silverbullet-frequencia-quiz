@@ -21,6 +21,8 @@ const getOpeningMessages = (t) => ({
     '/transition': t('johannChat.openings.transition', { returnObjects: true }),
     '/vsl': 'AGENTE_1',
     '/vsl2': 'AGENTE_1',
+
+    // Agente 4 (Hesitação no Exame / Sinceridade) - /quiz-step-1 a /resultado
     '/quiz-step-1': t('johannChat.openings.quiz_step', { returnObjects: true }),
     '/quiz-step-2': t('johannChat.openings.quiz_step', { returnObjects: true }),
     '/quiz-step-3': t('johannChat.openings.quiz_step', { returnObjects: true }),
@@ -38,14 +40,28 @@ const getOpeningMessages = (t) => ({
     '/processing': t('johannChat.openings.processing', { returnObjects: true }),
     '/resultado': t('johannChat.openings.quiz_step', { returnObjects: true }),
     '/resultado-pressel': t('johannChat.openings.quiz_step', { returnObjects: true }),
+
+    // Agente (Mentor Atento) - /fim (antes do pitch)
     '/fim': t('johannChat.openings.fim', { returnObjects: true }),
+
+    // Agente 3 (Sinal Dourado) - /fim (pós pitch), /checkout, /fim-funil
     '/fim-pos-pitch': t('johannChat.openings.checkout', { returnObjects: true }),
     '/checkout': t('johannChat.openings.checkout', { returnObjects: true }),
     '/fim-funil': t('johannChat.openings.checkout', { returnObjects: true }),
+
+    // Agente 2 (Via Intravenosa) - /audio-upsell
+    // Agente 2 (Via Intravenosa) - /audio-upsell ANTES do play
     '/audio-upsell': t('johannChat.openings.audio_upsell', { returnObjects: true }),
+
+    // Agente 2 - /audio-upsell PÓS play (se o cliente pausar/sair no meio)
     '/audio-upsell-pos-play': t('johannChat.openings.audio_upsell_pos', { returnObjects: true }),
+
     '/recupera': t('johannChat.openings.recupera', { returnObjects: true }),
+
+    // Rota direta de Atendimento / Suporte (PT-PT)
     '/suporte': t('johannChat.openings.suporte', { returnObjects: true }),
+
+    // Fallback Específico do VSL de abandono final
     '/vsl-abandon': [
         ...t('johannChat.openings.vsl_abandon', { returnObjects: true }),
         {
@@ -131,7 +147,6 @@ const HOTMART_POST_PITCH_URL = 'https://pay.hotmart.com/N105101154W?offDiscount=
 
 const JohannChat = () => {
     const { t, i18n } = useTranslation();
-
     useEffect(() => {
         // Bloquear scroll do body pra prevenir viewport bugs no iOS quando o teclado abre
         const originalBodyOverflow = document.body.style.overflow;
@@ -195,7 +210,6 @@ const JohannChat = () => {
         // 3. Iniciar o chat (ganchos) - blindado contra double-render
         if (!isChatStartedRef.current) {
             isChatStartedRef.current = true;
-            // Carrega dinamicamente a constant de acordo com a lingua.
             const localizedOpenings = getOpeningMessages(t);
             startOpeningSequence(from, localizedOpenings);
         }
