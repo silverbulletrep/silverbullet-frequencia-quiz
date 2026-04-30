@@ -144,6 +144,15 @@ const NEXT_ROUTE_MAP = {
 };
 const FALLBACK_SEEN_KEY = 'whatsapp_agente1_seen';
 const HOTMART_POST_PITCH_URL = 'https://pay.hotmart.com/N105101154W?offDiscount=DESCONTO+APLICADO&bid=1775256934969';
+const SUPPORT_CHECKPOINT_ALIASES = new Set(['/suporteDesconto']);
+
+const normalizeChatCheckpoint = (from) => {
+    if (SUPPORT_CHECKPOINT_ALIASES.has(from)) {
+        return '/suporte';
+    }
+
+    return from;
+};
 
 const JohannChat = () => {
     const { t, i18n } = useTranslation();
@@ -179,6 +188,7 @@ const JohannChat = () => {
     const messagesEndRef = useRef(null);
     const chatDataRef = useRef({
         checkpointId: '/quiz',
+        sourceFrom: '/quiz',
         leadData: {},
         session_id: 'ws_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9)
     });
@@ -194,10 +204,12 @@ const JohannChat = () => {
     useEffect(() => {
         // 1. Identificar checkpoint da URL
         const searchParams = new URLSearchParams(location.search);
-        let from = searchParams.get('from') || '/quiz';
+        let rawFrom = searchParams.get('from') || '/quiz';
         // Normalizar
-        from = from.replace(/^\/main/, '').replace(/^\/(pt|de)/, '') || '/quiz';
-        chatDataRef.current.checkpointId = from;
+        rawFrom = rawFrom.replace(/^\/main/, '').replace(/^\/(pt|de)/, '') || '/quiz';
+        const normalizedFrom = normalizeChatCheckpoint(rawFrom);
+        chatDataRef.current.sourceFrom = rawFrom;
+        chatDataRef.current.checkpointId = normalizedFrom;
 
         // 2. Carregar dados do lead do localStorage
         try {
@@ -211,7 +223,7 @@ const JohannChat = () => {
         if (!isChatStartedRef.current) {
             isChatStartedRef.current = true;
             const localizedOpenings = getOpeningMessages(t);
-            startOpeningSequence(from, localizedOpenings);
+            startOpeningSequence(normalizedFrom, localizedOpenings);
         }
     }, [t]);
 
@@ -309,8 +321,12 @@ const JohannChat = () => {
             }
 
             // Determinar a etapa do funil para o n8n (Segmentação solicitada pelo Vinicius)
-            const getFunnelEtapa = (route) => {
+            const getFunnelEtapa = (route, sourceFrom) => {
                 const r = route || '';
+                const source = sourceFrom || '';
+                if (source === '/suporteDesconto') {
+                    return 'Suporte_Checkout_Desconto';
+                }
                 // CURIOSOS
                 if (['/quiz', '/age-selection-men', '/ge-selection-men', '/age-selection-women', '/women-success', '/men-success', '/morning-feeling', '/transition', '/vsl', '/vsl2', '/vls'].includes(r)) {
                     return 'curisosos';
@@ -339,7 +355,8 @@ const JohannChat = () => {
             };
 
             const route = chatDataRef.current.checkpointId;
-            const etapa = getFunnelEtapa(route);
+            const sourceFrom = chatDataRef.current.sourceFrom;
+            const etapa = getFunnelEtapa(route, sourceFrom);
 
             console.log(`[JohannChat] Payload Webhook - Rota: ${route} | Etapa: ${etapa}`); // Log para depuração do n8n
 
