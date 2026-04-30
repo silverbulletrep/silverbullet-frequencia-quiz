@@ -9,7 +9,7 @@ import { motion } from 'framer-motion'
 import { API_BASE_URL, updateLeadPurchase } from '@/lib/api'
 import { asset } from '@/lib/asset'
 import { leadCache } from '@/lib/leadCache'
-import { buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
+import { buildCheckoutJourneyContext, buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
 import { useProgressStore } from '@/lib/progressStore'
 import { useNavigate } from 'react-router-dom'
 import { createFunnelTracker, QUIZ_FUNNEL_ID, getDefaultBaseUrl, readStoredCountry, buildRouteStep } from '@/lib/funnelTracker'
@@ -472,16 +472,14 @@ export default function AudioUpsell() {
         const step = buildRouteStep('/audio-upsell', { id: 'audio_upsell', index: 16 }, 'Página de Upsell')
         await tracker.checkoutStart(
           step,
-          { value: 37, currency: 'EUR' },
-          {
-            journey_type: 'upsell',
-            purchase_kind: 'upsell',
-            product_id: 'elevate_up01',
-            checkout_origin: origin || 'audio_upsell',
-            payment_method: storedMethod || undefined,
-            email_present: Boolean(email),
-            ...(leadIdShort ? { lead_id_short: leadIdShort } : {})
-          }
+          { value: 47, currency: 'EUR' },
+          buildCheckoutJourneyContext({
+            flow: 'upsell',
+            origin: origin || 'audio_upsell',
+            paymentMethod: storedMethod || undefined,
+            emailPresent: Boolean(email),
+            leadIdShort: leadIdShort || undefined,
+          })
         )
       } catch (error) {
         console.error('[AUDIO] Falha ao enviar checkout_start', { message: error?.message })

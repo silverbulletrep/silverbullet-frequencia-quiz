@@ -5,6 +5,16 @@ type BuildCheckoutParams = {
   email?: string
 }
 
+type CheckoutJourneyFlow = 'front' | 'upsell'
+
+type CheckoutJourneyParams = {
+  flow: CheckoutJourneyFlow
+  origin: string
+  paymentMethod?: string
+  emailPresent: boolean
+  leadIdShort?: string
+}
+
 const PAYMENT_METHOD_MAP: Record<string, string> = {
   card: 'credit_card',
   credit_card: 'credit_card',
@@ -52,5 +62,25 @@ export const buildHotmartCheckoutUrl = ({
   } catch (error) {
     console.error('[HOTMART] Erro ao construir URL do checkout', { baseUrl, message: error instanceof Error ? error.message : String(error) })
     return baseUrl
+  }
+}
+
+export const buildCheckoutJourneyContext = ({
+  flow,
+  origin,
+  paymentMethod,
+  emailPresent,
+  leadIdShort,
+}: CheckoutJourneyParams): Record<string, string | boolean> => {
+  const isUpsell = flow === 'upsell'
+
+  return {
+    journey_type: isUpsell ? 'upsell' : 'front',
+    purchase_kind: isUpsell ? 'upsell' : 'main',
+    product_id: isUpsell ? 'elevate_up01' : 'elevate_front',
+    checkout_origin: origin,
+    payment_method: paymentMethod || '',
+    email_present: emailPresent,
+    ...(leadIdShort ? { lead_id_short: leadIdShort } : {}),
   }
 }

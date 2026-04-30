@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, ShieldCheck, Star } from 'lucide-react'
 import { leadCache } from '@/lib/leadCache'
-import { buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
+import { buildCheckoutJourneyContext, buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
 import { buildRouteStep, createFunnelTracker, getDefaultBaseUrl, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry } from '@/lib/funnelTracker'
 import { useLocation, useNavigate } from 'react-router-dom'
 
@@ -182,13 +182,13 @@ export default function FimBelowFold({
                 step,
                 { value: checkoutValue, currency: 'EUR' },
                 {
-                    journey_type: 'front',
-                    purchase_kind: 'main',
-                    product_id: 'elevate_front',
-                    checkout_origin: origin || 'fim',
-                    payment_method: paymentMethod || undefined,
-                    email_present: Boolean(email),
-                    ...(leadIdShort ? { lead_id_short: leadIdShort } : {}),
+                    ...buildCheckoutJourneyContext({
+                        flow: 'front',
+                        origin: origin || 'fim',
+                        paymentMethod: paymentMethod || undefined,
+                        emailPresent: Boolean(email),
+                        leadIdShort: leadIdShort || undefined,
+                    }),
                     discount_active: discountThemeActive,
                     gift_active: giftThemeActive
                 }
