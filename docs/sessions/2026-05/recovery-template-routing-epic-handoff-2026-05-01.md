@@ -33,7 +33,8 @@
    - `/recovery-template-routing`
 10. The existing `/ai-recovery` route is unrelated and must not be reused.
 11. `mapped_value` must support an explicit fallback when no configured match is found.
-12. `name + pass_through` must resolve to the first name only, formatted with normalized casing.
+12. `pass_through` must also support an explicit fallback when the source key resolves null, empty, or not found.
+13. `name + pass_through` must resolve to the first name only, formatted with normalized casing.
 
 ### Why This Became a New Epic
 

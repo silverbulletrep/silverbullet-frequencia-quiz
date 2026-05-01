@@ -48,6 +48,7 @@ Implementar um sistema completo de roteamento de templates e resolucao de variav
      - cada binding deve permitir um fallback explicito quando nenhum valor mapeado corresponder ao valor bruto encontrado
    - **Tipo B: Pass-through / hard-coded source value**
      - backend usa diretamente o valor bruto vindo de `vw_funnel_lead_compact`
+     - cada binding deve permitir um fallback explicito quando a `source_key` resolver `null`, vazio ou nao encontrado
      - excecao obrigatoria: quando `source_key = name`, o backend deve reduzir para o primeiro nome e normalizar para `InicialMaiuscula + restanteMinusculo`
 5. Resolucao backend usando `vw_funnel_lead_compact.desire` como fonte oficial para desejos do lead.
 6. Payload backend -> N8N enriquecido com `meta_template_id`, `meta_language`, `template_variable_definitions` e `template_variable_values`.
@@ -62,6 +63,7 @@ Implementar um sistema completo de roteamento de templates e resolucao de variav
   - `desire.response[0]`
   - `desire.response[1]`
 - **Mapped values devem ter fallback configuravel.** A regra de execucao deve se comportar como `if / else`: se o valor bruto casar com um valor configurado, usa o texto mapeado; se nao casar, usa o texto de fallback do binding.
+- **Pass-through tambem deve ter fallback configuravel para ausencia de valor.** Se a `source_key` resolver `null`, vazio ou nao encontrado, o backend usa o `fallback_value` do binding.
 - **`name + pass_through` tem regra especial obrigatoria.** O valor final nao e o nome completo bruto: deve ser apenas o primeiro nome, com tratamento de caixa.
 - O backend **nao** deve inventar valores fora do catalogo configurado.
 - O N8N continua como camada de transporte para Meta, sem if/else de negocio por template.
@@ -103,6 +105,7 @@ As opcoes abaixo devem ser tratadas como catalogo controlado no dashboard/backen
 - `{{1}}`
   - `source_key = name`
   - `resolution_mode = pass_through`
+  - `fallback_value = Cliente`
   - backend nao envia o nome completo bruto; ele reduz para o primeiro nome e normaliza caixa
 
 ### Payload Target for N8N
@@ -137,6 +140,7 @@ As opcoes abaixo devem ser tratadas como catalogo controlado no dashboard/backen
 - O dashboard exibe texto amigavel para cada `source_key` disponivel.
 - O dashboard permite configurar `mapped_value` por template/variavel.
 - O dashboard permite configurar fallback explicito para `mapped_value`.
+- O dashboard permite configurar fallback explicito para `pass_through` quando a source key nao retornar valor.
 - O backend resolve variaveis exclusivamente a partir de `vw_funnel_lead_compact`.
 - O backend usa `vw_funnel_lead_compact.desire` como fonte oficial dos desejos.
 - Quando `source_key = name` e `resolution_mode = pass_through`, o backend envia apenas o primeiro nome formatado.
@@ -151,7 +155,7 @@ As opcoes abaixo devem ser tratadas como catalogo controlado no dashboard/backen
 
 - `Dashboard_2.0/dashbord/src/pages/Templates.tsx` ja faz CRUD completo em `message_templates` e ja persiste `meta_language`, `meta_payload` e `variable_definitions`.
 - `Dashboard_2.0/dashbord/src/components/Templates/MetaWhatsappTemplateEditor.tsx` ja reconstrui placeholders e salva a estrutura de variaveis do template Meta.
-- `Dashboard_2.0/dashbord/src/services/templateVariableService.ts` hoje modela apenas `token`, `index`, `label`, `example` e `required`; ainda nao conhece `source_key`, `resolution_mode`, `value_map` ou `fallback_value`.
+- `Dashboard_2.0/dashbord/src/services/templateVariableService.ts` hoje modela apenas `token`, `index`, `label`, `example` e `required`; ainda nao conhece `source_key`, `resolution_mode`, `value_map`, `fallback_value` ou regras de fallback por modo.
 - `Dashboard_2.0/dashbord/src/services/leadService.ts` ja envia `template_variable_definitions` e `template_variable_values` no metadata outbound, provando que o contrato com N8N ja aceita template resolvido.
 - `Dashboard_2.0/dashbord/src/app/router.tsx` ja expoe `/templates` e `/ai-recovery`.
 - `Dashboard_2.0/dashbord/src/pages/AiRecoveryDashboard.tsx` existe, mas hoje esta focado em visualizacao de mensagens e nao em configuracao operacional de routing.
@@ -243,7 +247,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] Criar persistencia de bindings por placeholder/template.
 - [ ] Modelar `resolution_mode` com pelo menos `pass_through` e `mapped_value`.
 - [ ] Modelar `value_map` por binding.
-- [ ] Modelar `fallback_value` por binding para `mapped_value`.
+- [ ] Modelar `fallback_value` por binding para `mapped_value` e `pass_through`.
 - [ ] Documentar catalogo V1 de source keys aceitas a partir de `vw_funnel_lead_compact`.
 - [ ] Documentar subpaths JSONB suportados em `desire`.
 
@@ -254,6 +258,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] O schema nao suporta roteamento por sexo.
 - [ ] O schema suporta mapear um valor bruto para um texto final especifico do template.
 - [ ] O schema suporta fallback explicito quando nenhum valor mapeado corresponder.
+- [ ] O schema suporta fallback explicito quando um `pass_through` resolver `null`, vazio ou nao encontrado.
 
 ### Story 6.2: Dashboard Configuration for Routes, Source Keys and Value Maps
 
@@ -275,6 +280,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] Permitir cadastrar `value_map` por binding.
 - [ ] Permitir cadastrar `fallback_value` por binding quando `resolution_mode = mapped_value`.
 - [ ] Permitir modo pass-through usando o valor bruto da source key.
+- [ ] Permitir cadastrar `fallback_value` por binding quando `resolution_mode = pass_through`.
 - [ ] Validar formularios para impedir bindings incompletos.
 
 **Acceptance Criteria:**
@@ -284,6 +290,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] O operador consegue ver texto amigavel para cada source key.
 - [ ] O operador consegue configurar mapeamentos como `Riqueza -> uma vida de prosperidade financeira ilimitada`.
 - [ ] O operador consegue configurar o que acontece quando nenhum valor mapeado for encontrado.
+- [ ] O operador consegue configurar o que acontece quando uma `source_key` em `pass_through` nao retornar valor.
 
 ### Story 6.3: Backend Variable Resolution from vw_funnel_lead_compact
 
@@ -304,6 +311,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] Implementar `pass_through`.
 - [ ] Implementar `mapped_value`.
 - [ ] Implementar `fallback_value` para `mapped_value` quando nenhum match for encontrado.
+- [ ] Implementar `fallback_value` para `pass_through` quando a `source_key` resolver `null`, vazio ou nao encontrado.
 - [ ] Implementar a regra especial de `name + pass_through` para primeiro nome com caixa normalizada.
 - [ ] Definir tratamento para valor ausente ou sem mapping.
 - [ ] Remover qualquer dependencia de roteamento por sexo.
@@ -315,6 +323,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] `desire.response[0]` e `desire.response[1]` podem abastecer placeholders.
 - [ ] Um template pode transformar `Riqueza` em uma copy expandida.
 - [ ] Quando nao houver match no `value_map`, o backend usa o fallback configurado do binding.
+- [ ] Quando um `pass_through` nao encontrar valor na `source_key`, o backend usa o fallback configurado do binding.
 - [ ] Quando `source_key = name` e `resolution_mode = pass_through`, o backend envia somente o primeiro nome formatado.
 - [ ] O sexo do lead so influencia a mensagem se o template usar uma variavel baseada em `gender`.
 
@@ -335,6 +344,7 @@ Nenhum arquivo deve ser deletado.
 - [ ] Expandir payload para enviar `meta_template_id`, `template_name`, `meta_language`, `template_variable_definitions` e `template_variable_values`.
 - [ ] Confirmar compatibilidade do N8N atual com esse payload resolvido.
 - [ ] Validar um caso com `pass_through`.
+- [ ] Validar um caso com `pass_through` caindo em `fallback_value`.
 - [ ] Validar um caso com `mapped_value`.
 - [ ] Validar um caso com `mapped_value` caindo em `fallback_value`.
 - [ ] Validar um caso usando `desire.response[0]`.
@@ -345,6 +355,7 @@ Nenhum arquivo deve ser deletado.
 
 - [ ] O N8N recebe payload completo sem precisar decidir source keys ou mappings.
 - [ ] O backend consegue disparar com valores dinamicos ja traduzidos para a copy final.
+- [ ] O backend consegue disparar com fallback correto quando um `pass_through` nao encontrar valor na `source_key`.
 - [ ] O backend consegue disparar com fallback correto quando um `mapped_value` nao encontrar match.
 - [ ] Falta de valor obrigatorio gera status auditavel e nao envio silencioso.
 - [ ] O fluxo fim a fim funciona sem reintroduzir roteamento por sexo.
