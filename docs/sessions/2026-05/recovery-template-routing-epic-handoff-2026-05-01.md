@@ -29,6 +29,9 @@
 8. Two official variable modes were captured:
    - `pass_through`
    - `mapped_value`
+9. The planning must use a new dedicated dashboard route:
+   - `/recovery-template-routing`
+10. The existing `/ai-recovery` route is unrelated and must not be reused.
 
 ### Why This Became a New Epic
 

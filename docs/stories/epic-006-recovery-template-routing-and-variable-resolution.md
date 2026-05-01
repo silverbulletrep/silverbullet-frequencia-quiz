@@ -29,7 +29,7 @@ Implementar um sistema completo de roteamento de templates e resolucao de variav
 - **N8N ja suporta 0, 1 ou N parametros:** o workflow atual le `metadata.template_variable_definitions` e `metadata.template_variable_values` para montar `components.body.parameters`.
 - **Recovery backend ja existe:** o endpoint `POST /api/recovery/dispatch-due` ja classifica candidatos e envia payloads basicos ao N8N, mas ainda sem resolucao completa de template/variaveis.
 - **Lead context compacto ja existe:** `vw_funnel_lead_compact` ja entrega `name`, `email`, `phone`, `gender`, `country`, `auto_tag`, `has_purchase`, e agora tambem `desire`.
-- **Recovery dashboard ja existe como superficie:** a rota `/ai-recovery` existe, mas hoje nao oferece configuracao formal de roteamento de templates.
+- **Recovery configurator dedicado ainda nao existe:** a rota `/ai-recovery` atual e de outro contexto e nao deve ser reutilizada para esta implementacao. O planejamento desta epic passa a prever uma nova rota dedicada: `/recovery-template-routing`.
 
 ### Enhancement Details
 
@@ -185,8 +185,7 @@ As opcoes abaixo devem ser tratadas como catalogo controlado no dashboard/backen
 | `../Dashboard_2.0/dashbord/src/pages/Templates.tsx` | Estender CRUD para bindings/resolution config ou conectar com nova UI de configuracao | Manter edicao de templates consistente com o catalogo atual |
 | `../Dashboard_2.0/dashbord/src/components/Templates/MetaWhatsappTemplateEditor.tsx` | Permitir configuracao de binding por placeholder | Ligar `{{N}}` a `source_key` e modo de resolucao |
 | `../Dashboard_2.0/dashbord/src/services/templateVariableService.ts` | Evoluir o modelo de variavel para incluir binding metadata | Base tipada para dashboard e backend |
-| `../Dashboard_2.0/dashbord/src/pages/AiRecoveryDashboard.tsx` | Reaproveitar ou redirecionar para superficie de configuracao de recovery | Evitar criar uma segunda area de recovery sem necessidade |
-| `../Dashboard_2.0/dashbord/src/app/router.tsx` | Registrar rota da configuracao, se a tela for dedicada | Navegacao da nova superficie operacional |
+| `../Dashboard_2.0/dashbord/src/app/router.tsx` | Registrar a nova rota `/recovery-template-routing` | Navegacao da nova superficie operacional |
 | `../Dashboard_2.0/dashbord/supabase/docs/SCHEMA.md` | Documentar tabelas/colunas novas de routing e binding | Contrato de dados para operacao |
 | `BACKEND/api/lib/recoveryDispatcher.ts` | Resolver rota, template, source keys e mappings | Mover inteligencia para o backend |
 | `BACKEND/api/lib/recoveryTypes.ts` | Tipar source keys, bindings, value maps e payload N8N expandido | Seguranca de contrato |
@@ -199,6 +198,7 @@ As opcoes abaixo devem ser tratadas como catalogo controlado no dashboard/backen
 |---|---|---|
 | `../Dashboard_2.0/dashbord/supabase/migrations/YYYYMMDD_create_recovery_template_routes.sql` | Tabela de roteamento por `message_type + country` | Padrao de migrations Supabase existentes |
 | `../Dashboard_2.0/dashbord/supabase/migrations/YYYYMMDD_create_recovery_template_bindings.sql` | Persistir binding por template/placeholder | Stack atual de `message_templates` |
+| `../Dashboard_2.0/dashbord/src/pages/RecoveryTemplateRouting.tsx` | Tela dedicada da nova rota `/recovery-template-routing` | Separacao explicita do fluxo atual `/ai-recovery` |
 | `../Dashboard_2.0/dashbord/src/services/recoveryTemplateConfigService.ts` | CRUD tipado das configuracoes de routing/binding | Padrao dos services existentes |
 | `../Dashboard_2.0/dashbord/src/components/RecoveryTemplateRouting/*` | Componentes da UI de roteamento/configuracao | Padrao MUI do dashboard |
 | `../Dashboard_2.0/dashbord/src/components/Templates/TemplateVariableBindingEditor.tsx` | Editor de `source_key`, modo e `value_map` por placeholder | Evolucao do editor atual |
@@ -259,7 +259,7 @@ Nenhum arquivo deve ser deletado.
 
 **Tasks:**
 
-- [ ] Definir se a configuracao mora em `/templates`, `/ai-recovery` ou em uma nova tela de recovery config.
+- [ ] Implementar a configuracao em uma nova rota dedicada `/recovery-template-routing`.
 - [ ] Exibir catalogo fixo de source keys com `key` tecnico e `display text`.
 - [ ] Permitir selecionar `source_key` por `{{N}}`.
 - [ ] Permitir selecionar `resolution_mode`.
