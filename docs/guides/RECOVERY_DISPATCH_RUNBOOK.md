@@ -32,6 +32,56 @@ N8N_TIMEOUT_MS=20000
 - Existe lock em memória para evitar execução sobreposta no mesmo processo.
 - Em múltiplas instâncias, a proteção real continua sendo a idempotência de `whatsapp_recovery_dispatches`.
 
+## Contrato backend -> N8N
+
+Payload esperado para o webhook de recovery:
+
+```json
+{
+  "lead_id": "lead_x",
+  "message_type": "checkout_no_purchase",
+  "destination": "351912345678",
+  "country": "PT",
+  "language": "pt",
+  "phone": "351912345678",
+  "email": "lead@email.com",
+  "name": "Maria da Silva",
+  "funnel_id": "quiz_frequencia_01",
+  "trigger": {
+    "event_id": "evt_x",
+    "event_type": "checkout_start",
+    "event_timestamp": "2026-05-02T05:00:00.000Z",
+    "payment_type": null,
+    "step_id": "/fim",
+    "page_path": "/pt/fim"
+  },
+  "metadata": {
+    "template_id": "local-template-uuid",
+    "meta_template_id": "1614925649613959",
+    "template_name": "recuperacao_portugal_base",
+    "template_category": "inicializacao",
+    "meta_language": "pt_PT",
+    "meta_payload": {
+      "components": []
+    },
+    "template_variable_definitions": [
+      { "token": "{{1}}", "index": 1, "label": "Nome", "required": true },
+      { "token": "{{2}}", "index": 2, "label": "Desejo principal", "required": true }
+    ],
+    "template_variable_values": {
+      "{{1}}": "Maria",
+      "{{2}}": "Riqueza"
+    }
+  }
+}
+```
+
+Regras importantes:
+
+- O backend decide `template_id`, `meta_language`, `source_key`, `resolution_mode`, `value_map` e `fallback_value`.
+- O N8N deve apenas transformar `metadata.template_variable_definitions` e `metadata.template_variable_values` em `components.body.parameters` para a Meta.
+- O N8N nao deve conter `if/else` para escolher template por `message_type`, sexo ou pais.
+
 ## Logs esperados
 
 Permitidos:
@@ -117,6 +167,25 @@ Checklist de leitura do `dry_run`:
 - confirmar `country`
 - confirmar `language`
 - confirmar telefone válido
+- confirmar que o lead escolhido possui rota ativa em `recovery_template_routes`
+
+### 3.1 Matriz de validação do contrato
+
+Casos que devem ser conferidos entre backend, resposta da rota e N8N:
+
+| Caso | Como validar | Evidência esperada |
+|---|---|---|
+| `pass_through` com valor presente | Binding `source_key = name` ou `email` com valor real | `template_variable_values` recebe valor resolvido sem usar fallback |
+| `pass_through` com fallback | Binding `source_key` sem valor no lead e `fallback_value` preenchido | `template_variable_values` usa o fallback |
+| `mapped_value` com match | `value_map` contém a chave bruta do lead | `template_variable_values` recebe o texto mapeado |
+| `mapped_value` com fallback | valor bruto nao existe em `value_map` e fallback existe | `template_variable_values` recebe o fallback |
+| `desire.response[0]` | lead com `desire.response[0]` preenchido | placeholder recebe o primeiro desejo |
+| `desire.response[1]` | lead com segundo desejo disponivel | placeholder recebe o segundo desejo |
+| obrigatoria sem resolucao | binding `required=true` sem valor final nem fallback | backend marca `missing_required_template_variable` e nao chama N8N |
+
+Evidência automatizada local já disponível:
+
+- `npm run test:api` cobre `pass_through` com valor presente, `pass_through` com fallback, `mapped_value` com match, `mapped_value` com fallback, `desire.response[0]`, `desire.response[1]` e bloqueio por variavel obrigatoria sem envio.
 
 ### 4. Primeiro envio real controlado
 
@@ -134,8 +203,27 @@ Depois validar:
 
 - resposta HTTP da rota
 - execução no N8N
-- template escolhido por `message_type + country/language`
+- `metadata.template_id`, `metadata.meta_template_id`, `metadata.template_name` e `metadata.meta_language`
+- `metadata.template_variable_definitions`
+- `metadata.template_variable_values`
 - linha criada/atualizada em `whatsapp_recovery_dispatches`
+- ausencia de regra de negocio no workflow do N8N para template/binding
+
+### 4.1 Consulta de auditoria após envio real
+
+```sql
+select
+  lead_id,
+  message_type,
+  country,
+  n8n_status,
+  eligible_at,
+  dispatched_at,
+  n8n_response
+from public.whatsapp_recovery_dispatches
+where lead_id = 'LEAD_VALIDADO'
+order by updated_at desc;
+```
 
 ## Ativação do cron interno
 
@@ -165,6 +253,7 @@ Fallback emergencial:
 
 - remover ou invalidar `N8N_META_TEMPLATE_WEBHOOK_URL`
 - reiniciar o backend
+- desativar a rota em `recovery_template_routes` para o `message_type + country` afetado, se o problema estiver no template
 
 ## Consultas operacionais úteis
 
