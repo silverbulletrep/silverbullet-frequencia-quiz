@@ -20,6 +20,8 @@ Operacionais:
 RECOVERY_DISPATCH_ENABLED=false
 RECOVERY_DISPATCH_INTERVAL_MS=60000
 RECOVERY_DISPATCH_LIMIT=20
+RECOVERY_DISPATCH_RECENT_LOOKBACK_MS=
+RECOVERY_DISPATCH_BACKFILL_ENABLED=false
 RECOVERY_FUNNEL_ID=quiz_frequencia_01
 N8N_TIMEOUT_MS=20000
 ```
@@ -30,7 +32,15 @@ N8N_TIMEOUT_MS=20000
 - O bootstrap acontece em `BACKEND/api/server.ts`.
 - O agendamento usa `setInterval` no próprio processo Node.
 - Existe lock em memória para evitar execução sobreposta no mesmo processo.
+- A busca operacional prioriza leads recentes primeiro; backlog antigo só entra como cauda opcional quando `RECOVERY_DISPATCH_BACKFILL_ENABLED=true`.
 - Em múltiplas instâncias, a proteção real continua sendo a idempotência de `whatsapp_recovery_dispatches`.
+
+## Prioridade de leitura dos leads
+
+- O lote quente usa uma janela recente derivada de `RECOVERY_DISPATCH_MAX_ELIGIBLE_AGE_MS + 25 min + margem`.
+- `RECOVERY_DISPATCH_RECENT_LOOKBACK_MS` permite sobrescrever essa janela quando for necessário um rollout controlado.
+- Se `RECOVERY_DISPATCH_BACKFILL_ENABLED=false`, o scheduler foca apenas no lote recente.
+- Se `RECOVERY_DISPATCH_BACKFILL_ENABLED=true`, o sistema completa vagas restantes com leads antigos sem deixar o backlog bloquear os recentes.
 
 ## Contrato backend -> N8N
 
@@ -97,6 +107,13 @@ Nunca logar:
 - `RECOVERY_DISPATCH_SECRET`
 - service role key
 - headers/tokens sensíveis
+
+Logs adicionais esperados após o ajuste:
+
+- `fetch_mode`
+- `recent_lookback_ms`
+- `fetched_context_count`
+- `skipped_expired_count`
 
 ## Sequência recomendada de validação
 
@@ -168,6 +185,7 @@ Checklist de leitura do `dry_run`:
 - confirmar `language`
 - confirmar telefone válido
 - confirmar que o lead escolhido possui rota ativa em `recovery_template_routes`
+- confirmar `fetch_mode = exact_lead` quando `lead_id` for informado
 
 ### 3.1 Matriz de validação do contrato
 
@@ -233,6 +251,7 @@ Depois do `dry_run` e do primeiro envio real controlado:
 RECOVERY_DISPATCH_ENABLED=true
 RECOVERY_DISPATCH_INTERVAL_MS=60000
 RECOVERY_DISPATCH_LIMIT=20
+RECOVERY_DISPATCH_BACKFILL_ENABLED=false
 ```
 
 Reinicie o backend e confirme no log:
