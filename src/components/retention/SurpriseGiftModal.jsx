@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
+import { createFunnelTracker, QUIZ_FUNNEL_ID, getDefaultBaseUrl, readStoredCountry, buildRouteStep, QUIZ_PROGRESS_STEPS, shouldSendEvent } from '../../lib/funnelTracker';
 import styles from './SurpriseGiftModal.module.scss';
 
 const SURPRISE_MODAL_PHASES = {

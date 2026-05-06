@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { useTranslation } from 'react-i18next';
+import { createFunnelTracker, QUIZ_FUNNEL_ID, getDefaultBaseUrl, readStoredCountry, buildRouteStep, QUIZ_PROGRESS_STEPS, shouldSendEvent } from '../../lib/funnelTracker';
 import styles from './DiscountModal.module.scss';
 
 const DiscountModal = ({ 
