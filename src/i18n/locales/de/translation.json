@@ -2153,9 +2153,9 @@
       "subtitle": "Tippen Sie auf das Video unten, um es zu entdecken..."
     },
     "transition": {
-      "phrase1": "Die Astrologin-Künstlerin bereitet\n<strong>Die Zeichnung</strong>\nIhrer Seelenverwandten vor...",
-      "phrase2": "✨ <strong>Verbindet sich</strong> mit Ihrer\nastralen Frequenz...",
-      "phrase3": "🌙 <strong>Kanalisiert</strong> die Energie\nder Sterne..."
+      "phrase1": "Das Tarot hat über <strong>600 Jahre dokumentierte</strong> Geschichte. Was du gleich siehst, <strong>ist keine Fiktion</strong>.",
+      "phrase2": "Jede Karte, die sich zeigt, wurde von Menschen <strong>real gespürt</strong>, die dasselbe durchgemacht haben wie du.",
+      "phrase3": "Deine Lesung beginnt jetzt. Was die Karten in dir finden — <strong>ist kein Zufall</strong>."
     },
     "chat": {
       "askName": "✨ Bevor ich enthülle, was die Karten verbergen... Wie heißen Sie?",
@@ -2195,7 +2195,12 @@
       "badge": "🇩🇪 Der Einzige in Deutschland",
       "copy": "Hat <strong>+19.000 Menschen</strong> geholfen, energetische Blockaden zu lösen, <em>finanziellen Wohlstand</em> freizuschalten und <em>wahre Beziehungen</em> zu finden — mit der kostenlosen Vibrationsuntersuchung."
     },
-    "cta_button": "Meine Vibrationsuntersuchung starten →"
+    "cta_button": "Meine Vibrationsuntersuchung starten →",
+    "gate": {
+      "badge": "✦ Energetisches Tarot ✦",
+      "title": "Ihre astrale Verbindung<br/>wurde hergestellt",
+      "button": "Beratung beginnen"
+    }
   },
   "surprise_modal": {
     "headline": "Herzlichen Glückwunsch!",

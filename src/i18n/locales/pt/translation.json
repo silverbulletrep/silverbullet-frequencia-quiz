@@ -2226,9 +2226,9 @@
       "subtitle": "Toque no vídeo abaixo para descobrir..."
     },
     "transition": {
-      "phrase1": "A Artista Astróloga está\n<strong>Preparando o Desenho</strong>\nda sua Alma Gêmea...",
-      "phrase2": "✨ <strong>Conectando</strong> com sua\nfrequência astral...",
-      "phrase3": "🌙 <strong>Canalizando</strong> a energia\ndas estrelas..."
+      "phrase1": "O Tarot tem mais de <strong>600 anos de registos</strong> documentados. O que vais ver <strong>não é ficção</strong>.",
+      "phrase2": "Cada carta revelada aqui foi <strong>sentida de forma real</strong> por quem passou pelo mesmo que tu.",
+      "phrase3": "A tua leitura começa. O que as cartas encontrarem em ti — <strong>não é coincidência</strong>."
     },
     "chat": {
       "askName": "✨ Antes de revelar o que as cartas escondem... Qual é o seu nome?",
@@ -2268,7 +2268,12 @@
       "badge": "🇵🇹 O único em Portugal",
       "copy": "Ajudou <strong>+19.000 pessoas</strong> a derreter bloqueios energéticos, desbloquear a <em>prosperidade financeira</em> e <em>relacionamentos verdadeiros</em> — com o Exame Vibracional Gratuito."
     },
-    "cta_button": "Quero fazer meu Exame Vibracional →"
+    "cta_button": "Quero fazer meu Exame Vibracional →",
+    "gate": {
+      "badge": "✦ Tarot Energético ✦",
+      "title": "Sua Conexão Astral<br/>foi Estabelecida",
+      "button": "Iniciar Consulta"
+    }
   },
   "surprise_modal": {
     "headline": "Parabéns!",
