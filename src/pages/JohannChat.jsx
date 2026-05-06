@@ -4,7 +4,15 @@ import { useTranslation } from 'react-i18next';
 import styles from './JohannChat.module.scss';
 import { asset } from '@/lib/asset';
 
-const isPtRoute = window.location.pathname.startsWith('/pt');
+const getPathnameWithoutBase = () => {
+    const base = String(import.meta.env.BASE_URL || '/').replace(/\/$/, '');
+    const pathname = window.location.pathname;
+
+    if (!base || base === '/') return pathname;
+    return pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
+};
+
+const isPtRoute = getPathnameWithoutBase().startsWith('/pt');
 const EXPERT_IMG = isPtRoute ? asset('/img/expert-pt.webp') : asset('/img/expert.webp');
 
 // --- CONFIGURAÇÃO DOS GANCHOS (17 VARIAÇÕES) ---
