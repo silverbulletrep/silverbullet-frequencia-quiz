@@ -17,6 +17,14 @@ import 'react-device-frameset/styles/marvel-devices.min.css';
 import { useTranslation } from 'react-i18next';
 import { asset } from '@/lib/asset';
 import styles from './AliceChat.module.scss';
+import { leadCache } from '@/lib/leadCache';
+import {
+  createFunnelTracker,
+  getDefaultBaseUrl,
+  readStoredCountry,
+  ALMA_GEMEA_FUNNEL_ID,
+  ALMA_GEMEA_STEPS
+} from '@/lib/funnelTracker';
 
 // ══════════════════════════════════════════════════════════
 // TIPOS
@@ -51,9 +59,9 @@ function personalize(text: string, name: string): string {
 
 // ── CardBack Mini ──
 const CardBackMini: React.FC<{ index: number; layoutId?: string }> = ({ index, layoutId }) => (
-  <motion.div 
+  <motion.div
     layoutId={layoutId}
-    className={styles.cardBackMini} 
+    className={styles.cardBackMini}
     style={{ transform: `rotate(${(index - 1) * 3}deg)` }}
   >
     <img
@@ -68,10 +76,10 @@ const CardBackMini: React.FC<{ index: number; layoutId?: string }> = ({ index, l
 const TarotDeck: React.FC = () => (
   <div className={styles.tarotDeckWrapper}>
     {[0, 1, 2, 3, 4].map((i) => (
-      <div 
-        key={`deck-card-${i}`} 
+      <div
+        key={`deck-card-${i}`}
         className={styles.deckCard}
-        style={{ 
+        style={{
           transform: `translateY(-${i * 2}px) rotateZ(-${i * 0.5}deg)`,
           opacity: 1 - (i * 0.15)
         }}
@@ -97,7 +105,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
   const { t } = useTranslation();
 
   // ── Configuração Localizada ──
-  
+
   const TIRAGEM_1: Record<Gender, RevealedCardInfo> = {
     F: { img: 'm04.jpg', name: t('alma_gemea.cards.emperor', 'O Imperador'), color: '#FFD700' },
     M: { img: 'm02.jpg', name: t('alma_gemea.cards.highpriestess', 'A Sacerdotisa'), color: '#C084FC' },
@@ -184,26 +192,57 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
     // Se for alemão, busca na subpasta /de/
     const rawSrc = lang === 'de' ? basePath.replace('/alice/', '/alice/de/') : basePath;
     const src = asset(rawSrc);
-    
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.src = src;
-      audioRef.current.play().catch(e => console.log("Audio play blocked:", e));
+
+    // Sequestra o áudio que foi destrancado pelo clique no AlmaGemea.tsx
+    let audioEl = document.getElementById('voice-audio') as HTMLAudioElement;
+
+    if (audioEl) {
+      if (audioRef.current && audioRef.current !== audioEl) {
+        audioRef.current.pause();
+      }
+      audioEl.pause();
+      audioEl.onended = null;
+      audioEl.loop = false;
+      audioEl.src = src;
+      audioEl.play().catch(e => console.log("Audio voice play blocked:", e));
+      audioRef.current = audioEl;
     } else {
-      const audio = new Audio(src);
-      audioRef.current = audio;
-      audio.play().catch(e => console.log("Audio play blocked:", e));
+      // Fallback caso não encontre
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.onended = null;
+        audioRef.current.loop = false;
+        audioRef.current.src = src;
+        audioRef.current.play().catch(e => console.log("Audio play blocked:", e));
+      } else {
+        const audio = new Audio(src);
+        audioRef.current = audio;
+        audio.play().catch(e => console.log("Audio play blocked:", e));
+      }
     }
     return audioRef.current;
   }, [lang]);
 
   const playBackgroundMusic = useCallback(() => {
-    if (!bgAudioRef.current) {
-      const audio = new Audio(asset('/Audio/musica-fundo.mp3'));
+    const src = asset('/Audio/musica-fundo.mp3');
+
+    // Tenta reutilizar o áudio fantasma destravado no Portão de Interação (AlmaGemea.tsx)
+    let audioEl = document.getElementById('bg-music-audio') as HTMLAudioElement;
+
+    if (audioEl) {
+      bgAudioRef.current = audioEl;
+      audioEl.loop = true;
+      audioEl.volume = 0.25;
+    } else if (!bgAudioRef.current) {
+      // Fallback
+      const audio = new Audio(src);
       audio.loop = true;
-      audio.volume = 0.25; 
+      audio.volume = 0.25;
       bgAudioRef.current = audio;
+    } else if (bgAudioRef.current.src.indexOf('/Audio/musica-fundo.mp3') === -1) {
+      bgAudioRef.current.src = src;
     }
+
     bgAudioRef.current.play().catch(e => console.log("Bg music blocked:", e));
   }, []);
 
@@ -221,7 +260,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
     const currentName = name || userName;
     isProcessingRef.current = true;
     setPanelState('hidden');
-    if (tiragemNum === 1) setRevealedCards([]); 
+    if (tiragemNum === 1) setRevealedCards([]);
     setSelectedCardIndex(null);
     setIsFlipping(false);
     setIsVibrating(false);
@@ -263,13 +302,40 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
     await new Promise(r => setTimeout(r, 400));
 
     const etapa8Audio = playAudio('/Audio/alice/etapa_8.mp3');
-    setActiveMessage('__PORTA_RETRATO__');
+
+    // Inicia "Digitando..." para criar expectativa nos primeiros 6 segundos
+    setIsTyping(true);
+    setActiveMessage('');
 
     if (etapa8Audio) {
+      // Evento para disparar a ficha exata e precisamente aos 6 segundos
+      const onTimeEtapa8 = () => {
+        if (etapa8Audio.currentTime >= 6 && !etapa8Audio.dataset.portaRetratoDone) {
+          etapa8Audio.dataset.portaRetratoDone = '1';
+          setIsTyping(false);
+          setActiveMessage('__PORTA_RETRATO__');
+        }
+      };
+      etapa8Audio.addEventListener('timeupdate', onTimeEtapa8);
+
       await new Promise<void>(resolve => {
-        etapa8Audio.onended = () => resolve();
-        setTimeout(() => resolve(), 90000); 
+        const onEnded = () => {
+          etapa8Audio.removeEventListener('timeupdate', onTimeEtapa8);
+          resolve();
+        };
+        etapa8Audio.onended = onEnded;
+        setTimeout(() => {
+          etapa8Audio.removeEventListener('timeupdate', onTimeEtapa8);
+          resolve();
+        }, 120000);
       });
+    } else {
+      // Fallback seguro caso o áudio falhe
+      setTimeout(() => {
+        setIsTyping(false);
+        setActiveMessage('__PORTA_RETRATO__');
+      }, 6000);
+      await new Promise(r => setTimeout(r, 12000));
     }
 
     await showMessage(personalize(COPIES.phone, userName));
@@ -287,31 +353,67 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
     setRevealedCards([]);
 
     const audio = playAudio('/Audio/alice/etapa_1.mp3');
-    await showMessage(COPIES.askName);
+
+    setIsTyping(true);
+    setActiveMessage('');
 
     if (audio) {
       await new Promise(resolve => {
         audio.onended = resolve;
         // Fallback maior caso o áudio em alemão seja longo
-        setTimeout(resolve, 15000); 
+        setTimeout(resolve, 15000);
       });
+    } else {
+      await new Promise(r => setTimeout(r, 6000));
     }
 
+    setIsTyping(false);
+    setActiveMessage(COPIES.askName);
     setPanelState('input');
     isProcessingRef.current = false;
-  }, [showMessage, playAudio, COPIES]);
+  }, [playAudio, COPIES]);
 
   const handleNameSubmit = useCallback(async () => {
     if (!nameInput.trim() || isProcessingRef.current) return;
     isProcessingRef.current = true;
 
     const name = nameInput.trim();
+    const formattedName = `${name}-Tarot`;
     setUserName(name);
+
+    // ── Tracking e Cache (Sync com /quiz) ──
+    leadCache.setNome(formattedName);
+
+    const tracker = createFunnelTracker({
+      baseUrl: getDefaultBaseUrl(),
+      funnelId: ALMA_GEMEA_FUNNEL_ID,
+      getCountry: () => readStoredCountry() || undefined,
+      debug: import.meta.env.DEV
+    });
+
+    // Sincroniza o ID entre funnelTracker e leadCache para garantir reuso em outras páginas
+    const currentLeadId = tracker.getLeadId();
+    leadCache.setLeadId(currentLeadId);
+
+    // Envia o payload com nome, id único, idioma e origem do funil
+    tracker.leadIdentifiedCustom(ALMA_GEMEA_STEPS.coleta_nome, {
+      name: formattedName,
+      lead_id: currentLeadId,
+      lang,
+      funnel_origin: `alma-gemea-${lang}`,
+    }).catch(err => {
+      console.error('[AliceChat] Erro ao enviar lead_identified:', err);
+    });
+
     setPanelState('hidden');
     setActiveMessage('');
     setGameState(1);
+
+    // Tentar tocar a música de fundo novamente (agora temos uma interação real do usuário)
+    playBackgroundMusic();
+
     await startTiragem(1, name);
-  }, [nameInput, startTiragem]);
+  }, [nameInput, startTiragem, playBackgroundMusic]);
 
   const abrirVSL = useCallback(() => {
     if (!isPhoneOn) return;
@@ -353,8 +455,8 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
   }, [playAudio]);
 
   const handleCTA = useCallback(() => {
-    window.location.href = '/exame-vibracional';
-  }, []);
+    window.location.href = asset(`/${lang}/quiz`);
+  }, [lang]);
 
   const handleCardSelect = useCallback(async (cardIndex: number) => {
     if (isEtapaAudioPlayingRef.current) {
@@ -407,6 +509,16 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
     // ── Tiragem 3 (A Lua): cronometria precisa pelo áudio da Etapa 7 ──
     if (gameState === 3) {
+      // PREFETCH: Inicia o carregamento das próximas rotas em background para transição instantânea
+      try {
+        import('@/pages/InitialQuestions').catch(() => {});
+        import('@/pages/AgeSelectionWomen').catch(() => {});
+        import('@/pages/AgeSelectionMen').catch(() => {});
+        if (import.meta.env.DEV) console.log('[AliceChat] Prefetch das rotas do Quiz iniciado 🚀');
+      } catch (e) {
+        void 0;
+      }
+
       if (audio) {
         // Pega os timestamps da tradução (com fallback seguro)
         const tLuaDeck = Number(t('alma_gemea.animation.lua_to_deck', { defaultValue: 29 }));
@@ -419,7 +531,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
             // Usa as variáveis da tradução em vez de valores fixos
             if (t >= tLuaDeck && !audio.dataset.lua29Done) {
               audio.dataset.lua29Done = '1';
-              setGameState(4); 
+              setGameState(4);
             }
             if (t >= tLuaFan && !audio.dataset.lua39Done) {
               audio.dataset.lua39Done = '1';
@@ -427,17 +539,19 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
             }
           };
           audio.addEventListener('timeupdate', onTime);
-          
+
           const cleanup = () => {
             audio.removeEventListener('timeupdate', onTime);
-            audio.removeEventListener('ended', cleanup);
+            audio.removeEventListener('ended', onEndedWrapper);
           };
 
-          audio.addEventListener('ended', () => {
+          const onEndedWrapper = () => {
             cleanup();
             setShowAllCards(false);
             resolve();
-          });
+          };
+
+          audio.addEventListener('ended', onEndedWrapper);
 
           setTimeout(() => {
             cleanup();
@@ -448,23 +562,40 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
       const etapa8Audio = playAudio('/Audio/alice/etapa_8.mp3');
       if (etapa8Audio) {
+        const targetTime = lang === 'de' ? 11 : 5;
+        const onTimeEtapa8 = () => {
+          if (etapa8Audio.currentTime >= targetTime && !etapa8Audio.dataset.portaRetratoDone) {
+            etapa8Audio.dataset.portaRetratoDone = '1';
+            setActiveMessage('__PORTA_RETRATO__');
+          }
+        };
+        etapa8Audio.addEventListener('timeupdate', onTimeEtapa8);
+
         await new Promise<void>(resolve => {
           const onEnded = () => {
+            etapa8Audio.removeEventListener('timeupdate', onTimeEtapa8);
             etapa8Audio.removeEventListener('ended', onEnded);
             resolve();
           };
           etapa8Audio.addEventListener('ended', onEnded);
           setTimeout(() => {
+            etapa8Audio.removeEventListener('timeupdate', onTimeEtapa8);
             etapa8Audio.removeEventListener('ended', onEnded);
             resolve();
           }, 120000);
         });
+      } else {
+        const targetTimeMs = lang === 'de' ? 11000 : 5000;
+        setTimeout(() => {
+          setActiveMessage('__PORTA_RETRATO__');
+        }, targetTimeMs);
+        await new Promise(r => setTimeout(r, 15000));
       }
 
       await showMessage(personalize(COPIES.phone, userName));
       await new Promise(r => setTimeout(r, 600));
       setIsPhoneOn(true);
-      setPhoneImage('on');   
+      setPhoneImage('on');
       setShowTapHint(true);
 
     } else {
@@ -477,7 +608,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
       const btnLabel = gameState === 1 ? COPIES.tiragem1Btn : COPIES.tiragem2Btn;
       setButtonLabel(btnLabel);
-      
+
       const nextStep = () => {
         setGameState(nextStage as GameState);
         startTiragem(nextStage as 1 | 2 | 3);
@@ -494,12 +625,24 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
       hasStartedRef.current = true;
       playBackgroundMusic();
       startState0();
-      
-      // Forçar o play do vídeo de fundo (contorna bloqueios de alguns browsers)
-      if (videoBgRef.current) {
-        videoBgRef.current.muted = true;
-        videoBgRef.current.play().catch(e => console.log("[AliceChat] Video play blocked:", e));
-      }
+
+      // Pré-carregar próximos áudios para evitar lag entre etapas
+      const futureAudios = [
+        '/Audio/alice/etapa_2.mp3', '/Audio/alice/etapa_3.mp3',
+        '/Audio/alice/etapa_4.mp3', '/Audio/alice/etapa_5.mp3',
+        '/Audio/alice/etapa_6.mp3', '/Audio/alice/etapa_7.mp3',
+        '/Audio/alice/etapa_8.mp3', '/Audio/alice/etapa_9.mp3',
+        '/Audio/alice/etapa_10.mp3'
+      ];
+      futureAudios.forEach(path => {
+        const img = new Image(); // Truque para forçar cache de pequenos arquivos se Audio() falhar
+        const a = new Audio();
+        a.src = asset(lang === 'de' ? path.replace('/alice/', '/alice/de/') : path);
+        a.preload = 'auto';
+      });
+
+      // O vídeo principal agora é gerenciado pelo AlmaGemea.tsx (pai)
+      // Isso evita recarregamento e mantém o play em aparelhos de baixo processamento
     }
 
     // Cleanup: Para todos os áudios se o chat fechar
@@ -521,22 +664,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
   return ReactDOM.createPortal(
     <div className={styles.chatOverlay} role="dialog" aria-label="Mesa de Tarot com Alice" style={{ touchAction: 'none' }}>
 
-      <video 
-        ref={videoBgRef}
-        autoPlay 
-        muted 
-        loop 
-        playsInline 
-        preload="auto"
-        style={{ pointerEvents: 'none' }}
-        className={styles.videoBg}
-      >
-        <source src={asset("/videos/alice-chat-bg.webm")} type="video/webm" />
-      </video>
-
       <TarotDeck />
-
-      <button className={styles.closeBtn} onClick={onClose} aria-label={t('alma_gemea.chat.close_btn')} type="button">✕</button>
 
       <LayoutGroup>
         <div className={styles.dialogZone}>
@@ -587,9 +715,9 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
             const fanAngles  = [-15, 0, 15];
             const fanX       = [-120, 0, 120];
             const fanY       = [10, -20, 10];
-            const messyAngle = [8, -5, 12];  
-            const messyX     = [0, 4, -3];    
-            const messyY     = [0, -5, 3];    
+            const messyAngle = [8, -5, 12];
+            const messyX     = [0, 4, -3];
+            const messyY     = [0, -5, 3];
 
             let animateProps: object;
 
@@ -621,7 +749,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
                 x: deckX,
                 y: deckY,
                 scale: 0.45,
-                rotateY: 180,
+                rotateY: 0, /* Modificado: 0 para manter a face virada para cima (antes era 180) */
                 rotateX: 55,
                 rotateZ: 10 + (messyAngle[idx] ?? 0),
                 zIndex: 5 + idx,
@@ -635,15 +763,15 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
                 style={{ position: 'absolute' }}
                 initial={false}
                 animate={animateProps as import('framer-motion').TargetAndTransition}
-                transition={{ 
+                transition={{
                   type: 'tween',
                   duration: showAllCards ? 0.6 : 0.8,
                   ease: [0.25, 0.46, 0.45, 0.94],
                   delay: showAllCards ? idx * 0.12 : 0
                 }}
               >
-              <div 
-                className={styles.revealedCardImgWrap} 
+              <div
+                className={styles.revealedCardImgWrap}
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 <div style={{ backfaceVisibility: 'hidden', position: 'absolute', inset: 0 }}>
@@ -713,7 +841,31 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
                 <>
                   <div className={styles.cardSelectionZone}>
                     <div className={styles.cardPicker}>
-                      <p className={styles.panelHint}>{t('alma_gemea.chat.panelHint_cards')}</p>
+                      <AnimatePresence mode="wait">
+                        {showAudioWaitToast ? (
+                          <motion.p
+                            key="toast-error"
+                            className={`${styles.panelHint} ${styles.toastHint}`}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {t('alma_gemea.chat.audioWaitToast')}
+                          </motion.p>
+                        ) : (
+                          <motion.p
+                            key="normal-hint"
+                            className={styles.panelHint}
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.9 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {t('alma_gemea.chat.panelHint_cards')}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
                       <div className={styles.cardPickRow}>
                         {[0, 1, 2].map((i) => (
                           <motion.button
@@ -759,19 +911,6 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
                     </div>
                   </div>
 
-                  <AnimatePresence>
-                    {showAudioWaitToast && (
-                      <motion.div
-                        className={styles.audioWaitToastInner}
-                        initial={{ opacity: 0, y: 8, scale: 0.92 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -6, scale: 0.92 }}
-                        transition={{ duration: 0.3, ease: 'easeOut' }}
-                      >
-                        {t('alma_gemea.chat.audioWaitToast')}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </>
               )}
 
@@ -824,11 +963,11 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
       </LayoutGroup>
 
       <button
-        className={styles.phoneTableWrapper}
+        className={`${styles.phoneTableWrapper} ${styles.wrapperVerticalPhone}`}
         onClick={abrirVSL}
         type="button"
         aria-label="Ver vídeo no celular"
-        style={{ 
+        style={{
           cursor: isPhoneOn ? 'pointer' : 'default',
           opacity: gameState === 0 ? 0 : 1,
           pointerEvents: gameState === 0 ? 'none' : 'auto',
@@ -841,7 +980,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
           <motion.div
             className={styles.clickIndicator}
             initial={{ opacity: 0, x: 40 }}
-            animate={{ 
+            animate={{
               opacity: [0, 1, 1, 0],
               x: [40, -10, -10, -10],
               scale: [1, 1, 0.8, 1.1, 1],
@@ -864,11 +1003,11 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
         <img
           src={asset(
-            phoneImage === 'exame' ? '/img/celular-exame.webp' :
-            phoneImage === 'on'    ? '/img/Celular-Webp.webp' :
-                                     '/img/celular-desligado.webp'
+            phoneImage === 'exame' ? '/img/exame-celular.webp' :
+            phoneImage === 'on'    ? '/img/celular-video.webp' :
+                                     '/img/celular-apagado.webp'
           )}
-          className={styles.phoneTableImg}
+          className={styles.verticalPhoneImg}
           alt="Celular na mesa"
         />
       </button>
@@ -889,38 +1028,40 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
               transition={{ type: 'spring', damping: 22, stiffness: 150 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <DeviceFrameset device="iPhone X" color="black" landscape={false}>
-                <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                  <video
-                    src={asset("/videos/AD-10.webm")}
-                    className={styles.videoInPhone}
-                    autoPlay
-                    playsInline
-                    onTimeUpdate={(e) => {
-                      const video = e.currentTarget;
-                      const realProg = video.currentTime / video.duration;
-                      const fakeProg = Math.sqrt(realProg) * 100;
-                      setVideoProgress(fakeProg);
-                    }}
-                    onEnded={handleClosePhoneModal}
-                  />
-                  
-                  <div className={styles.progressBox}>
-                    <div className={styles.progressStatus}>
-                      <span>{t('alma_gemea.chat.progressLabel')}</span>
-                      <span className={styles.progressPercent}>{Math.round(videoProgress)}%</span>
-                    </div>
-                    <div className={styles.progressContainer}>
-                      <div 
-                        className={styles.progressBar} 
-                        style={{ width: `${videoProgress}%` }}
-                      >
-                        <div className={styles.progressGlow} />
+              <div className={styles.deviceScaler}>
+                <DeviceFrameset device="iPhone X" color="black" landscape={false}>
+                  <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                    <video
+                      src={asset(lang === 'de' ? "/videos/AD-10-DE.webm" : "/videos/AD-10.webm")}
+                      className={styles.videoInPhone}
+                      autoPlay
+                      playsInline
+                      onTimeUpdate={(e) => {
+                        const video = e.currentTarget;
+                        const realProg = video.currentTime / video.duration;
+                        const fakeProg = Math.sqrt(realProg) * 100;
+                        setVideoProgress(fakeProg);
+                      }}
+                      onEnded={handleClosePhoneModal}
+                    />
+
+                    <div className={styles.progressBox}>
+                      <div className={styles.progressStatus}>
+                        <span>{t('alma_gemea.chat.progressLabel')}</span>
+                        <span className={styles.progressPercent}>{Math.round(videoProgress)}%</span>
+                      </div>
+                      <div className={styles.progressContainer}>
+                        <div
+                          className={styles.progressBar}
+                          style={{ width: `${videoProgress}%` }}
+                        >
+                          <div className={styles.progressGlow} />
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </DeviceFrameset>
+                </DeviceFrameset>
+              </div>
             </motion.div>
           </motion.div>
         )}
