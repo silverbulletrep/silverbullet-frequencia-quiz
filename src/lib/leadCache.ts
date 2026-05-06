@@ -21,6 +21,7 @@ type LeadCacheData = {
   client_uuid?: string
   selected_option?: string
   selected_option_description?: string
+  nome?: string
 }
 
 const MEMORY_STORE: { data: LeadCacheData } = { data: {} }
@@ -257,6 +258,12 @@ export const leadCache = {
   setLeadIdShort(lead_id_short: string) {
     const current = readStorage()
     const next = { ...current, lead_id_short }
+    writeStorage(next)
+    queueLeadSync()
+  },
+  setNome(nome: string) {
+    const current = readStorage()
+    const next = { ...current, nome, created_at: current.created_at || new Date().toISOString() }
     writeStorage(next)
     queueLeadSync()
   },

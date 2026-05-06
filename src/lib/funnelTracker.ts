@@ -26,9 +26,15 @@ type SendResult = { ok: boolean; via: "beacon" | "fetch" };
 
 export const COUNTRY_KEY = "lead_country";
 export const QUIZ_FUNNEL_ID = "quiz_frequencia_01";
+export const ALMA_GEMEA_FUNNEL_ID = "Tarot_Quiz_01";
+
 export const QUIZ_STEPS = {
   quiz: { id: "quiz", index: 1, name: "Quiz" },
   age: { id: "age_selection", index: 2, name: "Seleção de Idade" }
+} as const;
+
+export const ALMA_GEMEA_STEPS = {
+  coleta_nome: { id: "coleta_nome", index: 1, name: "Primeira Etapa - Nome" }
 } as const;
 
 export const QUIZ_PROGRESS_STEPS = {
@@ -434,6 +440,8 @@ export const createFunnelTracker = (config: TrackerConfig) => {
         event: "purchase" as EventName,
         ...base(),
         purchase: { order_id, product, value, currency, payment_method, is_upsell }
-      })
+      }),
+
+    getLeadId: () => getOrCreateLeadId(leadKey)
   };
 };
