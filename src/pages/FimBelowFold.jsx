@@ -226,7 +226,12 @@ export default function FimBelowFold({
             });
         }
         setShowStripeCheckout(false);
-    }, [DEBUG, discountThemeActive, showDiscountModal]);
+        if (!isPtRoute && !discountThemeActive && onDiscountActivated) {
+            const targetTime = Date.now() + (300 * 1000);
+            onDiscountActivated(targetTime);
+            sessionStorage.setItem('discount_timer_end', targetTime.toString());
+        }
+    }, [DEBUG, isPtRoute, discountThemeActive, onDiscountActivated, showDiscountModal]);
 
     const handleCheckoutIdle = useCallback(() => {
         if (DEBUG) {
