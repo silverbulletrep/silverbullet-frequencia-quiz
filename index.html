@@ -13,12 +13,22 @@
   <link rel="dns-prefetch" href="https://www.facebook.com" />
   <link rel="dns-prefetch" href="https://connect.facebook.net" />
   <link rel="dns-prefetch" href="https://images.converteai.net" />
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@300;400;700&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@300;400;700&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" media="print"
+  <link rel="preload" href="https://fonts.gstatic.com/s/cinzel/v19/8vLec776mE3E9PF87r1Z.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="https://fonts.gstatic.com/s/montserrat/v26/JTUSjIg1_i6t8kCHKm4df9GRne6_dg.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@300;400;500;700&family=Cinzel:wght@400;700&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@300;400;500;700&family=Cinzel:wght@400;700&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" media="print"
     onload="this.media='all'" />
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@300;400;700&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&family=Montserrat:wght@300;400;500;700&family=Cinzel:wght@400;700&family=Outfit:wght@300;400;700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" />
   </noscript>
+  <script>
+    (function() {
+      const path = window.location.pathname;
+      if (path.includes('alma-gemea')) {
+        document.documentElement.classList.add('route-alma-gemea');
+      }
+    })();
+  </script>
   <title>Fundaris</title>
 
   <style>
@@ -32,6 +42,10 @@
       padding: 120px 16px 28px;
       flex: 1;
       row-gap: 20px;
+    }
+
+    .route-alma-gemea .shell-container {
+      display: none !important;
     }
 
     @media (max-width: 768px) {

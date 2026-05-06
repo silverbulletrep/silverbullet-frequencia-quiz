@@ -124,7 +124,7 @@ export default function AuthorityHeader() {
 
   if (pathname === '/fim' || pathname === '/start') return null
 
-  const showProgressAndIndicator = pathname !== '/quiz'
+  const showProgressAndIndicator = pathname !== '/quiz' && pathname !== '/alma-gemea'
 
   return (
     <div className={styles.header} data-app-header="header">

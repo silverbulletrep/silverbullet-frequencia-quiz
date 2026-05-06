@@ -15,6 +15,7 @@ import {
   shouldSendEvent
 } from '../lib/funnelTracker';
 import { useExitIntent } from '../hooks/useExitIntent';
+import { useWakeLock } from '../hooks/useWakeLock';
 import styles from './Fim.module.scss'
 import expertImg from '../../img/expert.webp'
 import expertPtImg from '../../img/expert-pt.webp'
@@ -33,6 +34,7 @@ export default function Fim() {
   const navigate = useNavigate()
 
   useExitIntent();
+  useWakeLock(true);
   const introRef = useRef(null)
   const debugRef = useRef({ currentTime: 0, duration: 0, source: 'init' })
   const [introState, setIntroState] = useState('enter')

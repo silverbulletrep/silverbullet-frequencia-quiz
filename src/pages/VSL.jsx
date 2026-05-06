@@ -7,6 +7,7 @@ import styles from './VSL.module.scss';
 import { asset } from '@/lib/asset';
 import { buildRouteStep, buildRouteStepIndex, createFunnelTracker, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry, getDefaultBaseUrl, shouldSendEvent } from '../lib/funnelTracker';
 import { useExitIntent } from '../hooks/useExitIntent';
+import { useWakeLock } from '../hooks/useWakeLock';
 
 const EXPERT_IMG = (() => {
   try {
@@ -33,6 +34,7 @@ const VSL = () => {
   const [transitionText, setTransitionText] = useState('');
 
   useExitIntent();
+  useWakeLock(true);
   const isPtRoute = (() => {
     try {
       const pathname = String(window.location.pathname || '')

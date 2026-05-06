@@ -255,7 +255,7 @@ function PersistUtmQuery() {
 
 function HeaderAware() {
   const location = useLocation();
-  const hideOnPaths = new Set(["/checkout-success", "/recupera", "/chat-whatsapp"]);
+  const hideOnPaths = new Set(["/checkout-success", "/recupera", "/chat-whatsapp", "/alma-gemea"]);
   const hideHeader = hideOnPaths.has(location.pathname);
   if (hideHeader) return null;
   return <AuthorityHeader />;
