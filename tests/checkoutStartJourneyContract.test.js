@@ -56,4 +56,28 @@ describe('checkout_start journey contract', () => {
     expect(source).not.toContain('checkoutStart(')
     expect(source).not.toContain('checkout_start')
   })
+
+  test('discount retention is triggered by checkout idle, not by closing checkout', () => {
+    const source = readSource('src/pages/FimBelowFold.jsx')
+    const closeStart = source.indexOf('const handleCheckoutClose = useCallback(() => {')
+    const idleStart = source.indexOf('const handleCheckoutIdle = useCallback(() => {')
+    const closeBlock = source.slice(closeStart, idleStart)
+
+    expect(closeBlock).toContain('setShowStripeCheckout(false)')
+    expect(closeBlock).not.toContain('onDiscountActivated')
+    expect(source.slice(idleStart)).toContain('onDiscountActivated(targetTime)')
+  })
+
+  test('checkout idle tracks movement, scrolling, touch, wheel and Stripe field activity', () => {
+    const source = readSource('src/components/CheckoutModal.jsx')
+
+    expect(source).toContain("'pointermove'")
+    expect(source).toContain("'touchmove'")
+    expect(source).toContain("'wheel'")
+    expect(source).toContain("'scroll'")
+    expect(source).toContain('stripe_card_number_change')
+    expect(source).toContain('stripe_card_expiry_change')
+    expect(source).toContain('stripe_card_cvc_change')
+    expect(source).toContain('[IDLE] Activity captured; timer reset')
+  })
 })

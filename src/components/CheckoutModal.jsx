@@ -126,8 +126,12 @@ function InnerCheckout({
 
   const onCloseRef = useRef(onClose);
   const onIdleRef = useRef(onIdle);
-  const idleDebugEnabled = (import.meta.env && import.meta.env.DEV)
-    || (typeof window !== 'undefined' && /(?:\?|&)idle_debug=1(?:&|$)/.test(String(window.location?.search || '')))
+  const idleTimerRef = useRef(null);
+  const idleLastActivityAtRef = useRef(Date.now());
+  const idleLastLogAtRef = useRef(0);
+  const idleDebugEnabled = typeof window === 'undefined'
+    ? true
+    : !/(?:\?|&)idle_debug=0(?:&|$)/.test(String(window.location?.search || ''));
 
   useEffect(() => {
     onCloseRef.current = onClose;
@@ -137,73 +141,125 @@ function InnerCheckout({
     onIdleRef.current = onIdle;
   }, [onIdle]);
 
+  const logIdleEvent = React.useCallback((level, message, details = {}, force = false) => {
+    if (!idleDebugEnabled) return;
+    const now = Date.now();
+    if (!force && now - idleLastLogAtRef.current < 500) return;
+    idleLastLogAtRef.current = now;
+    const logger = level === 'warn' ? console.warn : console.log;
+    logger(message, details);
+  }, [idleDebugEnabled]);
+
+  const markIdleActivity = React.useCallback((eventOrType) => {
+    const eventType = typeof eventOrType === 'string' ? eventOrType : eventOrType?.type || 'manual';
+    idleLastActivityAtRef.current = Date.now();
+    logIdleEvent('log', '[IDLE] Activity captured; timer reset', {
+      eventType,
+      path: window.location.pathname
+    });
+  }, [logIdleEvent]);
+
   // ── Retention: 15s Idle Detection (Desktop + Mobile Touch) ──
   useEffect(() => {
     const isPtRoute = window.location.pathname.includes('/pt/') || window.location.pathname.endsWith('/pt') || window.location.pathname === '/pt';
 
     // Só em rotas alemãs e se o desconto não estiver ativo
     if (isPtRoute || discountThemeActive) {
-      if (idleDebugEnabled) {
-        console.log('[IDLE] Disabled for this route/theme active state', {
-          isPtRoute,
-          discountThemeActive
-        });
-      }
+      logIdleEvent('log', '[IDLE] Disabled for this route/theme active state', {
+        isPtRoute,
+        discountThemeActive
+      }, true);
       return;
     }
 
-    let idleTimer;
     const IDLE_THRESHOLD = 15000; // 15 segundos
+    const MIN_RESCHEDULE_MS = 250;
 
-    const resetIdleTimer = (event) => {
-      if (idleTimer) {
-        clearTimeout(idleTimer);
+    const clearIdleTimer = () => {
+      if (idleTimerRef.current) {
+        clearTimeout(idleTimerRef.current);
+        idleTimerRef.current = null;
       }
-      if (idleDebugEnabled) {
-        console.log('[IDLE] Timer reset', {
-          eventType: event?.type || 'initial',
-          path: window.location.pathname
-        });
-      }
-      idleTimer = setTimeout(() => {
-        if (paypalActiveRef.current) {
-          if (idleDebugEnabled) {
-            console.log('[IDLE] Ignored. PayPal checkout is currently active.');
-          }
+    };
+
+    const scheduleIdleCheck = () => {
+      clearIdleTimer();
+      const elapsed = Date.now() - idleLastActivityAtRef.current;
+      const delay = Math.max(MIN_RESCHEDULE_MS, IDLE_THRESHOLD - elapsed);
+
+      idleTimerRef.current = window.setTimeout(() => {
+        const inactiveForMs = Date.now() - idleLastActivityAtRef.current;
+
+        if (inactiveForMs < IDLE_THRESHOLD) {
+          logIdleEvent('log', '[IDLE] Activity happened before threshold; rescheduling', {
+            inactiveForMs,
+            thresholdMs: IDLE_THRESHOLD
+          }, true);
+          scheduleIdleCheck();
           return;
         }
-        if (idleDebugEnabled) {
-          console.warn('[IDLE] Threshold reached. Requesting retention takeover.', {
-            path: window.location.pathname,
-            thresholdMs: IDLE_THRESHOLD
-          });
+
+        if (paypalActiveRef.current) {
+          markIdleActivity('paypal_active');
+          logIdleEvent('log', '[IDLE] Ignored. PayPal checkout is currently active.', {}, true);
+          scheduleIdleCheck();
+          return;
         }
+
+        logIdleEvent('warn', '[IDLE] Threshold reached. Requesting retention takeover.', {
+          path: window.location.pathname,
+          inactiveForMs,
+          thresholdMs: IDLE_THRESHOLD
+        }, true);
+
         if (onIdleRef.current) {
           onIdleRef.current();
         }
-      }, IDLE_THRESHOLD);
+      }, delay);
     };
 
-    // Listen globally for ANY interaction
-    const events = ['mousedown', 'mousemove', 'keydown', 'touchstart', 'scroll', 'click'];
-    events.forEach(evt => window.addEventListener(evt, resetIdleTimer, { passive: true }));
+    const resetIdleTimer = (event) => {
+      markIdleActivity(event);
+      scheduleIdleCheck();
+    };
 
-    if (idleDebugEnabled) {
-      console.log('[IDLE] System started (15s)', {
-        path: window.location.pathname,
-        thresholdMs: IDLE_THRESHOLD
-      });
-    }
-    resetIdleTimer();
+    const activityEvents = [
+      'click',
+      'keydown',
+      'mousedown',
+      'mousemove',
+      'pointerdown',
+      'pointermove',
+      'scroll',
+      'touchend',
+      'touchmove',
+      'touchstart',
+      'wheel'
+    ];
+    const listenerOptions = { passive: true, capture: true };
+
+    activityEvents.forEach(evt => {
+      window.addEventListener(evt, resetIdleTimer, listenerOptions);
+      document.addEventListener(evt, resetIdleTimer, listenerOptions);
+    });
+
+    idleLastActivityAtRef.current = Date.now();
+    logIdleEvent('log', '[IDLE] System started (15s)', {
+      path: window.location.pathname,
+      thresholdMs: IDLE_THRESHOLD,
+      events: activityEvents
+    }, true);
+    scheduleIdleCheck();
 
     return () => {
-      if (idleDebugEnabled) {
-        console.log('[IDLE] System paused');
-      }
-      if (idleTimer) clearTimeout(idleTimer);
-      events.forEach(evt => window.removeEventListener(evt, resetIdleTimer));
+      logIdleEvent('log', '[IDLE] System paused', {}, true);
+      clearIdleTimer();
+      activityEvents.forEach(evt => {
+        window.removeEventListener(evt, resetIdleTimer, listenerOptions);
+        document.removeEventListener(evt, resetIdleTimer, listenerOptions);
+      });
     };
-  }, [discountThemeActive, idleDebugEnabled]); // 🟢 Removido onClose do dep array (estabilizado via useRef)
+  }, [discountThemeActive, logIdleEvent, markIdleActivity]);
 
   async function ensureClientSecret(normalizedEmail) {
     const initOperacao = 'payment_element.init'
@@ -806,12 +862,16 @@ function InnerCheckout({
                   },
                 }}
                 onChange={(e) => {
+                  markIdleActivity('stripe_card_number_change')
                   setCardNumComplete(!!e?.complete)
                   if (e?.complete) {
                     try { elements.getElement(CardCvcElement)?.focus() } catch { }
                   }
                 }}
-                onFocus={() => setCardNumFocused(true)}
+                onFocus={() => {
+                  markIdleActivity('stripe_card_number_focus')
+                  setCardNumFocused(true)
+                }}
                 onBlur={() => setCardNumFocused(false)}
               />
             </div>
@@ -833,8 +893,14 @@ function InnerCheckout({
                       invalid: { color: '#ff6b6b' },
                     },
                   }}
-                  onChange={(e) => setCardExpComplete(!!e?.complete)}
-                  onFocus={() => setCardExpFocused(true)}
+                  onChange={(e) => {
+                    markIdleActivity('stripe_card_expiry_change')
+                    setCardExpComplete(!!e?.complete)
+                  }}
+                  onFocus={() => {
+                    markIdleActivity('stripe_card_expiry_focus')
+                    setCardExpFocused(true)
+                  }}
                   onBlur={() => setCardExpFocused(false)}
                 />
               </div>
@@ -857,12 +923,16 @@ function InnerCheckout({
                     },
                   }}
                   onChange={(e) => {
+                    markIdleActivity('stripe_card_cvc_change')
                     setCardCvcComplete(!!e?.complete)
                     if (e?.complete) {
                       try { elements.getElement(CardExpiryElement)?.focus() } catch { }
                     }
                   }}
-                  onFocus={() => setCardCvcFocused(true)}
+                  onFocus={() => {
+                    markIdleActivity('stripe_card_cvc_focus')
+                    setCardCvcFocused(true)
+                  }}
                   onBlur={() => setCardCvcFocused(false)}
                 />
               </div>
@@ -880,7 +950,10 @@ function InnerCheckout({
               className={`${styles.cardholderInput} ${(cardholderTouched && !String(cardholderName || '').trim()) ? styles.cardholderInputInvalid : ''}`}
               type="text"
               value={cardholderName}
-              onChange={(e) => setCardholderName(e.target.value)}
+              onChange={(e) => {
+                markIdleActivity('cardholder_name_change')
+                setCardholderName(e.target.value)
+              }}
               onBlur={() => setCardholderTouched(true)}
               placeholder={(i18n.language && i18n.language.startsWith('de')) ? 'Name auf der Karte' : 'Nome no cartão'}
               autoComplete="cc-name"
@@ -899,6 +972,7 @@ function InnerCheckout({
                 type="email"
                 value={contactEmail}
                 onChange={(e) => {
+                  markIdleActivity('contact_email_change')
                   const next = e.target.value
                   setContactEmail(next)
                   try { leadCache.setEmail(String(next || '').trim()) } catch { }
@@ -917,7 +991,10 @@ function InnerCheckout({
                 className={`${styles.cardholderInput} ${(contactPhoneTouched && !String(contactPhone || '').trim()) ? styles.cardholderInputInvalid : ''}`}
                 type="tel"
                 value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value)}
+                onChange={(e) => {
+                  markIdleActivity('contact_phone_change')
+                  setContactPhone(e.target.value)
+                }}
                 onBlur={() => setContactPhoneTouched(true)}
                 placeholder={(i18n.language && i18n.language.startsWith('de')) ? 'Ihre Telefonnummer' : 'Seu telefone'}
                 autoComplete="tel"
