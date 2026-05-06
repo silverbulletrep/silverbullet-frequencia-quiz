@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './JohannChat.module.scss';
-import { asset } from '@/lib/asset';
+import expertImg from '../../img/expert.webp';
+import expertPtImg from '../../img/expert-pt.webp';
 
 const getPathnameWithoutBase = () => {
     const base = String(import.meta.env.BASE_URL || '/').replace(/\/$/, '');
@@ -13,7 +14,7 @@ const getPathnameWithoutBase = () => {
 };
 
 const isPtRoute = getPathnameWithoutBase().startsWith('/pt');
-const EXPERT_IMG = isPtRoute ? asset('/img/expert-pt.webp') : asset('/img/expert.webp');
+const EXPERT_IMG = isPtRoute ? expertPtImg : expertImg;
 
 // --- CONFIGURAÇÃO DOS GANCHOS (17 VARIAÇÕES) ---
 const getOpeningMessages = (t) => ({
