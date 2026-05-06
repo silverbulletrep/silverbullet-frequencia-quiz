@@ -201,8 +201,8 @@ const SurpriseGiftModal = ({
             funnelId: QUIZ_FUNNEL_ID,
             getCountry: () => readStoredCountry() || undefined
           });
-          const step = buildRouteStep('/fim/surprise_modal', QUIZ_PROGRESS_STEPS.fim.index, "Modal Surpresa");
-          tracker.stepView(step, { modal_opened: 'surprise' });
+          const step = buildRouteStep('/fim', QUIZ_PROGRESS_STEPS.fim);
+          tracker.customEvent('surprise_opened', step);
         }
       } catch(e) { console.error(e) }
     }

@@ -23,8 +23,8 @@ const DiscountModal = ({
           funnelId: QUIZ_FUNNEL_ID,
           getCountry: () => readStoredCountry() || undefined
         });
-        const step = buildRouteStep('/fim/discount_modal', QUIZ_PROGRESS_STEPS.fim.index, "Modal Desconto");
-        tracker.stepView(step, { modal_opened: 'discount' });
+        const step = buildRouteStep('/fim', QUIZ_PROGRESS_STEPS.fim);
+        tracker.customEvent('discount_opened', step);
       }
     } catch(e) { console.error(e) }
 

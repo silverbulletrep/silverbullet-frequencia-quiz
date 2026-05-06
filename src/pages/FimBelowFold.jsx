@@ -32,7 +32,8 @@ export default function FimBelowFold({
     checkoutResumeMode = null,
     onCheckoutOpen,
     onCheckoutResumeHandled,
-    onDiscountActivated
+    onDiscountActivated,
+    hideBackgroundCard = false
 }) {
     const { t } = useTranslation()
     const location = useLocation()
@@ -277,11 +278,15 @@ export default function FimBelowFold({
         onCheckoutResumeHandled && onCheckoutResumeHandled()
     }, [DEBUG, checkoutResumeMode, discountThemeActive, onCheckoutResumeHandled])
 
+    const sectionClassName = hideBackgroundCard 
+      ? `${styles.offerSection} ${styles.offerSectionHiddenCard} ${styles.offerAppear} ${isOfferVisible ? '' : 'esconder'}`
+      : `${styles.offerSection} ${styles.offerAppear} ${isOfferVisible ? '' : 'esconder'}`;
+
     return (
         <>
             <section
                 ref={offerSectionRef}
-                className={`${styles.offerSection} ${styles.offerAppear} ${isOfferVisible ? '' : 'esconder'}`}
+                className={sectionClassName}
                 aria-label="O que você ganha"
             >
                 {showComparisonCard && (

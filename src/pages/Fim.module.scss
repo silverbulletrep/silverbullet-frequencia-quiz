@@ -2201,3 +2201,41 @@
     margin-top: 4px;
   }
 }
+
+/* ── FimDesconto Ethereal Badge ── */
+.distinctiveBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(242, 201, 76, 0.1);
+  border: 1px solid rgba(242, 201, 76, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(242, 201, 76, 0.15), inset 0 0 10px rgba(242, 201, 76, 0.05);
+}
+
+.badgeSvg {
+  animation: badgePulse 3s infinite ease-in-out;
+}
+
+.badgeText {
+  color: #F2C94C;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+@keyframes badgePulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(242, 201, 76, 0.3)); }
+  50% { transform: scale(1.05); filter: drop-shadow(0 0 8px rgba(242, 201, 76, 0.8)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(242, 201, 76, 0.3)); }
+}
+
+.statusTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: #e9e9f0;
+  text-transform: uppercase;
+  letter-spacing: -0.2px;
+}

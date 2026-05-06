@@ -33,6 +33,7 @@ const Resultado = lazy(() => import("@/pages/Resultado"));
 const PresselResultado = lazy(() => import("@/pages/PresselResultado"));
 
 const Fim = lazy(() => import("@/pages/Fim"));
+const FimDesconto = lazy(() => import("@/pages/FimDesconto"));
 const FimFunil = lazy(() => import("@/pages/FimFunil"));
 const Recupera = lazy(() => import("@/pages/Recupera"));
 const TikTokTrackerTest = lazy(() => import("@/pages/TikTokTrackerTest"));
@@ -139,6 +140,7 @@ export default function App() {
 
             <Route path="/start" element={<Start />} />
             <Route path="/fim" element={<Fim />} />
+            <Route path="/fim-desconto" element={<FimDesconto />} />
             <Route path="/fim-funil" element={<FimFunil />} />
             <Route path="/recupera" element={<Recupera />} />
             <Route path="/teste-traker-tiktok-build" element={<TikTokTrackerTest />} />
@@ -255,7 +257,7 @@ function PersistUtmQuery() {
 
 function HeaderAware() {
   const location = useLocation();
-  const hideOnPaths = new Set(["/checkout-success", "/recupera", "/chat-whatsapp", "/alma-gemea"]);
+  const hideOnPaths = new Set(["/checkout-success", "/recupera", "/chat-whatsapp", "/alma-gemea", "/fim-desconto"]);
   const hideHeader = hideOnPaths.has(location.pathname);
   if (hideHeader) return null;
   return <AuthorityHeader />;

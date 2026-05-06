@@ -391,7 +391,7 @@ const VSL = () => {
 
   useEffect(() => {
     const cleanup = []
-    const DELAY_SECONDS = 200 // 3:20 assistidos
+    const DELAY_SECONDS = isPtRoute ? 200 : 213 // PT: 3:20 | DE: 3:33
     const shownRef = { current: false }
     const attach = () => {
       const smart = document.getElementById(smartplayerId) || document.querySelector('vturb-smartplayer')
