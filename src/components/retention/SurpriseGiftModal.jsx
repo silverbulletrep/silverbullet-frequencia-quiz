@@ -192,6 +192,18 @@ const SurpriseGiftModal = ({
   useEffect(() => {
     if (!open) {
       setPhase(SURPRISE_MODAL_PHASES.IDENTIFICATION);
+    } else {
+      try {
+        if (shouldSendEvent('surprise_opened_event')) {
+          const tracker = createFunnelTracker({
+            baseUrl: getDefaultBaseUrl(),
+            funnelId: QUIZ_FUNNEL_ID,
+            getCountry: () => readStoredCountry() || undefined
+          });
+          const step = buildRouteStep('/fim', QUIZ_PROGRESS_STEPS.fim);
+          tracker.customEvent('surprise_opened', step);
+        }
+      } catch(e) { console.error(e) }
     }
   }, [open]);
 

@@ -15,6 +15,18 @@ const DiscountModal = ({
   useEffect(() => {
     if (!open) return;
 
+    try {
+      if (shouldSendEvent('discount_opened_event')) {
+        const tracker = createFunnelTracker({
+          baseUrl: getDefaultBaseUrl(),
+          funnelId: QUIZ_FUNNEL_ID,
+          getCountry: () => readStoredCountry() || undefined
+        });
+        const step = buildRouteStep('/fim', QUIZ_PROGRESS_STEPS.fim);
+        tracker.customEvent('discount_opened', step);
+      }
+    } catch(e) { console.error(e) }
+
     const savedEnd = sessionStorage.getItem('discount_timer_end');
     const now = Date.now();
     

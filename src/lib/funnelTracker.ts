@@ -6,7 +6,9 @@ type EventName =
   | "step_progress"
   | "checkout_start"
   | "lead_identified"
-  | "purchase";
+  | "purchase"
+  | "discount_opened"
+  | "surprise_opened";
 
 type Step = { id: string; index: number; name: string };
 type StepIndex = { id: string; index: number };
@@ -440,6 +442,16 @@ export const createFunnelTracker = (config: TrackerConfig) => {
         event: "purchase" as EventName,
         ...base(),
         purchase: { order_id, product, value, currency, payment_method, is_upsell }
+      }),
+
+    customEvent: (eventName: EventName, step?: Step, attributes?: Record<string, unknown>) =>
+      sendPayload({
+        event: eventName,
+        ...base(),
+        ...withSession(),
+        ...(step ? { step } : {}),
+        ...(attributes ? { attributes } : {}),
+        metadata: buildMetadata(config.getCountry)
       }),
 
     getLeadId: () => getOrCreateLeadId(leadKey)
