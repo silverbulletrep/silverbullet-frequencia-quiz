@@ -44,7 +44,7 @@ Implementar um dispatcher backend interno que identifica leads elegiveis para re
 
 **Marco inicial recomendado para `no_checkout`:**
 
-Usar primeiro `lead_identified` em `step_id = /resultado`. Se nao existir, usar primeiro evento do lead no funil. Essa regra evita esperar por `/fim` quando o lead nao chegou ao IC.
+Usar primeiro `lead_identified` em `step_id = /resultado`. Como é no step_id = resultado em que o lead envia seu contato, esse deve ser o gatilho principal, se não exisitr, quer dizer que o lead não entregou o contato. Se nao existir, usar primeiro evento do lead no funil. Essa regra evita esperar por `/fim` quando o lead nao chegou ao IC.
 
 **Payload esperado para N8N:**
 
