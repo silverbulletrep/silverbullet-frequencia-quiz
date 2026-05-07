@@ -200,15 +200,24 @@
     "initial": {
       "headline_part1": "Eleve sua Vibração",
       "headline_part2": "& Torne Seus Sonhos Realidade",
-      "subtitle": "Por favor, escolha a opção para começar",
+      "subtitle": "Selecione o seu sexo para começar:",
       "gender_male": "Homem",
       "gender_female": "Mulher",
+      "gender_male_cta": "Sou Homem",
+      "gender_female_cta": "Sou Mulher",
       "test_duration": "EXAME RÁPIDO",
       "rating_aria": "Avaliação média",
-      "legal_text_part1": "Ao clicar em \"Homem\" ou \"Mulher\", você aceita os ",
+      "legal_text_part1": "Ao clicar em \"Sou Homem\" ou \"Sou Mulher\", você aceita os ",
       "terms": "Termos de Uso",
       "privacy": "Política de Privacidade",
-      "cookies": "Política de Assinatura e Cookies"
+      "cookies": "Política de Assinatura e Cookies",
+      "expert_welcome": "Olá! Estamos prontos para realizar seu exame:",
+      "expert_subtitle": "O seu Exame Vibracional será personalizado com base na sua escolha.",
+      "scarcity_alert": "⚠️ Atenção: Vagas limitadas para o Exame Vibracional — Não perca a sua!",
+      "scarcity_badge": "⚡ Vagas Esgotando",
+      "live_count_suffix": " pessoas fazendo o exame agora",
+      "social_proof_count": "19.000 Pacientes",
+      "social_proof_label": "Satisfeitos com o método"
     },
     "age_selection": {
       "title": "Qual é a sua idade?",

@@ -198,15 +198,24 @@
     "initial": {
       "headline_part1": "Erheben Sie Ihre Schwingung",
       "headline_part2": "& Lassen Sie Ihre Träume Wirklichkeit werden",
-      "subtitle": "Bitte wählen Sie eine Option, um zu beginnen",
+      "subtitle": "Wählen Sie Ihr Geschlecht, um zu beginnen:",
       "gender_male": "Mann",
       "gender_female": "Frau",
+      "gender_male_cta": "Ich bin ein Mann",
+      "gender_female_cta": "Ich bin eine Frau",
       "rating_aria": "Bewertung 4,8 von 5 Sternen",
       "test_duration": "1-MINUTEN-TEST",
-      "legal_text_part1": "Mit dem Klick auf \"Mann\" oder \"Frau\" akzeptieren Sie die ",
+      "legal_text_part1": "Mit dem Klick auf \"Ich bin ein Mann\" oder \"Ich bin eine Frau\" akzeptieren Sie die ",
       "terms": "Nutzungsbedingungen",
       "privacy": "Datenschutzrichtlinie",
-      "cookies": "Abonnement- und Cookie-Richtlinie"
+      "cookies": "Abonnement- und Cookie-Richtlinie",
+      "expert_welcome": "Hallo! Wir sind bereit, Ihre Prüfung durchzuführen:",
+      "expert_subtitle": "Ihre Vibrations-Prüfung wird basierend auf Ihrer Auswahl personalisiert.",
+      "scarcity_alert": "⚠️ Achtung: Begrenzte Plätze für den Vibrations-Exam — Verpassen Sie Ihren nicht!",
+      "scarcity_badge": "⚡ Plätze gehen zur Neige",
+      "live_count_suffix": " Personen machen jetzt den Exam",
+      "social_proof_count": "19.000 Patienten",
+      "social_proof_label": "Zufrieden mit der Methode"
     },
     "age_selection": {
       "title": "Wie alt sind Sie?",

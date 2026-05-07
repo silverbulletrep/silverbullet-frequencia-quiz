@@ -2,12 +2,16 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './InitialQuestions.module.scss';
-import headerStyles from '@/components/AuthorityHeader.module.scss';
 import { leadCache } from '../lib/leadCache';
 import { asset } from '@/lib/asset';
 import { buildRouteStep, createFunnelTracker, COUNTRY_KEY, getDefaultBaseUrl, readStoredCountry, QUIZ_FUNNEL_ID, QUIZ_STEPS } from '../lib/funnelTracker';
 import { isMetaPixelPaused, initMetaPixel } from '../lib/metaPixel';
 import usePrefetch from '../hooks/usePrefetch';
+import expertImg from '../../img/expert.webp';
+import expertPtImg from '../../img/expert-pt.webp';
+import testimonial1 from '../../img/testimonial-1.webp';
+import testimonial2 from '../../img/testimonial-2.webp';
+import testimonial3 from '../../img/testimonial-3.webp';
 
 const DEBUG = import.meta.env.DEV
 const META_PIXEL_ID = '1365856334837391'
@@ -85,9 +89,29 @@ const InitialQuestions = () => {
   const manImgRef = useRef(null);
   const womanBgRef = useRef(null);
   const manBgRef = useRef(null);
-  const STAR_SVG = asset('/.figma/image/mg03ny0l-7v0e27z.svg')
   const pageViewSentRef = useRef(false)
   const prefetchPath = usePrefetch();
+
+  const isPtRoute = (() => {
+    try {
+      const pathname = String(window.location.pathname || '')
+      return pathname.includes('/pt/') || pathname === '/pt' || pathname.endsWith('/pt')
+    } catch {
+      return false
+    }
+  })();
+
+  // Contador de pessoas ao vivo — fluctuação realística
+  const [liveCount, setLiveCount] = useState(247);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLiveCount(prev => {
+        const delta = Math.floor(Math.random() * 5) - 2;
+        return Math.max(230, Math.min(270, prev + delta));
+      });
+    }, 4000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     const run = () => {
@@ -255,39 +279,56 @@ const InitialQuestions = () => {
     <div className={styles.signupSpiriohubComEn}>
       <div className={styles.background2}>
         <div className={styles.container6}>
+
+          {/* 1. HEADLINE */}
           <p className={styles.torneSeUmaPessoaDeAl3}>
             <span className={styles.torneSeUmaPessoaDeAl}>{t('quiz.initial.headline_part1')} </span>{' '}
             <span className={styles.torneSeUmaPessoaDeAl2}>{t('quiz.initial.headline_part2')}</span>
           </p>
+
+          {/* 2. EXPERT STRIP — contador ao vivo */}
+          <div className={styles.expertStrip}>
+            <div className={styles.expertStripAvatar}>
+              <img
+                src={isPtRoute ? expertPtImg : expertImg}
+                alt={isPtRoute ? 'Especialista' : 'Experte'}
+                width="42" height="42"
+                loading="eager" decoding="async"
+              />
+            </div>
+            <div className={styles.expertStripText}>
+              <span className={styles.expertStripGreeting}>
+                {t('quiz.initial.expert_welcome')}
+              </span>
+              <span className={styles.liveCounter}>
+                <span className={styles.liveDot} aria-hidden="true" />
+                <span className={styles.liveNum}>{liveCount}</span>
+                {t('quiz.initial.live_count_suffix')}
+              </span>
+            </div>
+          </div>
+
+          {/* 3. INSTRUÇÃO */}
           <p className={styles.porFavorEscolhaAOpOp}>{t('quiz.initial.subtitle')}</p>
+
+          {/* 4. CARDS DE GÊNERO */}
           <div className={styles.container5} role="group" aria-label="Seleção de Gênero">
             <div
               className={`${styles.component2} ${selectedGender === 'homem' ? styles.selected : ''}`}
               onPointerDown={() => prefetchPath('/age-selection-men')}
               onClick={() => handleGenderSelect('homem')}
-              role="button"
-              tabIndex={0}
+              role="button" tabIndex={0}
               aria-pressed={selectedGender === 'homem'}
-              aria-label={t('quiz.initial.gender_male')}
+              aria-label={t('quiz.initial.gender_male_cta')}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleGenderSelect('homem'); } }}
             >
               <div className={styles.background} ref={manBgRef}>
                 <img src={asset('/img/homem.webp')} className={styles.man} alt="" aria-hidden="true" ref={manImgRef} width="198" height="181" fetchpriority="high" loading="eager" decoding="async" />
               </div>
               <div className={styles.container4}>
-                <p className={styles.text}>{t('quiz.initial.gender_male')}</p>
-                <svg
-                  className={styles.component14}
-                  width="12"
-                  height="20"
-                  viewBox="0 0 9 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M1.418 16L7.756 9.65333C8.19209 9.21519 8.43691 8.62218 8.43691 8.004C8.43691 7.38582 8.19209 6.79281 7.756 6.35467L1.41067 0L0 1.414L6.34533 7.768C6.40782 7.83051 6.44293 7.91528 6.44293 8.00367C6.44293 8.09206 6.40782 8.17682 6.34533 8.23933L0.00666682 14.586L1.418 16Z"
-                    fill="currentColor"
-                  />
+                <p className={styles.text}>{t('quiz.initial.gender_male_cta')}</p>
+                <svg className={styles.component14} width="12" height="20" viewBox="0 0 9 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M1.418 16L7.756 9.65333C8.19209 9.21519 8.43691 8.62218 8.43691 8.004C8.43691 7.38582 8.19209 6.79281 7.756 6.35467L1.41067 0L0 1.414L6.34533 7.768C6.40782 7.83051 6.44293 7.91528 6.44293 8.00367C6.44293 8.09206 6.40782 8.17682 6.34533 8.23933L0.00666682 14.586L1.418 16Z" fill="currentColor" />
                 </svg>
               </div>
             </div>
@@ -295,56 +336,46 @@ const InitialQuestions = () => {
               className={`${styles.component22} ${selectedGender === 'mulher' ? styles.selected : ''}`}
               onPointerDown={() => prefetchPath('/age-selection-women')}
               onClick={() => handleGenderSelect('mulher')}
-              role="button"
-              tabIndex={0}
+              role="button" tabIndex={0}
               aria-pressed={selectedGender === 'mulher'}
-              aria-label={t('quiz.initial.gender_female')}
+              aria-label={t('quiz.initial.gender_female_cta')}
               onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleGenderSelect('mulher'); } }}
             >
               <div className={styles.background} ref={womanBgRef}>
-                <img src={asset('/img/mulher.webp')} className={styles.man} alt={t('quiz.initial.gender_female')} ref={womanImgRef} width="198" height="181" fetchpriority="high" loading="eager" decoding="async" />
+                <img src={asset('/img/mulher.webp')} className={styles.man} alt={t('quiz.initial.gender_female_cta')} ref={womanImgRef} width="198" height="181" fetchpriority="high" loading="eager" decoding="async" />
               </div>
               <div className={styles.container4}>
-                <p className={styles.text}>{t('quiz.initial.gender_female')}</p>
-                <svg
-                  className={styles.component14}
-                  width="12"
-                  height="20"
-                  viewBox="0 0 9 16"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M1.418 16L7.756 9.65333C8.19209 9.21519 8.43691 8.62218 8.43691 8.004C8.43691 7.38582 8.19209 6.79281 7.756 6.35467L1.41067 0L0 1.414L6.34533 7.768C6.40782 7.83051 6.44293 7.91528 6.44293 8.00367C6.44293 8.09206 6.40782 8.17682 6.34533 8.23933L0.00666682 14.586L1.418 16Z"
-                    fill="currentColor"
-                  />
+                <p className={styles.text}>{t('quiz.initial.gender_female_cta')}</p>
+                <svg className={styles.component14} width="12" height="20" viewBox="0 0 9 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M1.418 16L7.756 9.65333C8.19209 9.21519 8.43691 8.62218 8.43691 8.004C8.43691 7.38582 8.19209 6.79281 7.756 6.35467L1.41067 0L0 1.414L6.34533 7.768C6.40782 7.83051 6.44293 7.91528 6.44293 8.00367C6.44293 8.09206 6.40782 8.17682 6.34533 8.23933L0.00666682 14.586L1.418 16Z" fill="currentColor" />
                 </svg>
               </div>
             </div>
           </div>
-          <p className={styles.tEstede1Minuto}>{t('quiz.initial.test_duration')}</p>
-          <div className={`${headerStyles.ratingArea} ${headerStyles.ratingAreaCompact}`} aria-label={t('quiz.initial.rating_aria')} style={{ gap: 8 }}>
-            <img src={STAR_SVG} className={headerStyles.ratingStar} alt="Star" style={{ width: 18, height: 18 }} />
-            <p className={headerStyles.ratingText} style={{ fontSize: 13 }}>
-              <span className={headerStyles.ratingNumber}>4.8</span>
-              <span className={headerStyles.ratingSlash}>&nbsp;/&nbsp;</span>
-              <span className={headerStyles.ratingTotal}>5</span>
-            </p>
+
+          {/* 5. PROVA SOCIAL — substitui o rating de estrelas */}
+          <div className={styles.socialProof}>
+            <div className={styles.avatarStack} aria-hidden="true">
+              <img src={testimonial1} alt="" className={styles.avatarStackImg} width="36" height="36" loading="eager" decoding="async" />
+              <img src={testimonial2} alt="" className={styles.avatarStackImg} width="36" height="36" loading="eager" decoding="async" />
+              <img src={testimonial3} alt="" className={styles.avatarStackImg} width="36" height="36" loading="eager" decoding="async" />
+            </div>
+            <div className={styles.socialProofText}>
+              <span className={styles.socialProofCount}>{t('quiz.initial.social_proof_count')}</span>
+              <span className={styles.socialProofLabel}>{t('quiz.initial.social_proof_label')}</span>
+            </div>
           </div>
+
+          {/* 6. LEGAL */}
           <p className={styles.aoClicarEmHomemOuMul3}>
-            <span className={styles.aoClicarEmHomemOuMul}>
-              {t('quiz.initial.legal_text_part1')}&nbsp;
-            </span>
+            <span className={styles.aoClicarEmHomemOuMul}>{t('quiz.initial.legal_text_part1')}&nbsp;</span>
             <span className={styles.aoClicarEmHomemOuMul2}>{t('quiz.initial.terms')}</span>
             <span className={styles.aoClicarEmHomemOuMul}>,&nbsp;</span>
-            <span className={styles.aoClicarEmHomemOuMul2}>
-              {t('quiz.initial.privacy')}
-            </span>
+            <span className={styles.aoClicarEmHomemOuMul2}>{t('quiz.initial.privacy')}</span>
             <span className={styles.aoClicarEmHomemOuMul}>,&nbsp;</span>
-            <span className={styles.aoClicarEmHomemOuMul2}>
-              {t('quiz.initial.cookies')}
-            </span>
+            <span className={styles.aoClicarEmHomemOuMul2}>{t('quiz.initial.cookies')}</span>
           </p>
+
         </div>
       </div>
     </div>
