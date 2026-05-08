@@ -134,9 +134,18 @@ router.post('/checkout-session', async (req: Request, res: Response): Promise<vo
     const metaWithInfra: Record<string, string> = { ...sanitizedMetadata }
     if (ip && !metaWithInfra.ip_address) metaWithInfra.ip_address = ip
     if (uaHeader && !metaWithInfra.user_agent && !metaWithInfra.ua) metaWithInfra.user_agent = uaHeader
+    const trackingQuery = new URLSearchParams()
+    Object.entries(sanitizedMetadata).forEach(([key, value]) => {
+      const normalizedKey = String(key || '').toLowerCase()
+      if (!value) return
+      if (normalizedKey.startsWith('utm_') || ['fbclid', 'gclid', 'ttclid', 'msclkid', 'wbraid', 'gbraid'].includes(normalizedKey)) {
+        trackingQuery.set(normalizedKey, value)
+      }
+    })
+    const trackingSuffix = trackingQuery.toString()
     const variantParam = sanitizedMetadata.variant ? `&variant=${encodeURIComponent(sanitizedMetadata.variant)}` : ''
-    const successUrl = `${normalizedBase}/checkout-success?session_id={CHECKOUT_SESSION_ID}${variantParam}`
-    const cancelUrl = `${normalizedBase}/checkout-cancel`
+    const successUrl = `${normalizedBase}/checkout-success?session_id={CHECKOUT_SESSION_ID}${variantParam}${trackingSuffix ? `&${trackingSuffix}` : ''}`
+    const cancelUrl = `${normalizedBase}/checkout-cancel${trackingSuffix ? `?${trackingSuffix}` : ''}`
 
     console.log('[STRIPE] URLs de redirect configuradas:', {
       successUrl,

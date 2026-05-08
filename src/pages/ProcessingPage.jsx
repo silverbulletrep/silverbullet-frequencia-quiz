@@ -26,6 +26,7 @@ import {
   shouldSendEvent
 } from '../lib/funnelTracker';
 import { useExitIntent } from '../hooks/useExitIntent';
+import { withTrackingParams } from '../lib/trackingParams';
 
 const DEBUG = import.meta.env.DEV;
 
@@ -151,7 +152,7 @@ const ProcessingPage = () => {
       window.navigator.vibrate([10, 30, 10]);
     }
     
-    navigate('/resultado');
+    navigate(withTrackingParams('/resultado'));
   };
 
   const showContactCard = currentProgress >= 95 && !contactPromptClosed && !allGoalsCompleted;

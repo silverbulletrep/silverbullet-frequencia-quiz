@@ -4,6 +4,7 @@ import AuthorityHeader from "./components/AuthorityHeader";
 import SkeletonFallback from "./components/SkeletonFallback";
 import PageTransition from "./components/PageTransition";
 import { ExitIntentGlobal } from "./hooks/useExitIntent";
+import { captureTrackingParams, mergeTrackingParamsIntoSearch } from "./lib/trackingParams";
 
 // Eager imports para rotas de entrada principais (melhor FCP)
 import InitialQuestions from "@/pages/InitialQuestions";
@@ -168,73 +169,8 @@ function PersistUtmQuery() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    const isProd = import.meta.env.PROD
-    if (!isProd) return
-
-    const TRACK_KEYS = new Set([
-      'fbclid',
-      'gclid',
-      'ttclid',
-      'msclkid',
-      'wbraid',
-      'gbraid',
-    ])
-
-    const shouldPersistKey = (key: string) => {
-      const k = String(key || '').trim()
-      if (!k) return false
-      if (k.toLowerCase().startsWith('utm_')) return true
-      if (TRACK_KEYS.has(k.toLowerCase())) return true
-      return false
-    }
-
-    const readPersisted = (): Record<string, string> => {
-      try {
-        const raw = sessionStorage.getItem('persisted_query_tracking')
-        if (!raw) return {}
-        const parsed = JSON.parse(raw)
-        return (parsed && typeof parsed === 'object') ? (parsed as Record<string, string>) : {}
-      } catch {
-        return {}
-      }
-    }
-
-    const writePersisted = (next: Record<string, string>) => {
-      try {
-        sessionStorage.setItem('persisted_query_tracking', JSON.stringify(next))
-      } catch {
-        void 0
-      }
-    }
-
-    const current = new URLSearchParams(location.search || '')
-    const stored = readPersisted()
-    let storedChanged = false
-
-    current.forEach((value, key) => {
-      if (!shouldPersistKey(key)) return
-      const k = key.toLowerCase()
-      const v = String(value || '')
-      if (!v) return
-      if (!stored[k]) {
-        stored[k] = v
-        storedChanged = true
-      }
-    })
-    if (storedChanged) writePersisted(stored)
-
-    let urlChanged = false
-    Object.entries(stored).forEach(([k, v]) => {
-      if (!v) return
-      if (!current.has(k)) {
-        current.set(k, v)
-        urlChanged = true
-      }
-    })
-
-    if (!urlChanged) return
-
-    const nextSearch = current.toString()
+    captureTrackingParams(location.search)
+    const nextSearch = mergeTrackingParamsIntoSearch(location.search || '')
     const currentSearch = String(location.search || '').replace(/^\?/, '')
     if (currentSearch === nextSearch) return
 

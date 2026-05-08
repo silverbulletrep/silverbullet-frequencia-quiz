@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './WomenSuccess.module.scss';
 import { asset } from '@/lib/asset'
+import { withTrackingParams } from '@/lib/trackingParams'
 import { buildRouteStep, createFunnelTracker, getDefaultBaseUrl, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry } from '../lib/funnelTracker';
 import { usePrefetch } from '../hooks/usePrefetch';
 
@@ -71,7 +72,7 @@ const WomenSuccess = () => {
 
   const handleBack = () => {
     if (DEBUG) console.log('[WOMEN_SUCCESS] handleBack chamado');
-    navigate('/age-selection-women');
+    navigate(withTrackingParams('/age-selection-women'));
   };
 
   const handleContinue = () => {
@@ -84,14 +85,14 @@ const WomenSuccess = () => {
 
     try {
       // Navegar para a página de sentimentos matinais
-      navigate('/morning-feeling');
+      navigate(withTrackingParams('/morning-feeling'));
       if (DEBUG) console.log('[WOMEN_SUCCESS] navigate() executado com sucesso');
 
       // Fallback caso o navigate não funcione
       setTimeout(() => {
         if (window.location.pathname === '/women-success') {
           if (DEBUG) console.log('[WOMEN_SUCCESS] Fallback: usando window.location.href');
-          window.location.href = asset('/morning-feeling');
+          window.location.href = withTrackingParams(asset('/morning-feeling'));
         }
       }, 100);
 
@@ -99,7 +100,7 @@ const WomenSuccess = () => {
       console.error('[WOMEN_SUCCESS] ERRO ao executar navigate():', error);
       // Fallback em caso de erro
       if (DEBUG) console.log('[WOMEN_SUCCESS] Usando fallback window.location.href devido ao erro');
-      window.location.href = asset('/morning-feeling');
+      window.location.href = withTrackingParams(asset('/morning-feeling'));
     }
   };
 

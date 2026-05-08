@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import styles from './WomenSuccess.module.scss';
 import { asset } from '@/lib/asset';
+import { withTrackingParams } from '@/lib/trackingParams';
 import { buildRouteStep, createFunnelTracker, getDefaultBaseUrl, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry } from '../lib/funnelTracker';
 import { usePrefetch } from '../hooks/usePrefetch';
 
@@ -66,12 +67,12 @@ const MenSuccess = () => {
     const dados_entrada = { targetRoute: '/morning-feeling' };
     try {
       if (DEBUG) console.log(`[MEN_SUCCESS] Iniciando operação: ${operacao}`, { dados_entrada });
-      navigate('/morning-feeling');
+      navigate(withTrackingParams('/morning-feeling'));
       if (DEBUG) console.log('[MEN_SUCCESS] navigate() executado com sucesso');
       setTimeout(() => {
         if (window.location.pathname === '/men-success') {
           if (DEBUG) console.log('[MEN_SUCCESS] Fallback: usando window.location.href');
-          window.location.href = asset('/morning-feeling');
+          window.location.href = withTrackingParams(asset('/morning-feeling'));
         }
       }, 100);
     } catch (error) {
@@ -80,7 +81,7 @@ const MenSuccess = () => {
         stack: error?.stack,
         timestamp: new Date().toISOString()
       });
-      window.location.href = asset('/morning-feeling');
+      window.location.href = withTrackingParams(asset('/morning-feeling'));
     }
   };
 

@@ -8,6 +8,7 @@ import tumb from '../../img/tumbweb.webp'
 import { buildRouteStep, buildRouteStepIndex, createFunnelTracker, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry, getDefaultBaseUrl, shouldSendEvent } from '../lib/funnelTracker';
 import { useExitIntent } from '../hooks/useExitIntent';
 import { usePrefetch } from '../hooks/usePrefetch';
+import { withTrackingParams } from '../lib/trackingParams';
 
 const DEBUG = import.meta.env.DEV
 
@@ -153,7 +154,7 @@ const TransitionPage = () => {
 
   const currentContent = contentMap[selectedOption] || contentMap['default'];
   const rawOptions = (searchParams.get('options') || '').trim();
-  const vslUrl = rawOptions ? `/vsl?option=${selectedOption}&options=${encodeURIComponent(rawOptions)}` : `/vsl?option=${selectedOption}`
+  const vslUrl = withTrackingParams(rawOptions ? `/vsl?option=${selectedOption}&options=${encodeURIComponent(rawOptions)}` : `/vsl?option=${selectedOption}`)
 
   const handleBackClick = () => {
     console.log('[TRANSITION_PAGE] Botão voltar clicado');
@@ -164,9 +165,9 @@ const TransitionPage = () => {
     console.log('[TRANSITION_PAGE] Botão continuar clicado, redirecionando para VSL com opção:', selectedOption);
     // Passando a escolha do usuário para a VSL
     if (rawOptions) {
-      navigate(`/vsl?option=${selectedOption}&options=${encodeURIComponent(rawOptions)}`);
+      navigate(withTrackingParams(`/vsl?option=${selectedOption}&options=${encodeURIComponent(rawOptions)}`));
     } else {
-      navigate(`/vsl?option=${selectedOption}`);
+      navigate(withTrackingParams(`/vsl?option=${selectedOption}`));
     }
   };
 

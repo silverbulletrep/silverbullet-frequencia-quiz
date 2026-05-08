@@ -10,6 +10,7 @@ import { API_BASE_URL, updateLeadPurchase } from '@/lib/api'
 import { asset } from '@/lib/asset'
 import { leadCache } from '@/lib/leadCache'
 import { buildCheckoutJourneyContext, buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
+import { appendTrackingParamsToUrl } from '@/lib/trackingParams'
 import { useProgressStore } from '@/lib/progressStore'
 import { useNavigate } from 'react-router-dom'
 import { createFunnelTracker, QUIZ_FUNNEL_ID, getDefaultBaseUrl, readStoredCountry, buildRouteStep } from '@/lib/funnelTracker'
@@ -713,7 +714,7 @@ export default function AudioUpsell() {
                   multibanco: 'https://pay.hotmart.com/N105101154W?bid=1775256934969&paymentMethod=billet',
                   mbway: 'https://pay.hotmart.com/N105101154W?bid=1775256934969&paymentMethod=mbway'
                 }
-                window.location.href = links[methodId] || 'https://pay.hotmart.com/N105101154W?bid=1775256934969'
+                window.location.href = appendTrackingParamsToUrl(links[methodId] || 'https://pay.hotmart.com/N105101154W?bid=1775256934969')
               }}
             />
           </React.Suspense>

@@ -9,6 +9,7 @@ import expertImg from '../../img/expert.webp';
 import expertPtImg from '../../img/expert-pt.webp';
 
 import { asset } from '@/lib/asset'
+import { withTrackingParams } from '@/lib/trackingParams'
 import {
   createFunnelTracker,
   QUIZ_FUNNEL_ID,
@@ -387,7 +388,7 @@ const Resultado = () => {
     return () => window.removeEventListener('resize', applyTopBlurHeight)
   }, [t])
 
-  const handleContinue = () => navigate('/fim')
+  const handleContinue = () => navigate(withTrackingParams('/fim'))
   const normalizePhone = (value) => String(value || '').replace(/\D/g, '')
   const isValidEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value || '').trim())
 
@@ -631,4 +632,3 @@ const Resultado = () => {
 };
 
 export default Resultado;
-

@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next';
 import { asset } from '@/lib/asset';
 import styles from './AliceChat.module.scss';
 import { leadCache } from '@/lib/leadCache';
+import { withTrackingParams } from '@/lib/trackingParams';
 import {
   createFunnelTracker,
   getDefaultBaseUrl,
@@ -455,7 +456,7 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
   }, [playAudio]);
 
   const handleCTA = useCallback(() => {
-    window.location.href = asset(`/${lang}/quiz`);
+    window.location.href = withTrackingParams(asset(`/${lang}/quiz`));
   }, [lang]);
 
   const handleCardSelect = useCallback(async (cardIndex: number) => {

@@ -6,6 +6,7 @@ import styles from './MorningFeeling.module.scss';
 import { leadCache } from '../lib/leadCache';
 import { logDesejoProgress } from '../lib/leadTracker';
 import { asset } from '@/lib/asset'
+import { withTrackingParams } from '@/lib/trackingParams'
 import transitionThumbnail from '../../img/tumbweb.webp'
 import { buildMorningFeelingPayload } from '../lib/morningFeelingPayload';
 import { buildRouteStep, createFunnelTracker, getDefaultBaseUrl, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry } from '../lib/funnelTracker';
@@ -122,7 +123,7 @@ const MorningFeeling = () => {
         }
       }
       const optionsParam = encodeURIComponent(selectedOptions.join(','));
-      navigate(`/transition?option=${primary || 'default'}&options=${optionsParam}`);
+      navigate(withTrackingParams(`/transition?option=${primary || 'default'}&options=${optionsParam}`));
       if (DEBUG) {
         console.log(`[MORNING_FEELING] Operação concluída com sucesso:`, {
           id_resultado: primary || 'default',
@@ -135,7 +136,7 @@ const MorningFeeling = () => {
         stack: error.stack,
         timestamp: new Date().toISOString(),
       });
-      navigate('/transition');
+      navigate(withTrackingParams('/transition'));
     }
   };
 

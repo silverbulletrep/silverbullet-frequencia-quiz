@@ -3,6 +3,7 @@ import { useTranslation, Trans } from 'react-i18next'
 import styles from './CheckoutModal.module.scss'
 import CheckoutModal from './CheckoutModal'
 import { createCheckoutSession } from '@/lib/api'
+import { getTrackingParams } from '@/lib/trackingParams'
 
 export default function CheckoutPromptModal({ amount_cents = 3700, currency = 'eur', metadata = {}, onClose }) {
   const { t } = useTranslation()
@@ -52,7 +53,7 @@ export default function CheckoutPromptModal({ amount_cents = 3700, currency = 'e
         const fbc = fbcMatch ? decodeURIComponent(fbcMatch[1]) : undefined
         const ua = (typeof navigator !== 'undefined' && navigator.userAgent) ? navigator.userAgent : ''
         const finalOrigin = (metadata && metadata.origin) ? metadata.origin : 'checkout_prompt_modal'
-        const sessionData = await createCheckoutSession({ amount_cents, currency, email, metadata: { ...metadata, origin: finalOrigin, fbp, fbc, ua } })
+        const sessionData = await createCheckoutSession({ amount_cents, currency, email, metadata: { ...metadata, ...getTrackingParams(), origin: finalOrigin, fbp, fbc, ua } })
         const url = sessionData?.session?.url || sessionData?.url
         if (url) {
           console.log('[POPUP] Redirecionando para Stripe Checkout', { opId, url })

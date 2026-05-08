@@ -1,3 +1,5 @@
+import { appendTrackingParamsToUrl } from './trackingParams'
+
 type BuildCheckoutParams = {
   baseUrl: string
   paymentMethod?: string
@@ -58,7 +60,7 @@ export const buildHotmartCheckoutUrl = ({
       url.searchParams.set('email', email.trim())
     }
 
-    return url.toString()
+    return appendTrackingParamsToUrl(url.toString())
   } catch (error) {
     console.error('[HOTMART] Erro ao construir URL do checkout', { baseUrl, message: error instanceof Error ? error.message : String(error) })
     return baseUrl

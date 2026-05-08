@@ -5,6 +5,7 @@ import { createPortal } from 'react-dom'
 import styles from './CheckoutModal.module.scss'
 import { createPaymentIntent, API_BASE_URL, createPayPalOrder, capturePayPalOrder, finalizePayPalEmail } from '@/lib/api'
 import { leadCache } from '@/lib/leadCache'
+import { getTrackingParams, withTrackingParams } from '@/lib/trackingParams'
 import { leadSyncService } from '@/lib/leadSyncService'
 import { useTranslation } from 'react-i18next'
 import { asset } from '@/lib/asset'
@@ -283,7 +284,7 @@ function InnerCheckout({
     try {
       console.log(`[CHECKOUT] Iniciando operação: ${initOperacao}`, { dados_entrada: initDadosEntrada })
       const cachedLeadId = typeof window !== 'undefined' ? (window.localStorage.getItem('lead_id') || leadCache.getAll()?.lead_id) : '';
-      const combinedMetadata = { ...(metadata || {}), lead_id: cachedLeadId };
+      const combinedMetadata = { ...(metadata || {}), ...getTrackingParams(), lead_id: cachedLeadId };
       const data = await createPaymentIntent({ amount_cents: amt, currency: cur, email: normalizedEmail, metadata: combinedMetadata })
       const secret = String(data?.client_secret || '')
       setClientSecret(secret)
@@ -410,7 +411,7 @@ function InnerCheckout({
       const rawBasePath = String(import.meta.env.BASE_URL || '/').trim() || '/'
       const basePathWithSlash = rawBasePath.endsWith('/') ? rawBasePath : `${rawBasePath}/`
       const basePath = basePathWithSlash === '/' ? '' : basePathWithSlash
-      const returnUrl = `${baseUrl.replace(/\/$/, '')}${basePath || '/'}checkout-success`
+      const returnUrl = withTrackingParams(`${baseUrl.replace(/\/$/, '')}${basePath || '/'}checkout-success`)
       const cardElement = elements.getElement(CardNumberElement)
       console.log('[CHECKOUT] Enviando confirmação para Stripe', {
         amount_cents,
@@ -626,7 +627,7 @@ function InnerCheckout({
               const data = await createPayPalOrder({
                 value: val,
                 currency: paypalCurrency,
-                metadata: { ...(metadata || {}), origin: (metadata && metadata.origin) ? metadata.origin : 'fim', lead_id: cachedLeadId },
+                metadata: { ...(metadata || {}), ...getTrackingParams(), origin: (metadata && metadata.origin) ? metadata.origin : 'fim', lead_id: cachedLeadId },
               })
               if (data?.id) {
                 paypalOrderIdRef.current = data.id
