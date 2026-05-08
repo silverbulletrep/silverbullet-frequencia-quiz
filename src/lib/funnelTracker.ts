@@ -1,3 +1,5 @@
+import { leadCache } from "./leadCache";
+
 type EventName =
   | "page_view"
   | "step_view"
@@ -257,6 +259,14 @@ const buildMetadata = (getCountry?: () => string | undefined) => ({
   utm: buildUtm()
 });
 
+const readStoredFunnelVariant = () => {
+  try {
+    return String(leadCache.getAll()?.funnel_variant || "").trim() || undefined;
+  } catch {
+    return undefined;
+  }
+};
+
 export const createFunnelTracker = (config: TrackerConfig) => {
   const leadKey = config.leadStorageKey ?? "lead_id";
   const sessionKey = config.sessionStorageKey ?? "session_id";
@@ -322,11 +332,16 @@ export const createFunnelTracker = (config: TrackerConfig) => {
     return { ok: response.ok, via: "fetch" };
   };
 
-  const base = () => ({
-    funnel_id: config.funnelId,
-    lead_id: getOrCreateLeadId(leadKey),
-    timestamp: new Date().toISOString()
-  });
+  const base = () => {
+    const funnelVariant = readStoredFunnelVariant();
+
+    return {
+      funnel_id: config.funnelId,
+      lead_id: getOrCreateLeadId(leadKey),
+      ...(funnelVariant ? { funnel_variant: funnelVariant } : {}),
+      timestamp: new Date().toISOString()
+    };
+  };
 
   const withSession = () => {
     const sid = getOrCreateSessionId(sessionKey);

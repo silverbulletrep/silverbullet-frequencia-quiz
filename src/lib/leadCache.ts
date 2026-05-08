@@ -22,6 +22,7 @@ type LeadCacheData = {
   selected_option?: string
   selected_option_description?: string
   nome?: string
+  funnel_variant?: string
 }
 
 const MEMORY_STORE: { data: LeadCacheData } = { data: {} }
@@ -266,6 +267,18 @@ export const leadCache = {
     const next = { ...current, nome, created_at: current.created_at || new Date().toISOString() }
     writeStorage(next)
     queueLeadSync()
+  },
+  setFunnelVariant(funnel_variant: string) {
+    const current = readStorage()
+    const normalizedVariant = String(funnel_variant || '').trim()
+    if (!normalizedVariant || current.funnel_variant === normalizedVariant) return
+
+    const next = {
+      ...current,
+      funnel_variant: normalizedVariant,
+      created_at: current.created_at || new Date().toISOString(),
+    }
+    writeStorage(next)
   },
 }
 function describeOption(key?: string): { key?: string; description?: string } {

@@ -76,6 +76,7 @@ export const leadSyncService = {
           email: cache.email || null,
           whatsapp: cache.whatsapp || null,
           lead_id_short: cache.lead_id_short || null,
+          funnel_variant: cache.funnel_variant || null,
         },
         status: statusToSave
       }

@@ -14,12 +14,14 @@ import React, { useState, useEffect, useCallback, lazy, Suspense, useRef } from 
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { asset } from '@/lib/asset';
+import { leadCache } from '@/lib/leadCache';
 
 // ── Lazy load do chat (não carrega no bundle inicial) ──
 const AliceChat = lazy(() => import('@/components/AliceChat/AliceChat'));
 
 const DEBUG = import.meta.env.DEV;
 const TIMINGS = [5500, 5000, 4500];
+const PRESALE_TAROT_FUNNEL_VARIANT = 'presell_tarot';
 
 const AlmaGemea: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -32,6 +34,10 @@ const AlmaGemea: React.FC = () => {
   const [showChat, setShowChat] = useState(false);
   const [transitionText, setTransitionText] = useState('');
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
+
+  useEffect(() => {
+    leadCache.setFunnelVariant(PRESALE_TAROT_FUNNEL_VARIANT);
+  }, []);
 
   // ── Sequência de transição cinematográfica ──
   const startTransition = useCallback(() => {
