@@ -37,6 +37,7 @@ export default function Fim() {
   useWakeLock(true);
   const introRef = useRef(null)
   const debugRef = useRef({ currentTime: 0, duration: 0, source: 'init' })
+  const offerRevealTrackedRef = useRef(false)
   const [introState, setIntroState] = useState('enter')
   const [dotsCount, setDotsCount] = useState(1)
   const [engagementState, setEngagementState] = useState('hidden') // 'hidden' | 'entering' | 'visible' | 'exiting'
@@ -501,9 +502,32 @@ export default function Fim() {
         if (typeof sessionStorage !== 'undefined') {
           sessionStorage.setItem('ei_checkpoint', '/fim-pos-pitch');
         }
+
+        if (!offerRevealTrackedRef.current && shouldSendEvent('offer_revealed:/fim', 60000)) {
+          offerRevealTrackedRef.current = true;
+
+          const tracker = createFunnelTracker({
+            baseUrl: getDefaultBaseUrl(),
+            funnelId: QUIZ_FUNNEL_ID,
+            getCountry: () => readStoredCountry() || undefined,
+            debug: DEBUG
+          });
+
+          const step = buildRouteStep('/fim-pos-pitch', QUIZ_PROGRESS_STEPS.fim, 'Oferta liberada pos-pitch');
+          tracker.customEvent('offer_revealed', step, {
+            source: 'gatingComplete',
+            gate: 'fim_below_fold',
+            target_seconds: TARGET_SECONDS,
+            player_id: playerConfig.playerId,
+            route_language: isPtRoute ? 'pt' : 'de'
+          }).catch((err) => {
+            offerRevealTrackedRef.current = false;
+            console.error('[FIM] Erro ao enviar offer_revealed:', err);
+          });
+        }
       }
     } catch { }
-  }, [gatingComplete])
+  }, [gatingComplete, isPtRoute, playerConfig.playerId, TARGET_SECONDS])
 
   const handleDebugClick = () => {
     console.log('[FIM] Debug button clicked, forcing gating complete.')

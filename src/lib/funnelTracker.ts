@@ -8,7 +8,8 @@ type EventName =
   | "lead_identified"
   | "purchase"
   | "discount_opened"
-  | "surprise_opened";
+  | "surprise_opened"
+  | "offer_revealed";
 
 type Step = { id: string; index: number; name: string };
 type StepIndex = { id: string; index: number };
