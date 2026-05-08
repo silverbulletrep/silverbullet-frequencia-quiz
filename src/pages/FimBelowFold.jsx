@@ -4,6 +4,7 @@ import { ChevronDown, ShieldCheck, Star } from 'lucide-react'
 import { leadCache } from '@/lib/leadCache'
 import { buildCheckoutJourneyContext, buildHotmartCheckoutUrl, makeLeadIdShort, normalizeHotmartPaymentMethod } from '@/lib/hotmartCheckout'
 import { buildRouteStep, createFunnelTracker, getDefaultBaseUrl, QUIZ_FUNNEL_ID, QUIZ_PROGRESS_STEPS, readStoredCountry } from '@/lib/funnelTracker'
+import { initMetaPixel, trackInitiateCheckout } from '@/lib/metaPixel'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 import styles from './FimBelowFold.module.scss'
@@ -201,12 +202,27 @@ export default function FimBelowFold({
         return { leadIdShort, email, paymentMethod, checkoutValue }
     }
 
+    const fireHotmartInitiateCheckout = async (value, currency = 'EUR') => {
+        try {
+            await initMetaPixel()
+        } catch (error) {
+            if (DEBUG) console.warn('[PIXEL] Hotmart IC init falhou; checkout continua', { message: error?.message })
+        }
+
+        try {
+            trackInitiateCheckout(value, currency)
+        } catch (error) {
+            if (DEBUG) console.warn('[PIXEL] Hotmart IC falhou; checkout continua', { message: error?.message })
+        }
+    }
+
     const redirectToMainCheckout = async (methodId) => {
-        const { leadIdShort, email, paymentMethod } = await handleCheckoutTracking(methodId, checkoutOriginRef.current)
+        const { leadIdShort, email, paymentMethod, checkoutValue } = await handleCheckoutTracking(methodId, checkoutOriginRef.current)
+        await fireHotmartInitiateCheckout(checkoutValue, 'EUR')
 
         // Anti-Race Condition Buffer: Garante que a promessa de tracking tenha
-        // 80ms de processamento dentro do event loop antes da pagina ser destruida
-        await new Promise(resolve => setTimeout(resolve, 80))
+        // 120ms de processamento dentro do event loop antes da pagina ser destruida
+        await new Promise(resolve => setTimeout(resolve, 120))
 
         const checkoutUrl = buildHotmartCheckoutUrl({
             baseUrl: HOTMART_MAIN_CHECKOUT_URL,
