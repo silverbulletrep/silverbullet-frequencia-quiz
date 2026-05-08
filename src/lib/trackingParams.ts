@@ -14,11 +14,16 @@ const CLICK_ID_KEYS = new Set([
   'gbraid',
 ])
 
+const ATTRIBUTION_PARAM_KEYS = new Set([
+  'xcod',
+])
+
 export function isTrackingParam(key: string): boolean {
   const normalized = String(key || '').trim().toLowerCase()
   if (!normalized) return false
   if (normalized.startsWith('utm_')) return true
   if (CLICK_ID_KEYS.has(normalized)) return true
+  if (ATTRIBUTION_PARAM_KEYS.has(normalized)) return true
   return false
 }
 
