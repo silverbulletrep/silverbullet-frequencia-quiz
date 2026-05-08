@@ -158,13 +158,13 @@ const SurpriseGiftModal = ({
   const [phase, setPhase] = useState(SURPRISE_MODAL_PHASES.IDENTIFICATION);
   
   // Estados dinâmicos conforme notas.md
-  const [participants, setParticipants] = useState(109);
+  const [participants, setParticipants] = useState(255);
   const [slots, setSlots] = useState(9);
 
   // Lógica de simulação "viva"
   useEffect(() => {
     if (!open) {
-      setParticipants(109);
+      setParticipants(255);
       setSlots(9);
       return;
     }
@@ -174,8 +174,8 @@ const SurpriseGiftModal = ({
       setParticipants(prev => {
         const change = Math.random() > 0.5 ? 1 : -1;
         const next = prev + change;
-        // Mantém entre 105 e 118 para manter a urgência
-        return (next > 118 || next < 105) ? prev : next;
+        // Mantém entre 250 e 260 para manter a urgência
+        return (next > 260 || next < 250) ? prev : next;
       });
     }, 3000);
 

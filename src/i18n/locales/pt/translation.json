@@ -2280,8 +2280,9 @@
     "cta_button": "Quero fazer meu Exame Vibracional →",
     "gate": {
       "badge": "✦ Tarot Energético ✦",
-      "title": "Sua Conexão Astral<br/>foi Estabelecida",
-      "button": "Iniciar Consulta"
+      "title": "Escolhe uma Carta e Recebe a Revelação que o Universo Reservou para Ti",
+      "button": "Iniciar Consulta",
+      "reading_time": "leitura de 1 minuto"
     }
   },
   "surprise_modal": {

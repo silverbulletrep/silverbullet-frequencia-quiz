@@ -2207,8 +2207,9 @@
     "cta_button": "Meine Vibrationsuntersuchung starten →",
     "gate": {
       "badge": "✦ Energetisches Tarot ✦",
-      "title": "Ihre astrale Verbindung<br/>wurde hergestellt",
-      "button": "Beratung beginnen"
+      "title": "Wähle eine Karte und erhalte die Offenbarung, die das Universum für dich bereitgehalten hat",
+      "button": "Beratung beginnen",
+      "reading_time": "1-minütige Lesung"
     }
   },
   "surprise_modal": {

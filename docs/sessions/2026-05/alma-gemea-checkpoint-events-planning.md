@@ -3,7 +3,7 @@ Planning output for Alma Gemea checkpoint event instrumentation.
 Main responsibilities: document mapped code references, implementation logic, risk, rollback, verification, and approval gate before production edits.
 -->
 
-# Alma Gemea Checkpoint Events — Planning Output (v1)
+# Alma Gemea Checkpoint Events — Planning Output (v2)
 
 > **Status:** PLANEJADO — Aguardando aprovação  
 > **Data:** 2026-05-08  
@@ -29,7 +29,7 @@ Point #1: Add checkpoint events across `/alma-gemea`
 
 - **Issue:** The tarot presell journey has several user-visible checkpoints but only one tracked lead identification event.
 - **Suspected Root Cause:** `AliceChat` was built as an interactive cinematic flow first, with tracking only added at name collection.
-- **Target Outcome:** Emit idempotent checkpoint events at page view, gate start, name prompt, name submitted, each card prompt/selection, ad ready/opened/completed, and quiz CTA click.
+- **Target Outcome:** Emit idempotent checkpoint events at page view, gate start, name prompt, name submitted, each card selection, ad opened/completed, and quiz CTA click.
 - **Risks & Mitigation:** React dev Strict Mode and repeated handler calls can duplicate events. Mitigate with `shouldSendEvent()` keys and handler guards already present in `AliceChat`.
 
 Point #2: Ensure every checkpoint has unique `step_id` and `step_name`
@@ -162,7 +162,7 @@ const normalizeCountryCode = (value) => {
 const getCountryFromLocale = () => {
   try {
     const lang = navigator.language || ''
-    const match = lang.match(/-([A-Za-z]{2})\b/)
+    const match = lang.match(/-([A-Za-z]{2})/)
     if (!match) return ''
     return normalizeCountryCode(match[1])
   } catch {
@@ -337,7 +337,7 @@ const handleCardSelect = useCallback(async (cardIndex: number) => {
 }, [gameState, gender, userName, showMessage, startTiragem, playAudio, COPIES, TIRAGEM_1, TIRAGEM_2, TIRAGEM_3]);
 ```
 
-This is where card selection events and the "ad ready" checkpoint should be placed.
+This is where card selection events should be placed.
 
 ### 2.10 Existing ad open/completion and CTA handlers
 
@@ -424,7 +424,7 @@ export const storeCountry = (country: string, key: string = COUNTRY_KEY) => {
 const getCountryFromLocale = () => {
   try {
     const lang = navigator.language || "";
-    const match = lang.match(/-([A-Za-z]{2})\b/);
+    const match = lang.match(/-([A-Za-z]{2})/);
     if (!match) return "";
     return normalizeCountryCode(match[1]);
   } catch {
@@ -468,16 +468,12 @@ export const ALMA_GEMEA_STEPS = {
   transition_completed: { id: "alma_gemea_transition_completed", index: 3, name: "Alma Gemea - Transition Completed" },
   name_prompt: { id: "alma_gemea_name_prompt", index: 4, name: "Alma Gemea - Escolher Nome" },
   coleta_nome: { id: "alma_gemea_name_submitted", index: 5, name: "Alma Gemea - Nome Enviado" },
-  card_1_prompt: { id: "alma_gemea_card_1_prompt", index: 6, name: "Alma Gemea - Escolher Carta 1" },
-  card_1_selected: { id: "alma_gemea_card_1_selected", index: 7, name: "Alma Gemea - Carta 1 Selecionada" },
-  card_2_prompt: { id: "alma_gemea_card_2_prompt", index: 8, name: "Alma Gemea - Escolher Carta 2" },
-  card_2_selected: { id: "alma_gemea_card_2_selected", index: 9, name: "Alma Gemea - Carta 2 Selecionada" },
-  card_3_prompt: { id: "alma_gemea_card_3_prompt", index: 10, name: "Alma Gemea - Escolher Carta 3" },
-  card_3_selected: { id: "alma_gemea_card_3_selected", index: 11, name: "Alma Gemea - Carta 3 Selecionada" },
-  ad_ready: { id: "alma_gemea_ad_ready", index: 12, name: "Alma Gemea - Anuncio Pronto" },
-  ad_opened: { id: "alma_gemea_ad_opened", index: 13, name: "Alma Gemea - Ver Anuncio" },
-  ad_completed: { id: "alma_gemea_ad_completed", index: 14, name: "Alma Gemea - Anuncio Concluido" },
-  quiz_cta_clicked: { id: "alma_gemea_quiz_cta_clicked", index: 15, name: "Alma Gemea - Ir Para Quiz" }
+  card_1_selected: { id: "alma_gemea_card_1_selected", index: 6, name: "Alma Gemea - Carta 1 Selecionada" },
+  card_2_selected: { id: "alma_gemea_card_2_selected", index: 7, name: "Alma Gemea - Carta 2 Selecionada" },
+  card_3_selected: { id: "alma_gemea_card_3_selected", index: 8, name: "Alma Gemea - Carta 3 Selecionada" },
+  ad_opened: { id: "alma_gemea_ad_opened", index: 9, name: "Alma Gemea - Ver Anuncio" },
+  ad_completed: { id: "alma_gemea_ad_completed", index: 10, name: "Alma Gemea - Anuncio Concluido" },
+  quiz_cta_clicked: { id: "alma_gemea_quiz_cta_clicked", index: 11, name: "Alma Gemea - Ir Para Quiz" }
 } as const;
 ```
 
@@ -611,33 +607,16 @@ tracker.leadIdentifiedCustom(ALMA_GEMEA_STEPS.coleta_nome, {
 
 Flow: the name prompt is a `step_view`; name submission keeps the current `lead_identified` event but gains explicit `step_id` and `step_name`.
 
-### 3.6 Track card prompts and card selections
+### 3.6 Track card selections
 
 **Origem:** `[CRIADO]` + `[REPO EXISTENTE]`
 
 ```tsx
-const getCardPromptStep = (tiragemNum: 1 | 2 | 3) => {
-  if (tiragemNum === 1) return ALMA_GEMEA_STEPS.card_1_prompt;
-  if (tiragemNum === 2) return ALMA_GEMEA_STEPS.card_2_prompt;
-  return ALMA_GEMEA_STEPS.card_3_prompt;
-};
-
 const getCardSelectedStep = (state: GameState) => {
   if (state === 1) return ALMA_GEMEA_STEPS.card_1_selected;
   if (state === 2) return ALMA_GEMEA_STEPS.card_2_selected;
   return ALMA_GEMEA_STEPS.card_3_selected;
 };
-
-const startTiragem = useCallback(async (tiragemNum: 1 | 2 | 3, name?: string) => {
-  // existing setup remains unchanged
-  await showMessage(intros[tiragemNum]);
-  setPanelState('cards');
-  await trackCheckpoint(getCardPromptStep(tiragemNum), {
-    tiragem: tiragemNum,
-    user_name_present: Boolean(name || userName),
-  });
-  isProcessingRef.current = false;
-}, [userName, showMessage, playAudio, COPIES, trackCheckpoint]);
 
 const handleCardSelect = useCallback(async (cardIndex: number) => {
   if (isEtapaAudioPlayingRef.current) {
@@ -660,7 +639,7 @@ const handleCardSelect = useCallback(async (cardIndex: number) => {
 }, [gameState, selectedCardIndex, trackCheckpoint]);
 ```
 
-Flow: prompt events fire when the cards become selectable. Selection events fire after the existing guard accepts the click, so blocked clicks do not count.
+Flow: Selection events fire after the existing guard accepts the click, so blocked clicks do not count.
 
 ### 3.7 Track ad open/completed and quiz CTA
 
@@ -814,7 +793,7 @@ export const resolveTrackingCountry = async () => {
 export const ALMA_GEMEA_STEPS = {
   page_view: { id: "alma_gemea_page_view", index: 1, name: "Alma Gemea - Page View" },
   // ...
-  quiz_cta_clicked: { id: "alma_gemea_quiz_cta_clicked", index: 15, name: "Alma Gemea - Ir Para Quiz" }
+  quiz_cta_clicked: { id: "alma_gemea_quiz_cta_clicked", index: 11, name: "Alma Gemea - Ir Para Quiz" }
 } as const;
 ```
 
@@ -868,7 +847,6 @@ const trackCheckpoint = useCallback((step, attributes = {}) => {
 
 ```tsx
 await trackCheckpoint(ALMA_GEMEA_STEPS.name_prompt, { game_state: 0 });
-await trackCheckpoint(ALMA_GEMEA_STEPS.card_1_prompt, { tiragem: 1 });
 await trackCheckpoint(ALMA_GEMEA_STEPS.card_1_selected, { selected_card_position: cardIndex + 1 });
 await trackCheckpoint(ALMA_GEMEA_STEPS.ad_opened, { game_state, phone_image: phoneImage });
 await trackCheckpoint(ALMA_GEMEA_STEPS.ad_completed, { video_progress: Math.round(videoProgress) });
@@ -913,7 +891,7 @@ Expected: no diff.
 1. **Phase A:** Add `resolveTrackingCountry`, `storeCountry`, and expanded `ALMA_GEMEA_STEPS` in `funnelTracker.ts`.
 2. **Phase B:** Add `src/lib/almaGemeaTracking.ts` with idempotent checkpoint helper.
 3. **Phase C:** Instrument `AlmaGemea.tsx` page entry and interaction gate.
-4. **Phase D:** Instrument `AliceChat.tsx` name, card, ad, and quiz CTA checkpoints.
+4. **Phase D:** Instrument `AliceChat.tsx` name, card selections, ad, and quiz CTA checkpoints.
 5. **Phase E:** Run typecheck/build and manually validate payloads in browser Network tab for `/alma-gemea` and `/de/alma-gemea`.
 
 ---
@@ -945,9 +923,9 @@ Point #1 Rollback:
 | 2 | Interaction gate click | `/alma-gemea` | event `alma_gemea_gate_started` fires once after click |
 | 3 | Name prompt displayed | `/alma-gemea` | event `alma_gemea_name_prompt` fires once when input panel opens |
 | 4 | Name submitted | `/alma-gemea` | existing `lead_identified` fires with `step.id: alma_gemea_name_submitted`, `attributes.step_id`, `attributes.step_name`, `metadata.country` |
-| 5 | Card 1 selection | `/alma-gemea` | prompt and selected events use unique card 1 step IDs and include selected card position |
-| 6 | Card 2 selection | `/alma-gemea` | prompt and selected events use unique card 2 step IDs |
-| 7 | Card 3 selection | `/alma-gemea` | prompt and selected events use unique card 3 step IDs |
+| 5 | Card 1 selection | `/alma-gemea` | selected event uses unique card 1 step ID and include selected card position |
+| 6 | Card 2 selection | `/alma-gemea` | selected event uses unique card 2 step ID |
+| 7 | Card 3 selection | `/alma-gemea` | selected event uses unique card 3 step ID |
 | 8 | Ad opened | `/alma-gemea` | `alma_gemea_ad_opened` fires once when phone is clicked |
 | 9 | Ad completed | `/alma-gemea` | `alma_gemea_ad_completed` fires when video ends with video progress attribute |
 | 10 | CTA to quiz | `/alma-gemea` | `alma_gemea_quiz_cta_clicked` fires before navigation to `/{lang}/quiz` |
@@ -962,4 +940,3 @@ Point #1 Rollback:
 
 - **O que é necessário:** Confirm that the event consumer/dashboard should read `step.id`/`step.name` or the mirrored `attributes.step_id`/`attributes.step_name`. This plan sends both for compatibility.
 - **Documento de handoff:** `/Users/brunogovas/Projects/Funnel_Quiz/silverbullet-frequencia-quiz/docs/sessions/2026-05/alma-gemea-checkpoint-events-handoff.md` after implementation and validation.
-
