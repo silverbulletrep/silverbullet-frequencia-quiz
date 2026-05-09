@@ -13,7 +13,7 @@ type EventName =
   | "surprise_opened"
   | "offer_revealed";
 
-type Step = { id: string; index: number; name: string };
+export type Step = { id: string; index: number; name: string };
 type StepIndex = { id: string; index: number };
 type Page = { url: string; path: string; title: string };
 type DesireSelectedAttributes = { desire: string; question?: string; response?: string[] };
@@ -27,7 +27,7 @@ type TrackerConfig = {
   debug?: boolean;
 };
 
-type SendResult = { ok: boolean; via: "beacon" | "fetch" };
+export type SendResult = { ok: boolean; via: "beacon" | "fetch" };
 
 export const COUNTRY_KEY = "lead_country";
 export const QUIZ_FUNNEL_ID = "quiz_frequencia_01";
@@ -39,7 +39,17 @@ export const QUIZ_STEPS = {
 } as const;
 
 export const ALMA_GEMEA_STEPS = {
-  coleta_nome: { id: "coleta_nome", index: 1, name: "Primeira Etapa - Nome" }
+  page_view: { id: "alma_gemea_page_view", index: 1, name: "Alma Gemea - Page View" },
+  gate_started: { id: "alma_gemea_gate_started", index: 2, name: "Alma Gemea - Start Experience" },
+  transition_completed: { id: "alma_gemea_transition_completed", index: 3, name: "Alma Gemea - Transition Completed" },
+  name_prompt: { id: "alma_gemea_name_prompt", index: 4, name: "Alma Gemea - Escolher Nome" },
+  coleta_nome: { id: "alma_gemea_name_submitted", index: 5, name: "Alma Gemea - Nome Enviado" },
+  card_1_selected: { id: "alma_gemea_card_1_selected", index: 6, name: "Alma Gemea - Carta 1 Selecionada" },
+  card_2_selected: { id: "alma_gemea_card_2_selected", index: 7, name: "Alma Gemea - Carta 2 Selecionada" },
+  card_3_selected: { id: "alma_gemea_card_3_selected", index: 8, name: "Alma Gemea - Carta 3 Selecionada" },
+  ad_opened: { id: "alma_gemea_ad_opened", index: 9, name: "Alma Gemea - Ver Anuncio" },
+  ad_completed: { id: "alma_gemea_ad_completed", index: 10, name: "Alma Gemea - Anuncio Concluido" },
+  quiz_cta_clicked: { id: "alma_gemea_quiz_cta_clicked", index: 11, name: "Alma Gemea - Ir Para Quiz" }
 } as const;
 
 export const QUIZ_PROGRESS_STEPS = {
@@ -91,6 +101,39 @@ export const buildRouteStep = (route: string, step: StepIndex, name?: string): S
   name: name ?? getQuizStepName(step.index)
 });
 
+const normalizeCountryCode = (value: string) => {
+  const code = String(value || "").trim();
+  if (!code) return "";
+  return code.toUpperCase();
+};
+
+export const storeCountry = (country: string, key: string = COUNTRY_KEY) => {
+  const normalized = normalizeCountryCode(country);
+  if (!normalized) return "";
+  try {
+    sessionStorage.setItem(key, normalized);
+  } catch {
+    void 0;
+  }
+  try {
+    localStorage.setItem(key, normalized);
+  } catch {
+    void 0;
+  }
+  return normalized;
+};
+
+const getCountryFromLocale = () => {
+  try {
+    const lang = navigator.language || "";
+    const match = lang.match(/-([A-Za-z]{2})$/);
+    if (!match) return "";
+    return normalizeCountryCode(match[1]);
+  } catch {
+    return "";
+  }
+};
+
 export const readStoredCountry = (key: string = COUNTRY_KEY) => {
   try {
     const fromLocal = localStorage.getItem(key);
@@ -99,6 +142,28 @@ export const readStoredCountry = (key: string = COUNTRY_KEY) => {
     void 0;
   }
   return "";
+};
+
+export const resolveTrackingCountry = async () => {
+  const cached = readStoredCountry();
+  if (cached) return cached;
+
+  try {
+    const controller = new AbortController();
+    const timer = window.setTimeout(() => controller.abort(), 2500);
+    const resp = await fetch("https://ipapi.co/json/", { signal: controller.signal });
+    window.clearTimeout(timer);
+    if (resp.ok) {
+      const data = await resp.json();
+      const country = storeCountry(data?.country_code || data?.country || "");
+      if (country) return country;
+    }
+  } catch {
+    void 0;
+  }
+
+  const fromLocale = storeCountry(getCountryFromLocale());
+  return fromLocale || "UN";
 };
 
 export const getDefaultBaseUrl = () => {
