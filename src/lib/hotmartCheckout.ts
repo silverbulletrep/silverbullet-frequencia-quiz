@@ -63,20 +63,6 @@ export const buildHotmartCheckoutUrl = ({
     // UTMs são adicionadas por appendTrackingParamsToUrl via storage
     const finalUrl = appendTrackingParamsToUrl(url.toString())
 
-    // DEBUG TEMPORÁRIO — remover após confirmar que UTMs aparecem corretamente na UTMify
-    if (typeof console !== 'undefined') {
-      try {
-        const debugUrl = new URL(finalUrl)
-        const params: Record<string, string> = {}
-        debugUrl.searchParams.forEach((v, k) => { params[k] = v })
-        console.group('[HOTMART] 🔍 URL do Checkout')
-        console.log('URL completa:', finalUrl)
-        console.log('Parâmetros:', params)
-        console.log('Storage tracking:', (() => { try { return JSON.parse(sessionStorage.getItem('persisted_query_tracking') || '{}') } catch { return {} } })())
-        console.groupEnd()
-      } catch { void 0 }
-    }
-
     return finalUrl
   } catch (error) {
     console.error('[HOTMART] Erro ao construir URL do checkout', { baseUrl, message: error instanceof Error ? error.message : String(error) })
