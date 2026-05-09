@@ -239,13 +239,27 @@ const buildPage = (): Page => ({
 
 const buildUtm = () => {
   try {
-    const params = new URLSearchParams(window.location.search);
-    const source = params.get('utm_source') || '';
-    const campaign = params.get('utm_campaign') || '';
+    const urlParams = new URLSearchParams(window.location.search);
+    // Fallback para storage — em rotas internas (/fim, /processing, /vsl)
+    // a URL não tem UTMs, mas o storage as preservou desde a entrada.
+    const stored: Record<string, string> = (() => {
+      try {
+        const s = sessionStorage.getItem('persisted_query_tracking')
+        if (s) return JSON.parse(s) as Record<string, string>
+        const l = localStorage.getItem('persisted_query_tracking')
+        return l ? JSON.parse(l) as Record<string, string> : {}
+      } catch { return {} }
+    })()
+    const get = (key: string): string => urlParams.get(key) || stored[key] || ''
+    const source = get('utm_source')
+    const campaign = get('utm_campaign')
     if (!source && !campaign) return undefined;
     return {
       source: source || undefined,
       campaign: campaign || undefined,
+      medium: get('utm_medium') || undefined,
+      content: get('utm_content') || undefined,
+      term: get('utm_term') || undefined,
     };
   } catch {
     return undefined;
