@@ -15,6 +15,11 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useTranslation } from 'react-i18next';
 import { asset } from '@/lib/asset';
 import { leadCache } from '@/lib/leadCache';
+import {
+  ALMA_GEMEA_STEPS,
+  resolveTrackingCountry
+} from '@/lib/funnelTracker';
+import { trackAlmaGemeaCheckpoint } from '@/lib/almaGemeaTracking';
 
 // ── Lazy load do chat (não carrega no bundle inicial) ──
 const AliceChat = lazy(() => import('@/components/AliceChat/AliceChat'));
@@ -43,8 +48,27 @@ const AlmaGemea: React.FC = () => {
   const [currentPhraseIndex, setCurrentPhraseIndex] = useState(0);
 
   useEffect(() => {
-    leadCache.setFunnelVariant(PRESALE_TAROT_FUNNEL_VARIANT);
-  }, []);
+    let cancelled = false;
+
+    const initTracking = async () => {
+      leadCache.setFunnelVariant(PRESALE_TAROT_FUNNEL_VARIANT);
+      await resolveTrackingCountry();
+      if (cancelled) return;
+
+      trackAlmaGemeaCheckpoint(ALMA_GEMEA_STEPS.page_view, {
+        lang,
+        funnel_origin: `alma-gemea-${lang}`,
+      }).catch((err) => {
+        console.error('[AlmaGemea] Erro ao enviar page checkpoint:', err);
+      });
+    };
+
+    initTracking();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [lang]);
 
   // ── Sequência de transição cinematográfica ──
   const startTransition = useCallback(() => {
@@ -107,6 +131,13 @@ const AlmaGemea: React.FC = () => {
   const handleStartExperience = useCallback(() => {
     // 1. Ganha o Token de Interação do Navegador
     setHasStarted(true);
+
+    trackAlmaGemeaCheckpoint(ALMA_GEMEA_STEPS.gate_started, {
+      lang,
+      funnel_origin: `alma-gemea-${lang}`,
+    }).catch((err) => {
+      console.error('[AlmaGemea] Erro ao enviar gate checkpoint:', err);
+    });
 
     // Destrava música de fundo
     const bgAudio = document.getElementById('bg-music-audio') as HTMLAudioElement;

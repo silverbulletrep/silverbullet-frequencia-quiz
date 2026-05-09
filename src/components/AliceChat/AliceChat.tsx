@@ -26,6 +26,7 @@ import {
   ALMA_GEMEA_FUNNEL_ID,
   ALMA_GEMEA_STEPS
 } from '@/lib/funnelTracker';
+import { trackAlmaGemeaCheckpoint } from '@/lib/almaGemeaTracking';
 
 // ══════════════════════════════════════════════════════════
 // TIPOS
@@ -144,6 +145,16 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
   const deckX = "-32vw";
   const deckY = "10vh";
+
+  const trackCheckpoint = useCallback((step: (typeof ALMA_GEMEA_STEPS)[keyof typeof ALMA_GEMEA_STEPS], attributes = {}) => {
+    return trackAlmaGemeaCheckpoint(step, {
+      lang,
+      funnel_origin: `alma-gemea-${lang}`,
+      ...attributes
+    }).catch((err) => {
+      console.error('[AliceChat] Erro ao enviar checkpoint:', err);
+    });
+  }, [lang]);
 
   // ── Diálogo ──
   const [activeMessage, setActiveMessage] = useState('');
@@ -353,7 +364,12 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
     setPanelState('hidden');
     setRevealedCards([]);
 
+    await trackCheckpoint(ALMA_GEMEA_STEPS.name_prompt, {
+      game_state: 0,
+    });
+
     const audio = playAudio('/Audio/alice/etapa_1.mp3');
+
 
     setIsTyping(true);
     setActiveMessage('');
@@ -398,6 +414,8 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
     // Envia o payload com nome, id único, idioma e origem do funil
     tracker.leadIdentifiedCustom(ALMA_GEMEA_STEPS.coleta_nome, {
+      step_id: ALMA_GEMEA_STEPS.coleta_nome.id,
+      step_name: ALMA_GEMEA_STEPS.coleta_nome.name,
       name: formattedName,
       lead_id: currentLeadId,
       lang,
@@ -418,11 +436,22 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
 
   const abrirVSL = useCallback(() => {
     if (!isPhoneOn) return;
+
+    trackCheckpoint(ALMA_GEMEA_STEPS.ad_opened, {
+      game_state: gameState,
+      phone_image: phoneImage,
+    });
+
     setIsPhoneModalOpen(true);
     setShowTapHint(false);
-  }, [isPhoneOn]);
+  }, [isPhoneOn, gameState, phoneImage, trackCheckpoint]);
 
   const handleClosePhoneModal = useCallback(() => {
+    trackCheckpoint(ALMA_GEMEA_STEPS.ad_completed, {
+      video_progress: Math.round(videoProgress),
+      lang,
+    });
+
     setIsPhoneModalOpen(false);
     setActiveMessage('__PORTA_RETRATO__');
     setIsPhoneOn(false);
@@ -456,8 +485,18 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
   }, [playAudio]);
 
   const handleCTA = useCallback(() => {
-    window.location.href = withTrackingParams(asset(`/${lang}/quiz`));
-  }, [lang]);
+    trackCheckpoint(ALMA_GEMEA_STEPS.quiz_cta_clicked, {
+      destination: `/${lang}/quiz`,
+    }).finally(() => {
+      window.location.href = withTrackingParams(asset(`/${lang}/quiz`));
+    });
+  }, [lang, trackCheckpoint]);
+
+  const getCardSelectedStep = (state: GameState) => {
+    if (state === 1) return ALMA_GEMEA_STEPS.card_1_selected;
+    if (state === 2) return ALMA_GEMEA_STEPS.card_2_selected;
+    return ALMA_GEMEA_STEPS.card_3_selected;
+  };
 
   const handleCardSelect = useCallback(async (cardIndex: number) => {
     if (isEtapaAudioPlayingRef.current) {
@@ -488,6 +527,13 @@ const AliceChat: React.FC<AliceChatProps> = ({ isOpen, onClose, lang = 'pt' }) =
       revealText = personalize(COPIES.tiragem3Reveal, userName);
       nextStage = 4;
     }
+
+    const selectedStep = getCardSelectedStep(gameState);
+    await trackCheckpoint(selectedStep, {
+      selected_card_position: cardIndex + 1,
+      tarot_card_name: card.name,
+      game_state: gameState,
+    });
 
     await new Promise(r => setTimeout(r, 1200));
     setPanelState('hidden');
