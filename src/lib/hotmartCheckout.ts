@@ -52,12 +52,15 @@ export const buildHotmartCheckoutUrl = ({
       url.searchParams.set('paymentMethod', normalizeHotmartPaymentMethod(paymentMethod))
     }
 
+    if (leadIdShort) {
+      url.searchParams.set('sck', leadIdShort.substring(0, 30).replace(/_/g, ''))
+    }
+
     if (email) {
       url.searchParams.set('email', email.trim())
     }
 
     // UTMs são adicionadas por appendTrackingParamsToUrl via storage
-    // Sem sck manual — deixar UTMify gerenciar o reconciliation via xcod interno
     const finalUrl = appendTrackingParamsToUrl(url.toString())
 
     // DEBUG TEMPORÁRIO — remover após confirmar que UTMs aparecem corretamente na UTMify
